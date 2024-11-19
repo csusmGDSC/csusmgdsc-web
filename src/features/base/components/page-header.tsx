@@ -24,10 +24,10 @@ const PageHeader = ({
           "./src/assets/images/placeholder/header-background.png"
         }
         alt="header-background"
-        className="absolute object-cover w-full h-full"
+        className="absolute object-cover w-full h-full opacity-60 z-0"
       />
 
-      <div className="text-center space-y-2">
+      <div className="text-center space-y-2 z-10">
         <h1 className="text-2xl sm:text-4xl font-semibold text-foreground/70">
           {title}
         </h1>
