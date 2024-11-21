@@ -2,7 +2,6 @@ import { PageContent, PageHeader } from "@/features/base";
 import {
   ProjectContributions,
   ProjectList,
-  ProjectRequirements,
 } from "@/features/projects";
 import { GDSCProject } from "@/types/gdsc-project";
 
