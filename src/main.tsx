@@ -8,6 +8,7 @@ import HomePage from "./pages/home-page";
 import EventsPage from "./pages/events-page";
 import ProjectsPage from "./pages/projects-page";
 import ResourcesPage from "./pages/resources-page";
+import EventPage from "./pages/event-page";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/resources",
         element: <ResourcesPage />,
+      },
+      {
+        path: "/events/:eventId",
+        element: <EventPage />,
       },
     ],
   },

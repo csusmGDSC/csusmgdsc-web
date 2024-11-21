@@ -1,5 +1,5 @@
 import { PageContent } from "@/features/base";
-import { Hero } from "@/features/home";
+import { ActivityGallery, Branches, Hero } from "@/features/home";
 
 export default function HomePage() {
   return (
@@ -7,7 +7,8 @@ export default function HomePage() {
       <Hero />
 
       <PageContent>
-        <div>hello</div>
+        <Branches />
+        <ActivityGallery />
       </PageContent>
     </main>
   );

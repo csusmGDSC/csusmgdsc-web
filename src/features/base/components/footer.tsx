@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
         <div className="h-full grid grid-cols-1 sm:grid-cols-4 custom-max-width">
           <div className="flex flex-col items-center h-full pt-10 sm:col-span-2 sm:mr-auto">
             <img
-              src="./src/assets/images/club/logo-title-light.png"
+              src="/images/club/logo-title-light.png"
               alt="navbar-logo"
               className="w-[350px] h-auto"
             />
@@ -112,7 +112,7 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer bottom with copyright and social media icons */}
-      <div className="w-full h-12 flex flex-col items-center justify-center bg-primary-foreground">
+      <div className="w-full h-12 flex flex-col items-center border-t justify-center bg-gray-50">
         <div className="flex flex-row items-center justify-between custom-max-width">
           <span className="text-neutral-400 font-semibold text-xs px-2 md:px-0">
             © 2024 CSUSM

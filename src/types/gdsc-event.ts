@@ -75,6 +75,7 @@ export const EVENT_TYPES = [
   "challenge",
   "other",
 ] as const;
+
 export const ROOM_TYPES = [
   "lecture",
   "classroom",

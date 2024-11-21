@@ -7,7 +7,7 @@ export default function ResourcesPage() {
       <PageHeader
         title="Resources"
         subTitle="Additional resources, information, and guidelines."
-        backgroundImageSrc="./src/assets/images/placeholder/homeBackground-4.jpg"
+        backgroundImageSrc="/images/placeholder/homeBackground-4.jpg"
       />
       <PageContent>
         <FAQ />

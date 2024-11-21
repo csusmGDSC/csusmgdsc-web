@@ -46,7 +46,7 @@ const Header = () => {
         {/* GDSC logo, Click on it should bring back to root page*/}
         <Link to="/">
           <img
-            src="./src/assets/images/club/logo-title-light.png"
+            src="/images/club/logo-title-light.png"
             alt="navbar-logo"
             className="hidden lg:block w-[350px] h-auto"
           />

@@ -19,7 +19,7 @@ const ProjectCard = ({
   date,
 }: GDSCProject) => {
   return (
-    <Card key={date} className="overflow-hidden flex flex-col w-full">
+    <Card key={date} className="overflow-hidden flex flex-col w-full shadow-md">
       {/* Project Image */}
       <div className="relative group overflow-hidden">
         <img
@@ -83,7 +83,7 @@ const ProjectCard = ({
         </div>
 
         {/* Links */}
-        <div className="flex flex-col gap-3 pt-4">
+        {/* <div className="flex flex-col gap-3 pt-4">
           {websiteUrl && (
             <a
               href={websiteUrl}
@@ -104,7 +104,7 @@ const ProjectCard = ({
             View Code
             <FaGithub className="w-4 h-4" />
           </a>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );
