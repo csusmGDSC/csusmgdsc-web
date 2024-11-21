@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Code, Lightbulb, Coffee } from "lucide-react";
+import { Code, Coffee } from "lucide-react";
 
 export default function ActivityGallery() {
   const activities = [
