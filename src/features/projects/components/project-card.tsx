@@ -53,7 +53,7 @@ const ProjectCard = ({
         </div>
       </div>
 
-      <CardContent className="space-y-4 mt-2 flex-grow flex flex-col">
+      <CardContent className="space-y-4 mt-8 flex-grow flex flex-col">
         <div className="flex flex-col justify-between">
           <CardTitle className="text-xl font-bold text-gray-800">
             {title}

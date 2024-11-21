@@ -28,10 +28,10 @@ const PageHeader = ({
       />
 
       <div className="text-center space-y-2 z-10">
-        <h1 className="text-2xl sm:text-4xl font-semibold text-foreground/70">
+        <h1 className="text-2xl sm:text-4xl font-semibold text-primary">
           {title}
         </h1>
-        <h2 className="text-xs sm:text-sm">{subTitle}</h2>
+        <h2 className="text-xs text-[#5f6368] sm:text-sm">{subTitle}</h2>
       </div>
     </header>
   );

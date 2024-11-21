@@ -39,7 +39,6 @@ export default function ProjectsPage() {
       />
       <PageContent>
         <ProjectContributions />
-        <ProjectRequirements />
         <ProjectList projects={exampleProjects} />
       </PageContent>
     </main>

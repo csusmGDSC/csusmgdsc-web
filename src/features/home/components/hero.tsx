@@ -29,7 +29,7 @@ const Hero = () => {
 
         <h1
           className="text-center text-2xl md:text-3xl lg:text-5xl
-            font-semibold text-primary z-10"
+            font-semibold text-primary z-10]"
         >
           Google Developer Student Club
         </h1>

@@ -4,7 +4,7 @@ import { Code, Coffee } from "lucide-react";
 export default function ActivityGallery() {
   const activities = [
     {
-      title: "Leetcode Workshops",
+      title: "Leetcode",
       description:
         "Weekly hands-on sessions solving leetcode problems collaboratively",
       date: "Every Tuesday",
@@ -15,7 +15,7 @@ export default function ActivityGallery() {
     {
       title: "Community Meetups",
       description: "Casual gatherings to network and share ideas",
-      date: "Monthly",
+      date: "Every Day",
       category: "Social",
       icon: <Coffee className="w-6 h-6" />,
       imageUrl: "/images/group-2.jpg",
@@ -53,7 +53,7 @@ export default function ActivityGallery() {
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-medium text-blue-600">
+                    <span className="text-sm font-mono text-blue">
                       {activity.category}
                     </span>
                     <span className="text-sm text-gray-500">
