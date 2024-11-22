@@ -23,10 +23,10 @@ const teams = [
     features: [
       {
         icon: <Code className="w-5 h-5" />,
-        text: "Partake in coding projects",
+        text: "Contribute in Coding Projects",
       },
-      { icon: <Play className="w-5 h-5" />, text: "Collaborate on sprints" },
-      { icon: <Cloud className="w-5 h-5" />, text: "Deploy real software" },
+      { icon: <Play className="w-5 h-5" />, text: "Collaborate on Sprints" },
+      { icon: <Cloud className="w-5 h-5" />, text: "Deploy Real Software" },
     ],
     technologies: ["HTML5", "CSS3", "TypeScript", "React", "Next.js", "GitHub"],
     techIcons: [
@@ -54,16 +54,16 @@ const teams = [
   {
     title: "Interview Team",
     description:
-      "Improve your technical and soft skills to propel your chances of winning interviews",
+      "Improve your technical skills to propel your chances of winning interviews",
     features: [
-      { icon: <Users className="w-5 h-5" />, text: "Perform mock interviews" },
+      { icon: <Users className="w-5 h-5" />, text: "Perform Mock Interviews" },
       {
         icon: <Terminal className="w-5 h-5" />,
-        text: "Partake in coding comps",
+        text: "Partake in Coding Competitions",
       },
       {
         icon: <BookOpen className="w-5 h-5" />,
-        text: "Learn interview problems",
+        text: "Learn Interview Problems",
       },
     ],
     technologies: ["Python", "Go", "GitHub", "HackerRank"],
