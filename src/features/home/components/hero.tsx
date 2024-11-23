@@ -5,6 +5,7 @@ import DotPattern from "@/components/background/dot-background";
 import Ripple from "@/components/background/ripple-background";
 import { Announcement } from "@/components/ui/announcement";
 import { PulsatingButton } from "@/components/ui/pulsating-button";
+import { Link } from "react-router-dom";
 
 /**
  * Component that shows the hero (top section) of the web-page
@@ -39,12 +40,14 @@ const Hero = () => {
 
         <p className="text-center text-foreground/70 mb-6">{description}</p>
 
-        <PulsatingButton
-          className="m-auto px-10 md:m-0 h-10 rounded-md font-bold
-                text-xs bg-blue z-10 hover:bg-blue/80 gap-2 text-white group"
-        >
-          Contribute Now
-        </PulsatingButton>
+        <Link to="/join">
+          <PulsatingButton
+            className="m-auto px-28 md:m-0 h-10 rounded-md
+            bg-blue z-10 hover:bg-blue/80 gap-2 text-white group"
+          >
+            Get Involved
+          </PulsatingButton>
+        </Link>
 
         <a
           className="flex items-center gap-2 hover:underline text-blue transition-colors"

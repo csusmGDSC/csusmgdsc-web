@@ -9,6 +9,7 @@ import EventsPage from "./pages/events-page";
 import ProjectsPage from "./pages/projects-page";
 import ResourcesPage from "./pages/resources-page";
 import EventPage from "./pages/event-page";
+import InfoPage from "./pages/info-page";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/events/:eventId",
         element: <EventPage />,
+      },
+      {
+        path: "/join",
+        element: <InfoPage />,
       },
     ],
   },
