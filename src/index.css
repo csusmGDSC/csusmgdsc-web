@@ -128,3 +128,7 @@
     hsl(var(--background)) 100%
   );
 }
+
+.w-md-editor {
+  --md-editor-font-family: 'GoogleSans', sans-serif !important;
+}
