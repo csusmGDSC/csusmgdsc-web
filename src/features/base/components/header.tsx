@@ -20,6 +20,10 @@ const links = [
     ref: "/",
   },
   {
+    name: "Team",
+    ref: "/team",
+  },
+  {
     name: "Events",
     ref: "/events",
   },

@@ -1,5 +1,5 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { EVENT_TYPES } from "@/types/gdsc-event";
 import { Filter, Search } from "lucide-react";
 
@@ -34,15 +34,14 @@ export default function EventsFilter({
             </div>
             <div className="flex flex-wrap gap-2">
               {EVENT_TYPES.map((type) => (
-                <button
+                <Button
                   key={type}
-                  className={cn(
-                    "px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200",
-                    {
-                      "bg-blue text-white": selectedTags.includes(type),
-                      "bg-gray-100 text-gray-800": !selectedTags.includes(type),
-                    }
-                  )}
+                  className={
+                    selectedTags.includes(type)
+                      ? "border-blue/80 bg-blue/10 text-darkBlue"
+                      : ""
+                  }
+                  variant="outline"
                   onClick={() => {
                     if (selectedTags.includes(type)) {
                       setSelectedTags(
@@ -54,7 +53,7 @@ export default function EventsFilter({
                   }}
                 >
                   {type}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

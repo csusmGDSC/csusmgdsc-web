@@ -1,1 +1,1 @@
-export { default as FAQ } from "./components/faq";
+export { default as ResourceCards } from "./components/resource-cards";

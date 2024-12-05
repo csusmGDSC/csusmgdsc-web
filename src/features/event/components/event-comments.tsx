@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { Ellipsis, Pin, Send } from "lucide-react";
 import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 // Interfaces for type safety
 interface Comment {
@@ -145,20 +146,17 @@ const EventComments: React.FC<EventCommentsProps> = ({
             onChange={(val) => setCommentContent(val || "")}
             data-color-mode="light"
             style={{
-              borderRadius: "8px",
+              borderRadius: "4px",
               border: "1px solid",
               borderColor: "hsl(var(--border))",
               padding: "4px",
             }}
           />
           <div className="mt-2 flex justify-end">
-            <button
-              onClick={handlePostComment}
-              className="flex items-center gap-2 bg-blue text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition-colors"
-            >
+            <Button onClick={handlePostComment}>
               <Send className="w-4 h-4" />
               Post Comment
-            </button>
+            </Button>
           </div>
         </div>
       </div>

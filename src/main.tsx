@@ -10,6 +10,8 @@ import ProjectsPage from "./pages/projects-page";
 import ResourcesPage from "./pages/resources-page";
 import EventPage from "./pages/event-page";
 import InfoPage from "./pages/info-page";
+import TeamPage from "./pages/team-page";
+import ProfilePage from "./pages/profile-page";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
       {
         path: "/join",
         element: <InfoPage />,
+      },
+      {
+        path: "/team",
+        element: <TeamPage />,
+      },
+      {
+        path: "/profile/:userId",
+        element: <ProfilePage />,
       },
     ],
   },

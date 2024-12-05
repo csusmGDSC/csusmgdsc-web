@@ -1,5 +1,5 @@
 import { PageContent, PageHeader } from "@/features/base";
-import { FAQ } from "@/features/resources";
+import { ResourceCards } from "@/features/resources";
 
 export default function ResourcesPage() {
   return (
@@ -10,7 +10,7 @@ export default function ResourcesPage() {
         backgroundImageSrc="/images/placeholder/homeBackground-4.jpg"
       />
       <PageContent>
-        <FAQ />
+        <ResourceCards />
       </PageContent>
     </main>
   );
