@@ -19,7 +19,10 @@ const ProjectCard = ({
   date,
 }: GDSCProject) => {
   return (
-    <Card key={date} className="overflow-hidden flex flex-col w-full shadow-md">
+    <Card
+      key={date}
+      className="overflow-hidden flex flex-col w-full hover:shadow-md transition-shadow"
+    >
       {/* Project Image */}
       <div className="relative group overflow-hidden">
         <img
@@ -81,30 +84,6 @@ const ProjectCard = ({
             </Badge>
           ))}
         </div>
-
-        {/* Links */}
-        {/* <div className="flex flex-col gap-3 pt-4">
-          {websiteUrl && (
-            <a
-              href={websiteUrl}
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-blue text-white py-2 px-4 rounded-lg hover:bg-blue/80 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Demo
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          )}
-          <a
-            href={githubUrl}
-            className="flex-1 inline-flex items-center justify-center gap-2 bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900 transition-colors duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Code
-            <FaGithub className="w-4 h-4" />
-          </a>
-        </div> */}
       </CardContent>
     </Card>
   );

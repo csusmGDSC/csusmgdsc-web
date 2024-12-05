@@ -4,6 +4,8 @@ import { CiInstagram } from "react-icons/ci";
 import { FaDiscord, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 
 interface LinkItem {
   label: string;
@@ -97,7 +99,7 @@ const Footer: React.FC = () => {
   return (
     <footer>
       {/* Main footer content with logo and links */}
-      <div className="w-full sm:h-[12rem] pb-4 sm:pb-0 border-t border-b-border bg-background items-center flex flex-col mt-20">
+      <div className="w-full sm:h-[12rem] pb-4 shadow-inner sm:pb-0 border-t border-b-border bg-background items-center flex flex-col mt-20">
         <div className="h-full grid grid-cols-1 sm:grid-cols-4 custom-max-width">
           <div className="flex flex-col items-center h-full pt-10 sm:col-span-2 sm:mr-auto">
             <img
@@ -112,11 +114,13 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer bottom with copyright and social media icons */}
-      <div className="w-full h-12 flex flex-col items-center border-t justify-center bg-gray-50">
+      <div className="w-full h-12 flex flex-col items-center justify-center">
         <div className="flex flex-row items-center justify-between custom-max-width">
-          <span className="text-neutral-400 font-semibold text-xs px-2 md:px-0">
-            © 2024 CSUSM
-          </span>
+          <Link to="https://github.com/csusmGDSC/csusmgdsc-web" target="_blank">
+            <Button variant="link">
+              Improve this page on GitHub <ExternalLink />
+            </Button>
+          </Link>
           <SocialMediaIcons />
         </div>
       </div>

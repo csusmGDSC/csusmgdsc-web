@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Code, Coffee } from "lucide-react";
 
@@ -71,10 +72,9 @@ export default function ActivityGallery() {
         </div>
 
         <div className="mt-12 text-center">
-          <button className="bg-blue text-white py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-200 inline-flex items-center space-x-2">
-            <span>View All Activities</span>
-            <Code className="w-4 h-4" />
-          </button>
+          <Button size="lg">
+            <Code /> View All Activities
+          </Button>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -7,6 +8,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 import { MdMenu } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
@@ -16,6 +18,10 @@ const links = [
   {
     name: "Home",
     ref: "/",
+  },
+  {
+    name: "Team",
+    ref: "/team",
   },
   {
     name: "Events",
@@ -40,8 +46,31 @@ const links = [
 const Header = () => {
   const pathname = useLocation().pathname;
 
+  const [hasShadow, setHasShadow] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setHasShadow(true);
+      } else {
+        setHasShadow(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="w-full h-[4.5rem] border-b border-b-border items-center flex flex-col fixed top-0 z-[40] bg-background">
+    <header
+      className={cn(
+        "w-full h-[4.5rem] items-center flex flex-col fixed top-0 z-[40] bg-background",
+        hasShadow &&
+          "shadow-md transition-shadow duration-700 ease-in-out border-b border-b-border"
+      )}
+    >
       <div className="h-full flex flex-row justify-center lg:justify-between items-center custom-max-width">
         {/* GDSC logo, Click on it should bring back to root page*/}
         <Link to="/">
@@ -73,7 +102,7 @@ const Header = () => {
 
           {/* MOBILE TRIGGER MENU, DOES NOT SHOW ON WEBSITE */}
           <Sheet>
-            <SheetTrigger className="flex p-3 flex-col items-center justify-center sm:hidden border border-border rounded-md">
+            <SheetTrigger className="flex p-3 flex-col items-center justify-center sm:hidden border border-border rounded-sm">
               <MdMenu />
             </SheetTrigger>
             <SheetContent side="left">
@@ -99,12 +128,7 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <p
-            onClick={() => {}}
-            className="text-foreground/70 h-full flex items-center border-b-4 border-background text-sm hover:cursor-pointer hover:text-foreground transition"
-          >
-            Sign In
-          </p>
+          <Button>Sign In</Button>
         </nav>
       </div>
     </header>

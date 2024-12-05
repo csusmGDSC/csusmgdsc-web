@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -129,10 +130,9 @@ export default function Branches() {
                   <div className="flex flex-wrap gap-3">{team.techIcons}</div>
                 </div>
 
-                <button className="w-full bg-blue text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2">
-                  <span>{team.action}</span>
-                  <Terminal className="w-4 h-4" />
-                </button>
+                <Button className="w-full" size="lg">
+                  {team.action}
+                </Button>
               </div>
             </CardContent>
           </Card>

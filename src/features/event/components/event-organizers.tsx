@@ -22,7 +22,7 @@ export default function EventOrganizers() {
         ].map((organizer) => (
           <div
             key={organizer.name}
-            className="border border-border rounded-lg shadow-sm p-4 flex items-center space-x-4"
+            className="border border-border rounded-sm shadow-sm p-4 flex items-center space-x-4"
           >
             <img
               src={organizer.image}

@@ -10,7 +10,11 @@ interface TitleProps {
  * @param {string} heading Text that describes the following section
  */
 const Title = ({ children }: TitleProps) => {
-  return <h1 className="text-2xl font-bold text-primary w-full">{children}</h1>;
+  return (
+    <h1 className="text-2xl font-bold text-primary w-full flex items-center gap-2">
+      {children}
+    </h1>
+  );
 };
 
 export default Title;

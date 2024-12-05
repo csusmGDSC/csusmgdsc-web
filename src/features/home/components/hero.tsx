@@ -1,10 +1,9 @@
 "use client";
 
-import { IoMdAlert } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import DotPattern from "@/components/background/dot-background";
 import Ripple from "@/components/background/ripple-background";
-import { Announcement } from "@/components/ui/announcement";
-import { PulsatingButton } from "@/components/ui/pulsating-button";
 
 /**
  * Component that shows the hero (top section) of the web-page
@@ -19,40 +18,31 @@ const Hero = () => {
       <DotPattern className="[mask-image:linear-gradient(to_bottom,white,transparent,transparent)]" />
 
       {/* Hero Section Content */}
-      <div className="px-2 md:px-0 flex flex-col justify-center items-center custom-max-width gap-6">
-        <Announcement
-          onClick={() => {}}
-          text="Accepting 2024 Applications"
-          color="blue"
-        />
-
+      <div className="px-2 md:px-0 flex flex-col justify-center items-center custom-max-width gap-6 z-10">
         <h1
           className="text-center text-2xl md:text-3xl lg:text-5xl
-            font-semibold text-primary z-10]"
+            font-semibold text-primary"
         >
           Google Developer Student Club
         </h1>
 
-        <h2 className="text-center text-sm md:text-lg lg:text-xl text-foreground/50">
+        <h2 className="text-center text-lg md:text-xl lg:text-2xl font-semibold text-foreground/50">
           California State University, San Marcos
         </h2>
 
         <p className="text-center text-foreground/70 mb-6">{description}</p>
 
-        <PulsatingButton
-          className="m-auto px-10 md:m-0 h-10 rounded-md font-bold
-                text-xs bg-blue z-10 hover:bg-blue/80 gap-2 text-white group"
-        >
-          Contribute Now
-        </PulsatingButton>
+        <span className="flex gap-4">
+          <Link to="/join">
+            <Button size="lg">Get Involved</Button>
+          </Link>
 
-        <a
-          className="flex items-center gap-2 hover:underline text-blue transition-colors"
-          href="https://gdsc.community.dev/"
-          target="_blank"
-        >
-          <IoMdAlert size={20} /> Learn More
-        </a>
+          <Link to="/">
+            <Button size="lg" variant="outline">
+              Learn More
+            </Button>
+          </Link>
+        </span>
       </div>
 
       <Ripple
