@@ -16,6 +16,8 @@ const InfoCard = ({
   points,
   buttonText,
   buttonIcon: ButtonIcon,
+  buttonLink,
+  targetBlank,
 }: {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
@@ -23,6 +25,8 @@ const InfoCard = ({
   points: string[];
   buttonText: string;
   buttonIcon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  buttonLink: string;
+  targetBlank?: boolean;
 }) => (
   <Card className="bg-white flex flex-col justify-between">
     <CardHeader>
@@ -43,10 +47,16 @@ const InfoCard = ({
     </CardHeader>
     {/* Footer Button */}
     <CardFooter>
-      <Button className="w-full">
-        <ButtonIcon className="mr-2 h-4 w-4" />
-        {buttonText}
-      </Button>
+      <a
+        href={buttonLink}
+        className="w-full"
+        target={targetBlank ? "_blank" : undefined}
+      >
+        <Button className="w-full">
+          <ButtonIcon className="mr-2 h-4 w-4" />
+          {buttonText}
+        </Button>
+      </a>
     </CardFooter>
   </Card>
 );
@@ -68,6 +78,8 @@ const InfoCards = () => {
           ]}
           buttonText="Join Teams"
           buttonIcon={Users}
+          buttonLink={"/team"}
+          targetBlank={false}
         />
 
         {/* Create Account Card */}
@@ -83,6 +95,8 @@ const InfoCards = () => {
           ]}
           buttonText="Sign In / Register"
           buttonIcon={LogIn}
+          buttonLink={"/sign-in"}
+          targetBlank={true}
         />
 
         {/* Join Sessions Card */}
@@ -98,6 +112,8 @@ const InfoCards = () => {
           ]}
           buttonText="View Events"
           buttonIcon={Calendar}
+          buttonLink={"/events"}
+          targetBlank={false}
         />
       </div>
     </div>
