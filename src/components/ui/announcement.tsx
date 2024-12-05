@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { FaArrowRight } from "react-icons/fa6";
+import { IoMdClose } from "react-icons/io";
 
 interface AnnouncementProps {
   onClick?: () => void;
-  text: string;
+  children: React.ReactNode;
   color: "red" | "green" | "blue" | "yellow";
 }
 
@@ -16,46 +16,24 @@ interface AnnouncementProps {
  * @param {string} props.color - The color of the announcement. Can be "red", "green", "blue", or "yellow".
  * @return {JSX.Element} The rendered announcement component.
  */
-export const Announcement = ({ onClick, text, color }: AnnouncementProps) => {
+export const Announcement = ({ children, color }: AnnouncementProps) => {
   const bgColors = {
-    red: "bg-red/20",
-    green: "bg-green/20",
-    blue: "bg-blue/20",
-    yellow: "bg-yellow/20",
-  };
-
-  const colors = {
-    red: "text-red",
-    green: "text-green",
-    blue: "text-blue",
-    yellow: "text-yellow",
+    red: "bg-red/10",
+    green: "bg-green/10",
+    blue: "bg-blue/10",
+    yellow: "bg-yellow/10",
   };
 
   return (
     <div
       className={cn(
-        "rounded-full flex items-center gap-2 py-1 px-2 z-10 group hover:cursor-pointer",
+        "relative flex items-center md:justify-center px-4 md:px-0 gap-2 py-2 z-10",
         bgColors[color]
       )}
-      onClick={onClick}
     >
-      <span
-        className={cn(
-          "flex gap-2 text-xs font-semibold items-center bg-slate-100 rounded-full p-1",
-          colors[color]
-        )}
-      >
-        📣 Announcment
-      </span>
+      {children}
 
-      <p className={cn("text-xs font-semibold", colors[color])}>{text}</p>
-
-      <FaArrowRight
-        className={cn(
-          "text-xs group-hover:translate-x-1 transition-transform",
-          colors[color]
-        )}
-      />
+      <IoMdClose className="hover:bg-primary/20 hover:rounded-full transition-all p-2 w-10 h-10 absolute top-1/2 -translate-y-1/2 right-4 hover:cursor-pointer text-primary" />
     </div>
   );
 };

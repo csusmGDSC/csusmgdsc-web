@@ -62,8 +62,9 @@ const Header = () => {
   return (
     <header
       className={cn(
-        "w-full h-[4.5rem] border-b border-b-border items-center flex flex-col fixed top-0 z-[40] bg-background",
-        hasShadow && "shadow-md"
+        "w-full h-[4.5rem] items-center flex flex-col fixed top-0 z-[40] bg-background",
+        hasShadow &&
+          "shadow-md transition-shadow duration-700 ease-in-out border-b border-b-border"
       )}
     >
       <div className="h-full flex flex-row justify-center lg:justify-between items-center custom-max-width">

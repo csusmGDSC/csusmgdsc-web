@@ -11,7 +11,7 @@ const buttonVariants = cva(
       variant: {
         default: "bg-blue text-white hover:bg-darkBlue transition",
         outline:
-          "border border-input bg-background text-blue hover:border-blue/50 hover:bg-blue/10 hover:text-darkBlue transition",
+          "border border-input bg-background text-blue hover:border-blue/80 hover:bg-blue/10 hover:text-darkBlue transition",
         ghost: "text-blue hover:bg-blue/10 hover:text-darkBlue transition",
         link: "text-blue underline-offset-4 hover:underline hover:text-darkBlue transition",
         nav: "text-foreground/70 hover:text-foreground transition",
@@ -19,7 +19,7 @@ const buttonVariants = cva(
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-sm px-3",
-        lg: "h-11 rounded-sm px-8",
+        lg: "h-11 text-md rounded-sm px-10 py-6",
         icon: "h-10 w-10",
       },
     },
