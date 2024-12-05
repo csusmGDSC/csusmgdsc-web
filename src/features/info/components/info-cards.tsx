@@ -43,7 +43,7 @@ const InfoCard = ({
     </CardHeader>
     {/* Footer Button */}
     <CardFooter>
-      <Button className="w-full bg-blue hover:bg-blue/70" variant="default">
+      <Button className="w-full">
         <ButtonIcon className="mr-2 h-4 w-4" />
         {buttonText}
       </Button>

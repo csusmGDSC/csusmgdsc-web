@@ -112,10 +112,10 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer bottom with copyright and social media icons */}
-      <div className="w-full h-12 flex flex-col items-center border-t justify-center bg-gray-50">
+      <div className="w-full h-12 flex flex-col items-center justify-center">
         <div className="flex flex-row items-center justify-between custom-max-width">
-          <span className="text-neutral-400 font-semibold text-xs px-2 md:px-0">
-            © 2024 CSUSM
+          <span className="font-semibold text-xs px-2 md:px-0">
+            GDSC @ CSUSM
           </span>
           <SocialMediaIcons />
         </div>

@@ -176,7 +176,7 @@ export default function PastEvents() {
           <Link key={event.id} to={`/events/${event.id}`}>
             <div
               key={event.id}
-              className="group hover:shadow-sm border rounded-sm p-4"
+              className="group hover:shadow-md transition-shadow border rounded-sm p-4"
             >
               <div className="flex justify-between items-start">
                 <div>
