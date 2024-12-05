@@ -1,13 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@radix-ui/react-select";
-import { ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import Title from "@/components/ui/title";
+import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const pastEvents = [
   {
@@ -173,27 +167,17 @@ const pastEvents = [
 ];
 
 export default function PastEvents() {
-  const [selectedYear, setSelectedYear] = useState("2025");
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>Past Events</CardTitle>
-          <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-[100px]">
-              <SelectValue placeholder="Select year" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2025">2025</SelectItem>
-              <SelectItem value="2024">2024</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {pastEvents.map((event) => (
-            <div key={event.id} className="border rounded-lg p-4">
+    <section id="past-events">
+      <Title>Past Events</Title>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {pastEvents.map((event) => (
+          <Link key={event.id} to={`/events/${event.id}`}>
+            <div
+              key={event.id}
+              className="group hover:shadow-sm border rounded-sm p-4"
+            >
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-medium">{event.name}</h3>
@@ -208,25 +192,16 @@ export default function PastEvents() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <div className="mt-2 flex gap-2">
-                  {event.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-gray-100 rounded-full text-sm"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-2 text-sm text-gray-600 flex items-center gap-2 hover:underline hover:cursor-pointer">
-                  View Event <ArrowRight className="w-4 h-4 text-gray-600" />
-                </p>
-              </div>
+              <Button
+                className="mt-4 py-4 px-0 text-blue group-hover:text-darkBlue"
+                variant="nav"
+              >
+                <ExternalLink className="w-4 h-4" /> View Event
+              </Button>
             </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
 interface EventSummaryProps {
@@ -19,9 +20,9 @@ export default function EventSummary({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold line-clamp-2">{title}</h1>
-        <button className="py-2 px-4 bg-blue text-white w-fit rounded-lg flex gap-2 items-center">
-          <Calendar className="mr-3" /> Add to calendar
-        </button>
+        <Button size="lg">
+          <Calendar /> Add to calendar
+        </Button>
       </div>
       <div className="flex flex-wrap gap-2">
         {tags.map((tag, index) => (

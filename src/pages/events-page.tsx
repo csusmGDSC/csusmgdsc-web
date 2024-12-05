@@ -64,11 +64,11 @@ export default function EventsPage() {
         backgroundImageSrc="/images/placeholder/homeBackground.jpg"
       />
       <PageContent>
+        <UpcomingEvents events={events} />
         <EventsFilter
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
         />
-        <UpcomingEvents events={events} />
         <PastEvents />
       </PageContent>
     </main>

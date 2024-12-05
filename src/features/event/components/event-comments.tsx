@@ -63,7 +63,7 @@ const CommentItem: React.FC<{
         className="w-10 h-10 rounded-full"
       />
       <div className="flex-1">
-        <div className="bg-gray-50 p-4 rounded-lg">
+        <div className="bg-gray-50 p-4 rounded-sm">
           <div className="flex justify-between items-start mb-2">
             <div>
               {comment.pinnedBy && (
@@ -154,7 +154,7 @@ const EventComments: React.FC<EventCommentsProps> = ({
           <div className="mt-2 flex justify-end">
             <button
               onClick={handlePostComment}
-              className="flex items-center gap-2 bg-blue text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-2 bg-blue text-white px-4 py-2 rounded-sm hover:bg-blue-700 transition-colors"
             >
               <Send className="w-4 h-4" />
               Post Comment
