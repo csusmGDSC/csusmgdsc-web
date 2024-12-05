@@ -4,6 +4,8 @@ import { CiInstagram } from "react-icons/ci";
 import { FaDiscord, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 
 interface LinkItem {
   label: string;
@@ -114,9 +116,11 @@ const Footer: React.FC = () => {
       {/* Footer bottom with copyright and social media icons */}
       <div className="w-full h-12 flex flex-col items-center justify-center">
         <div className="flex flex-row items-center justify-between custom-max-width">
-          <span className="font-semibold text-xs px-2 md:px-0">
-            GDSC @ CSUSM
-          </span>
+          <Link to="https://github.com/csusmGDSC/csusmgdsc-web" target="_blank">
+            <Button variant="link">
+              Improve this page on GitHub <ExternalLink />
+            </Button>
+          </Link>
           <SocialMediaIcons />
         </div>
       </div>

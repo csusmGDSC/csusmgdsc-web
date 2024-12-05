@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline:
           "border border-input bg-background text-blue hover:border-blue/80 hover:bg-blue/10 hover:text-darkBlue transition",
         ghost: "text-blue hover:bg-blue/10 hover:text-darkBlue transition",
-        link: "text-blue underline-offset-4 hover:underline hover:text-darkBlue transition",
+        link: "text-blue hover:underline hover:text-darkBlue transition",
         nav: "text-foreground/70 hover:text-foreground transition",
       },
       size: {
