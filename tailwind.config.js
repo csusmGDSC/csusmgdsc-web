@@ -1,4 +1,5 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+import defaultTheme from "tailwindcss/defaultTheme";
+import animatetailwind from "tailwindcss-animate";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -102,5 +103,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animatetailwind],
 };

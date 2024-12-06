@@ -12,6 +12,7 @@ import EventPage from "./pages/event-page";
 import InfoPage from "./pages/info-page";
 import TeamPage from "./pages/team-page";
 import ProfilePage from "./pages/profile-page";
+import SignInPage from "./pages/sign-in-page";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
     ],
+  },
+  {
+    path: "/sign-in",
+    element: <SignInPage />,
   },
 ]);
 
