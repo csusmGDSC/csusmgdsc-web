@@ -1,7 +1,5 @@
 "use client";
 
-import { CiInstagram } from "react-icons/ci";
-import { FaDiscord, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -27,53 +25,12 @@ const LinkSection: React.FC<LinkSectionProps> = ({ title, links }) => {
     <div className="flex flex-col text-sm gap-2 pt-10 pl-4 sm:pl-0 sm:ml-auto [&>h1]:font-semibold">
       <h1>{title}</h1>
       {links.map(({ label, path }) => (
-        <Link
-          key={label}
-          to={path}
-          className="hover:underline hover:text-blue transition-colors"
-        >
-          {label}
+        <Link key={label} to={path}>
+          <Button variant="nav" className="p-0 m-0 h-fit">
+            {label}
+          </Button>
         </Link>
       ))}
-    </div>
-  );
-};
-
-/**
- * Renders social media icons with links.
- * @returns {JSX.Element} A group of social media icons with external links.
- */
-const SocialMediaIcons: React.FC = () => {
-  return (
-    <div className="flex flex-row gap-4 text-neutral-700">
-      <a
-        href="https://www.instagram.com/gdsc.csusm/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <CiInstagram
-          className="hover:text-blue hover:cursor-pointer transition"
-          size={20}
-        />
-      </a>
-      <a
-        href="https://x.com/dsccsusm?lang=en"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaXTwitter
-          className="hover:text-blue hover:cursor-pointer transition"
-          size={20}
-        />
-      </a>
-      <FaLinkedin
-        className="hover:text-blue hover:cursor-pointer transition"
-        size={20}
-      />
-      <FaDiscord
-        className="hover:text-blue hover:cursor-pointer transition"
-        size={20}
-      />
     </div>
   );
 };
@@ -101,11 +58,11 @@ const Footer: React.FC = () => {
       {/* Main footer content with logo and links */}
       <div className="w-full sm:h-[12rem] pb-4 shadow-inner sm:pb-0 border-t border-b-border bg-background items-center flex flex-col mt-20">
         <div className="h-full grid grid-cols-1 sm:grid-cols-4 custom-max-width">
-          <div className="flex flex-col items-center h-full pt-10 sm:col-span-2 sm:mr-auto">
+          <div className="flex flex-col items-center h-full pt-10 sm:col-span-2 pl-4 md:pl-0 mr-auto">
             <img
-              src="/images/club/logo-title-light.png"
+              src="/images/club/logo-only.png"
               alt="navbar-logo"
-              className="w-[350px] h-auto"
+              className="w-[80px] h-auto"
             />
           </div>
           <LinkSection title="Quick Links" links={quickLinks} />
@@ -121,7 +78,6 @@ const Footer: React.FC = () => {
               Improve this page on GitHub <ExternalLink />
             </Button>
           </Link>
-          <SocialMediaIcons />
         </div>
       </div>
     </footer>

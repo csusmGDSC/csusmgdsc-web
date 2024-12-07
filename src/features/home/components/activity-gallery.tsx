@@ -26,7 +26,7 @@ export default function ActivityGallery() {
   return (
     <div className="w-full">
       <div className="w-full mx-auto">
-        <div className="text-center mb-12">
+        <div className=" mb-12">
           <h2 className="text-4xl font-bold text-gray-800 mb-3">
             Community in Action
           </h2>

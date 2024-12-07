@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Code, Lightbulb } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const About = () => {
   const featureCards = [
@@ -29,7 +31,7 @@ const About = () => {
 
   return (
     <>
-      <section className="py-24">
+      <section id="about">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="grid grid-cols-2 gap-6">
@@ -60,23 +62,27 @@ const About = () => {
                 </Card>
               ))}
             </div>
-            <div className="space-y-6">
-              <h2 className="text-4xl font-bold text-gray-800 mb-3">
-                Insight About Us
-              </h2>
-              <p className="text-xl font-mono text-blue">
-                Google Development Student Club
-              </p>
-              <div className="space-y-4text-xl text-gray-600">
-                <p>
-                  We are a vibrant community of student developers sponsored by
-                  Google Developers. Our mission is to empower students to
-                  learn, innovate, and make an impact through technology.
-                  Whether you're a beginner or an experienced coder, join us to
-                  explore cutting-edge technologies, collaborate on exciting
-                  projects, and shape the future of tech.
+            <div className="h-full flex flex-col justify-center gap-6">
+              <span>
+                <h2 className="text-4xl font-bold text-gray-800">
+                  Insight About Us
+                </h2>
+                <p className="text-xl font-mono text-blue">
+                  Google Developer Student Club
                 </p>
-              </div>
+              </span>
+
+              <p className="text-gray-600">
+                We are a community of software engineers at CSUSM, dedicated to
+                learning fundementals of software development. Our mission is to
+                empower students with the skills and knowledge necessary to
+                succeed in the tech industry.
+              </p>
+              <Link to="/team" className="w-fit">
+                <Button variant="outline" className="px-10">
+                  Check Our Team
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

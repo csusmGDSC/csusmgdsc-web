@@ -88,14 +88,14 @@ const teams = [
 export default function Branches() {
   return (
     <div className="w-full">
-      <div className="text-center mb-8">
+      <div className=" mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-3">Branches</h1>
         <p className="text-xl text-gray-600">
           Choose your desired team at GDSC
         </p>
       </div>
 
-      <div className="flex flex-row gap-6 w-full justify-center">
+      <div className="flex flex-col md:flex-row gap-6 w-full justify-center">
         {teams.map((team, index) => (
           <Card
             key={index}
