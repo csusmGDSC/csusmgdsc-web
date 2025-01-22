@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,12 +13,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { AnimatedShapes } from "./animated-shapes";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  const [isLogin, setIsLogin] = useState(true);
-
-  const toggleAuth = () => setIsLogin(!isLogin);
-
   return (
     <div className="flex h-screen items-center justify-center">
       <Card className="w-full max-w-4xl overflow-hidden border-0 shadow-transparent rounded-none">
@@ -34,28 +30,15 @@ const SignIn = () => {
           <div className="flex-1 p-8">
             <CardHeader>
               <CardTitle className="text-2xl font-bold">
-                {isLogin ? "Welcome Back!" : "Join the Club!"}
+                Welcome Back!
               </CardTitle>
               <CardDescription className="font-mono text-blue">
-                {isLogin
-                  ? "Sign in to your GDSC account"
-                  : "Create your GDSC account"}
+                Sign in to your GDSC account
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={(e) => e.preventDefault()}>
                 <div className="space-y-4">
-                  {!isLogin && (
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
-                      <Input
-                        id="name"
-                        placeholder="John Doe"
-                        required
-                        className="transition-all duration-300 focus:ring-2 focus:ring-blue"
-                      />
-                    </div>
-                  )}
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -80,7 +63,7 @@ const SignIn = () => {
                     className="w-full bg-blue"
                     // TODO: Add route for regular sign-in or sign-up
                   >
-                    {isLogin ? "Sign In" : "Sign Up"}
+                    Sign In
                   </Button>
                 </div>
               </form>
@@ -96,16 +79,12 @@ const SignIn = () => {
                 <SocialButton icon="github" />
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm">
-                  {isLogin ? "New to GDSC?" : "Already have an account?"}
-                </span>
-                <Button
-                  variant="link"
-                  onClick={toggleAuth}
-                  className="text-blue"
-                >
-                  {isLogin ? "Sign Up" : "Sign In"}
-                </Button>
+                <span className="text-sm">New to GDSC?</span>
+                <Link to={"/sign-up"}>
+                  <Button variant="link" className="text-blue">
+                    Sign Up
+                  </Button>
+                </Link>
               </div>
             </CardFooter>
           </div>
@@ -114,74 +93,6 @@ const SignIn = () => {
     </div>
   );
 };
-
-function AnimatedShapes() {
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      <motion.div
-        className="absolute h-40 w-40 rounded-full bg-blue opacity-50
-        0"
-        animate={{
-          x: ["-20%", "120%"],
-          y: ["-20%", "120%"],
-          scale: [1, 1.2, 1],
-          rotate: [0, 360],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear",
-        }}
-      />
-      <motion.div
-        className="absolute h-32 w-32 rounded-lg bg-red opacity-50"
-        animate={{
-          x: ["100%", "-10%"],
-          y: ["10%", "90%"],
-          scale: [1, 1.1, 1],
-          rotate: [0, 90, 180, 270, 360],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear",
-        }}
-      />
-      <motion.div
-        className="absolute h-48 w-48 rounded-full bg-yellow opacity-50"
-        animate={{
-          x: ["80%", "-20%"],
-          y: ["80%", "-20%"],
-          scale: [1, 1.3, 1],
-          rotate: [0, -360],
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear",
-        }}
-      />
-      <motion.div
-        className="absolute h-36 w-36 rounded-lg bg-green opacity-50"
-        animate={{
-          x: ["-10%", "110%"],
-          y: ["110%", "-10%"],
-          scale: [1, 1.2, 1],
-          rotate: [0, 120, 240, 360],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear",
-        }}
-      />
-    </div>
-  );
-}
 
 function SocialButton({ icon }: { icon: "google" | "github" }) {
   const iconMap = {

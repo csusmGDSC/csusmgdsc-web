@@ -128,7 +128,7 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <Link to="/sign-in" target="_blank" rel="noopener noreferrer">
+          <Link to="/sign-in">
             <Button>Sign In</Button>
           </Link>
         </nav>
