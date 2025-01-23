@@ -16,6 +16,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { BiLeftTopArrowCircle } from "react-icons/bi";
+import { ArrowRight, Check, Eye, EyeOff, X } from "lucide-react";
 
 // Form handling
 import { z } from "zod";
@@ -29,18 +31,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ArrowRight, Check, Eye, EyeOff, X } from "lucide-react";
 
-const formSchema = z.object({
-  email: z.string().email("Invalid email address").min(2).max(25),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(25, "Password must be less than 25 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number"),
-});
+// Utils
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+
+const formSchema = z
+  .object({
+    email: z.string().email("Invalid email address").min(2).max(200),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(25, "Password must be less than 25 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 /**
  * SignUp component renders a sign-up form with email and password fields.
@@ -53,16 +64,32 @@ const formSchema = z.object({
 const SignUp = () => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
+  const checkMatchingPassword = (password: string, confirmPassword: string) => {
+    if (password === "" || confirmPassword === "") return false;
+    return password === confirmPassword;
+  };
+
+  const passwordMatched = checkMatchingPassword(
+    form.watch("password"),
+    form.watch("confirmPassword")
+  );
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const checkStrength = (password: string) => {
@@ -101,15 +128,20 @@ const SignUp = () => {
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    toast.success("Successfully signed up with " + values.email);
   }
 
   return (
     <div className="w-full flex h-screen items-center justify-center">
-      <Card className="w-full max-w-xl overflow-hidden border-0 shadow-transparent rounded-none">
+      <Card className="w-full max-w-[500px] overflow-hidden border-0 shadow-transparent rounded-none">
         {/* Right side: Auth form */}
         <div className="flex-1 p-8">
           <CardHeader>
+            <Link to="/" className="mb-4">
+              <Button variant="link" className="p-0">
+                <BiLeftTopArrowCircle /> Back to Home
+              </Button>
+            </Link>
             <CardTitle className="text-2xl font-bold">Join the Club!</CardTitle>
             <CardDescription className="font-mono text-blue">
               Create your GDSC account
@@ -232,6 +264,63 @@ const SignUp = () => {
                             </li>
                           ))}
                         </ul>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <div
+                          className={cn(
+                            "flex items-center gap-2",
+                            passwordMatched ? "text-[#22c55e]" : ""
+                          )}
+                        >
+                          {passwordMatched
+                            ? "Password matches"
+                            : "Confirm password"}
+                          {passwordMatched ? <Check size={16} /> : null}
+                        </div>
+                      </FormLabel>
+                      <div className="space-y-2">
+                        <div className="relative">
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type={showConfirmPassword ? "text" : "password"}
+                              className="transition-all duration-300 focus:ring-2 focus:ring-blue"
+                              placeholder="Confirm password"
+                              aria-invalid={
+                                form.formState.errors.confirmPassword
+                                  ? true
+                                  : false
+                              }
+                              aria-describedby={`${id}-description`}
+                            />
+                          </FormControl>
+                          <button
+                            type="button"
+                            onClick={toggleShowConfirmPassword}
+                            className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center text-muted-foreground/80 hover:text-foreground"
+                            aria-label={
+                              showConfirmPassword
+                                ? "Hide confirm-password"
+                                : "Show confirm-password"
+                            }
+                          >
+                            {showConfirmPassword ? (
+                              <EyeOff size={16} strokeWidth={2} />
+                            ) : (
+                              <Eye size={16} strokeWidth={2} />
+                            )}
+                          </button>
+                        </div>
                       </div>
                       <FormMessage />
                     </FormItem>
