@@ -19,6 +19,12 @@ export const GDSC_POSITIONS_SELECTABLE = GDSC_POSITIONS.filter(
   (position) => position !== "leader"
 );
 
+export const GDSC_POSITIONS_WITH_GRAD_DATE = [
+  "student",
+  "alumni",
+  "leader",
+] as const;
+
 export const GDSC_POSITIONS_ICONS = {
   student: GoPerson,
   alumni: PiStudent,

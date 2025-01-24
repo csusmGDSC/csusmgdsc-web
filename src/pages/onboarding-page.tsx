@@ -13,6 +13,8 @@ export default function OnboardingPage() {
           <p className="text-muted-foreground md:w-1/2">
             Tell us more about yourself so we can provide you a personalized
             experience tailored to your needs and preferences.
+            <br />
+            <br />* You can change these details later
           </p>
         </div>
 

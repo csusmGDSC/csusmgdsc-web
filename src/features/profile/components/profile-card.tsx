@@ -1,24 +1,52 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import RandomBadge from "@/components/ui/random-badge";
+import { Tag } from "emblor";
 import { Copy, Flag } from "lucide-react";
-import { FaGithub, FaLinkedin, FaStackOverflow } from "react-icons/fa6";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const ProfileCard = ({
-  name,
-  role,
-  bio,
-  imageSrc,
-  hideReport,
-}: {
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+interface ProfileCardProps {
   name: string;
   role: string;
   bio?: string;
   imageSrc: string;
   hideReport?: boolean;
-}) => {
+  userId?: string;
+  discord?: string;
+  github?: string;
+  linkedin?: string;
+  instagram?: string;
+  website?: string;
+  tags?: Tag[];
+  className?: string;
+}
+
+const ProfileCard = ({
+  name,
+  userId,
+  discord,
+  github,
+  linkedin,
+  instagram,
+  website,
+  role,
+  bio,
+  imageSrc,
+  hideReport,
+  tags,
+  className,
+}: ProfileCardProps) => {
   return (
-    <div>
+    <div className={className}>
       <Card className="flex flex-col items-center justify-center">
         <img
           src={imageSrc}
@@ -30,9 +58,24 @@ const ProfileCard = ({
           <p className="text-primary text-3xl font-medium">{name}</p>
           <p className="text-primary text-lg">{role}</p>
 
-          <Button variant="outline" className="rounded-full text-xs !h-8">
-            g.dev/rendybjunior <Copy />
-          </Button>
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="relative rounded-full text-xs !h-8 w-1/2"
+                >
+                  <span className="overflow-hidden text-ellipsis whitespace-nowrap w-full block">
+                    g.profile/{userId}
+                  </span>
+                  <Copy />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="text-primary text-xs font-medium rounded-sm">
+                Copy profile link
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </CardContent>
 
         <div className="w-full h-[1px] bg-border mb-4" />
@@ -45,19 +88,77 @@ const ProfileCard = ({
             </>
           )}
 
-          <p className="font-medium text-primary">Links</p>
-          <div className="flex flex-col gap-3 text-primary/80">
-            <span className="flex items-center gap-2">
-              <FaGithub className="w-6 h-6" /> github.com/randybjunior
-            </span>
-            <span className="flex items-center gap-2">
-              <FaLinkedin className="w-6 h-6" /> linkedin.com/in/randybjunior
-            </span>
-            <span className="flex items-center gap-2">
-              <FaStackOverflow className="w-6 h-6" />{" "}
-              stackoverflow.com/users/3705319
-            </span>
-          </div>
+          {(discord || github || linkedin || instagram || website) && (
+            <>
+              <p className="font-medium text-primary">Links</p>
+              <div className="flex flex-col gap-1 text-primary/80">
+                {github && (
+                  <Link to={github} target="_blank">
+                    <Button
+                      variant="link"
+                      className="p-0 h-fit text-sm font-normal overflow-hidden text-ellipsis whitespace-nowrap w-full justify-start"
+                    >
+                      <FaGithub className="w-6 h-6" /> {github}
+                    </Button>
+                  </Link>
+                )}
+                {linkedin && (
+                  <Link to={linkedin} target="_blank">
+                    <Button
+                      variant="link"
+                      className="p-0 h-fit text-sm font-normal overflow-hidden text-ellipsis whitespace-nowrap w-full justify-start"
+                    >
+                      <FaLinkedin className="w-6 h-6" /> {linkedin}
+                      fsf s
+                    </Button>
+                  </Link>
+                )}
+                {instagram && (
+                  <Link to={instagram} target="_blank">
+                    <Button
+                      variant="link"
+                      className="p-0 h-fit text-sm font-normal overflow-hidden text-ellipsis whitespace-nowrap w-full justify-start"
+                    >
+                      <FaInstagram className="w-6 h-6" /> {instagram}
+                    </Button>
+                  </Link>
+                )}
+                {website && (
+                  <Link to={website} target="_blank">
+                    <Button
+                      variant="link"
+                      className="p-0 h-fit hover:bg-background text-sm font-normal overflow-hidden text-ellipsis whitespace-nowrap w-full justify-start"
+                    >
+                      <FaExternalLinkAlt className="w-6 h-6" /> {website}
+                    </Button>
+                  </Link>
+                )}
+                {discord && (
+                  <Button
+                    variant="ghost"
+                    className="p-0 h-fit text-sm font-normal w-fit overflow-hidden text-ellipsis whitespace-nowrap w-full justify-start"
+                  >
+                    <FaDiscord className="w-6 h-6" /> {discord}
+                  </Button>
+                )}
+              </div>
+            </>
+          )}
+
+          {tags && tags.length > 0 && (
+            <div className="flex flex-col gap-4">
+              <p className="font-medium text-primary">Tags</p>
+              <div className="flex flex-wrap gap-1">
+                {tags.map((tag, index) => (
+                  <RandomBadge
+                    key={index}
+                    text={tag.text}
+                    className="text-sm font-medium rounded-sm px-3"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
