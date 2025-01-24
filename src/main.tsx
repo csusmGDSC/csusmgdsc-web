@@ -17,6 +17,7 @@ import ProfilePage from "./pages/profile-page";
 import SignInPage from "./pages/sign-in-page";
 import { Toaster } from "./components/ui/sonner";
 import SignUpPage from "./pages/sign-up-page";
+import OnboardingPage from "./pages/onboarding-page";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId",
         element: <ProfilePage />,
+      },
+      {
+        path: "/onboarding",
+        element: <OnboardingPage />,
       },
     ],
   },

@@ -1,9 +1,9 @@
 "use client";
 
+// UI Components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaGoogle, FaGithub } from "react-icons/fa";
-
 import {
   Card,
   CardContent,
@@ -15,7 +15,9 @@ import {
 import { AnimatedShapes } from "./animated-shapes";
 import { Link } from "react-router-dom";
 import { BiLeftTopArrowCircle } from "react-icons/bi";
+import { Eye, EyeOff } from "lucide-react";
 
+// Form handling
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -29,7 +31,6 @@ import {
 } from "@/components/ui/form";
 import { useId, useState } from "react";
 import { toast } from "sonner";
-import { Eye, EyeOff } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address").min(2).max(200),

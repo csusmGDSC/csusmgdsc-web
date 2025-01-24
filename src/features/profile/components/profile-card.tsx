@@ -7,14 +7,18 @@ import { Link } from "react-router-dom";
 const ProfileCard = ({
   name,
   role,
+  bio,
   imageSrc,
+  hideReport,
 }: {
   name: string;
   role: string;
+  bio?: string;
   imageSrc: string;
+  hideReport?: boolean;
 }) => {
   return (
-    <>
+    <div>
       <Card className="flex flex-col items-center justify-center">
         <img
           src={imageSrc}
@@ -34,13 +38,12 @@ const ProfileCard = ({
         <div className="w-full h-[1px] bg-border mb-4" />
 
         <CardContent className="flex flex-col w-full gap-4">
-          <p className="font-medium text-primary">Bio</p>
-          <p className="text-primary/80">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            voluptates nemo iure omnis at ducimus distinctio soluta non delectus
-            veniam et error obcaecati dolorum quisquam tenetur laudantium
-            accusantium, molestiae odit.
-          </p>
+          {bio && (
+            <>
+              <p className="font-medium text-primary">Bio</p>
+              <p className="text-primary/80">{bio}</p>
+            </>
+          )}
 
           <p className="font-medium text-primary">Links</p>
           <div className="flex flex-col gap-3 text-primary/80">
@@ -57,12 +60,15 @@ const ProfileCard = ({
           </div>
         </CardContent>
       </Card>
-      <Link to="/">
-        <Button variant="nav" className="mt-1 text-sm mx-0 my-0 p-0">
-          <Flag className="w-4 h-4" /> Report profile
-        </Button>
-      </Link>
-    </>
+
+      {!hideReport && (
+        <Link to="/">
+          <Button variant="nav" className="mt-1 text-sm mx-0 my-0 p-0">
+            <Flag className="w-4 h-4" /> Report profile
+          </Button>
+        </Link>
+      )}
+    </div>
   );
 };
 

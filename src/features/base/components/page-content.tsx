@@ -9,7 +9,12 @@ export default function PageContent({
 }) {
   return (
     <div className="w-full flex-center-col">
-      <div className={cn("custom-max-width flex flex-col gap-10", className)}>
+      <div
+        className={cn(
+          "custom-max-width px-2 md:px-0 flex flex-col gap-10",
+          className
+        )}
+      >
         {children}
       </div>
     </div>
