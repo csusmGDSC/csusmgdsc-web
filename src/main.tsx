@@ -18,6 +18,10 @@ import SignInPage from "./pages/sign-in-page";
 import { Toaster } from "./components/ui/sonner";
 import SignUpPage from "./pages/sign-up-page";
 import OnboardingPage from "./pages/onboarding-page";
+import ResetPage from "./pages/forgot-password-page";
+import ResetPasswordPage from "./pages/reset-password-page";
+import EmailVerificationPage from "./pages/email-verification-page";
+import TwoFactorAuthPage from "./pages/two-factor-auth-page";
 
 const router = createBrowserRouter([
   {
@@ -56,19 +60,40 @@ const router = createBrowserRouter([
         path: "/profile/:userId",
         element: <ProfilePage />,
       },
-      {
-        path: "/onboarding",
-        element: <OnboardingPage />,
-      },
     ],
   },
   {
-    path: "/sign-in",
-    element: <SignInPage />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUpPage />,
+    path: "/auth",
+    children: [
+      {
+        path: "sign-in",
+        element: <SignInPage />,
+      },
+      {
+        path: "sign-up",
+        element: <SignUpPage />,
+      },
+      {
+        path: "forgot-password",
+        element: <ResetPage />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPasswordPage />,
+      },
+      {
+        path: "email-verification",
+        element: <EmailVerificationPage />,
+      },
+      {
+        path: "two-factor-auth",
+        element: <TwoFactorAuthPage />,
+      },
+      {
+        path: "onboarding",
+        element: <OnboardingPage />,
+      },
+    ],
   },
 ]);
 

@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Code, Coffee } from "lucide-react";
+import { Link } from "react-router-dom";
+import { SectionTitle } from "./section-title";
 
 export default function ActivityGallery() {
   const activities = [
@@ -25,15 +27,11 @@ export default function ActivityGallery() {
 
   return (
     <div className="w-full">
-      <div className="w-full mx-auto">
-        <div className=" mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-3">
-            Community in Action
-          </h2>
-          <p className="text-xl text-gray-600">
-            See what we've been up to and join our thriving tech community
-          </p>
-        </div>
+      <div className="w-full space-y-4">
+        <SectionTitle
+          title="Community in Action"
+          subtitle="See how our members get involved"
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {activities.map((activity, index) => (
@@ -72,9 +70,11 @@ export default function ActivityGallery() {
         </div>
 
         <div className="mt-12 text-center">
-          <Button size="lg">
-            <Code /> View All Activities
-          </Button>
+          <Link to="/events">
+            <Button size="lg">
+              <Code /> View All Activities
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

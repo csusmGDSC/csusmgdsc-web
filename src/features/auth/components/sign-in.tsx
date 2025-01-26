@@ -2,8 +2,6 @@
 
 // UI Components
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { FaGoogle, FaGithub } from "react-icons/fa";
 import {
   Card,
   CardContent,
@@ -12,47 +10,42 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AnimatedShapes } from "./animated-shapes";
-import { Link } from "react-router-dom";
-import { BiLeftTopArrowCircle } from "react-icons/bi";
-import { Eye, EyeOff } from "lucide-react";
+import { SimpleFormInput } from "@/components/form-inputs/simple-form-input";
+import { PasswordInput } from "@/components/form-inputs/password-input";
+import { HomeButton } from "./home-button";
+import { OauthButtons } from "./oauth-buttons";
 
 // Form handling
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { useId, useState } from "react";
+import { Form } from "@/components/ui/form";
+
+// Utils
+import { useId } from "react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
+import { SignInSchema } from "../schemas/auth-schemas";
 
-const formSchema = z.object({
-  email: z.string().email("Invalid email address").min(2).max(200),
-  password: z.string(),
-});
-
+/**
+ * SignIn component renders a sign-in form with email and password fields.
+ * It includes password strength validation and visual feedback for password requirements.
+ * Users can toggle password visibility and submit the form to sign in.
+ * The component also provides options to sign in with Google or GitHub.
+ *
+ * @returns JSX element representing the sign-in component.
+ */
 const SignIn = () => {
   const id = useId();
-  const [showPassword, setShowPassword] = useState(false);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof SignInSchema>>({
+    resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof SignInSchema>) {
     toast.success("Successfully signed in with " + values.email);
   }
 
@@ -61,18 +54,20 @@ const SignIn = () => {
       <Card className="w-full max-w-4xl overflow-hidden border-0 shadow-transparent rounded-none">
         <div className="flex flex-col md:flex-row">
           {/* Left side: Animated shapes */}
-          <div className="relative flex-1">
-            <AnimatedShapes />
+          <div className="relative flex-1 hidden md:flex items-center">
+            <img
+              src="/images/stock/stock-2.jpeg"
+              alt="background-image"
+              className="select-none"
+              width={700}
+              height={700}
+            />
           </div>
 
           {/* Right side: Auth form */}
           <div className="flex-1 p-8">
             <CardHeader>
-              <Link to="/" className="mb-4">
-                <Button variant="link" className="p-0">
-                  <BiLeftTopArrowCircle /> Back to Home
-                </Button>
-              </Link>
+              <HomeButton />
               <CardTitle className="text-2xl font-bold">
                 Welcome Back!
               </CardTitle>
@@ -87,64 +82,13 @@ const SignIn = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-4"
                 >
-                  <FormField
-                    control={form.control}
+                  <SimpleFormInput
                     name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            className="transition-all duration-300 focus:ring-2 focus:ring-blue"
-                            placeholder="Enter your email"
-                            aria-invalid={!!form.formState.errors.email}
-                            aria-describedby={`${id}-description`}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    id={id}
+                    placeholder="Enter your email"
+                    label="Email"
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <div className="space-y-2">
-                          <div className="relative">
-                            <FormControl>
-                              <Input
-                                {...field}
-                                type={showPassword ? "text" : "password"}
-                                className="transition-all duration-300 focus:ring-2 focus:ring-blue"
-                                placeholder="Enter your password"
-                                aria-invalid={!!form.formState.errors.password}
-                                aria-describedby={`${id}-description`}
-                              />
-                            </FormControl>
-                            <button
-                              type="button"
-                              onClick={toggleShowPassword}
-                              className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center text-muted-foreground/80 hover:text-foreground"
-                              aria-label={
-                                showPassword ? "Hide password" : "Show password"
-                              }
-                            >
-                              {showPassword ? (
-                                <EyeOff size={16} strokeWidth={2} />
-                              ) : (
-                                <Eye size={16} strokeWidth={2} />
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <PasswordInput id={id} showForgotPassword={true} />
 
                   <Button type="submit" className="w-full bg-blue">
                     Sign In
@@ -152,19 +96,11 @@ const SignIn = () => {
                 </form>
               </Form>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-2">
-                <hr className="flex-1" />
-                <span className="text-sm text-gray-500">or continue with</span>
-                <hr className="flex-1" />
-              </div>
-              <div className="flex justify-center space-x-4">
-                <SocialButton icon="google" />
-                <SocialButton icon="github" />
-              </div>
-              <div className="flex items-center justify-between">
+            <CardFooter className="flex flex-col gap-4">
+              <OauthButtons />
+              <div className="flex items-center justify-center">
                 <span className="text-sm">New to GDSC?</span>
-                <Link to={"/sign-up"}>
+                <Link to={"/auth/sign-up"}>
                   <Button variant="link" className="text-blue">
                     Sign Up
                   </Button>
@@ -178,28 +114,4 @@ const SignIn = () => {
   );
 };
 
-function SocialButton({ icon }: { icon: "google" | "github" }) {
-  const iconMap = {
-    google: <FaGoogle className="h-5 w-5" />,
-    github: <FaGithub className="h-5 w-5" />,
-  };
-
-  return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="h-10 w-10 rounded-full transition-transform hover:scale-110"
-      // TODO: Add route for social button click
-      onClick={() => {
-        if (icon === "google") {
-          // Add Google sign-in route
-        } else if (icon === "github") {
-          // Add GitHub sign-in route
-        }
-      }}
-    >
-      {iconMap[icon]}
-    </Button>
-  );
-}
 export default SignIn;

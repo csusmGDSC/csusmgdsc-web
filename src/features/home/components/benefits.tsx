@@ -1,4 +1,3 @@
-import IconCloud from "@/components/ui/icon-cloud";
 import { IconType } from "react-icons";
 import { BiSolidBarChartAlt2 } from "react-icons/bi";
 import { BsCheck2Circle, BsFillSuitDiamondFill } from "react-icons/bs";
@@ -8,12 +7,12 @@ export default function Benefits() {
   return (
     <div className="flex flex-row items-center gap-20">
       <div className="w-full md:w-1/2">
-        <h1 className="text-4xl font-bold text-foreground/70">
+        <h1 className="text-3xl font-bold text-primary">
           Built on strong foundations
         </h1>
-        <p className="my-8 text-primary/90">
-          GDSC is a community driven to give students the best software
-          engineering experience at CSUSM.
+        <p className="mb-8 font-mono text-blue">
+          A community driven to give students the best software engineering
+          experience
         </p>
         <hr />
         <dl className="grid-cols-2 grid my-8 gap-y-8">
@@ -68,7 +67,8 @@ export default function Benefits() {
         className="relative hidden md:flex w-1/2 max-w-[32rem]
           items-center justify-center overflow-hidden"
       >
-        <IconCloud iconSlugs={slugs} />
+        {/* <IconCloud iconSlugs={slugs} /> */}
+        <img src="/images/stock/stock-5.jpeg" alt="benefits image" />
       </div>
     </div>
   );
@@ -78,7 +78,7 @@ const Row = ({ label, desc }: { label: string; desc: string }) => {
   return (
     <div className="contents">
       <dt className="font-semibold text-primary/90">{label}</dt>
-      <dd className="text-primary/70">{desc}</dd>
+      <dd className="text-muted-foreground">{desc}</dd>
     </div>
   );
 };
@@ -100,32 +100,3 @@ const Thing = ({ title, icon: Icon, color, className }: ThingProps) => {
     </div>
   );
 };
-
-const slugs = [
-  "googlechrome",
-  "google",
-  "typescript",
-  "javascript",
-  "react",
-  "android",
-  "apple",
-  "html5",
-  "css3",
-  "tailwind",
-  "prisma",
-  "github",
-  "git",
-  "docker",
-  "cypress",
-  "figma",
-  "jest",
-  "visualstudiocode",
-  "androidstudio",
-  "nextdotjs",
-  "nodedotjs",
-  "amazonaws",
-  "vercel",
-  "python",
-  "leetcode",
-  "hackerrank",
-];

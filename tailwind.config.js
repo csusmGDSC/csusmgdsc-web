@@ -86,6 +86,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         ripple: "ripple var(--duration,8s) ease calc(var(--i, 0)*.2s) infinite",
         pulse: "pulse var(--duration) ease-out infinite",
+        "loader-bounce": "loader-bounce 1.4s infinite ease-in-out",
       },
       keyframes: {
         ripple: {
@@ -103,5 +104,5 @@ export default {
       },
     },
   },
-  plugins: [animatetailwind],
+  plugins: [animatetailwind, require("tailwindcss-animate")],
 };
