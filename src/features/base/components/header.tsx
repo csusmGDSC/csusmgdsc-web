@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/auth/auth-api";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -7,6 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { PAGE_ROUTES } from "@/config/routes";
+import AvatarButton from "@/features/auth/components/avatar-button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
@@ -47,6 +50,8 @@ const Header = () => {
   const pathname = useLocation().pathname;
 
   const [hasShadow, setHasShadow] = useState(false);
+
+  const user = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,9 +132,13 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <Link to="/auth/sign-in">
-            <Button>Sign In</Button>
-          </Link>
+          {user ? (
+            <AvatarButton />
+          ) : (
+            <Link to={PAGE_ROUTES.AUTH.SIGN_IN}>
+              <Button>Sign In</Button>
+            </Link>
+          )}
         </nav>
       </div>
     </header>

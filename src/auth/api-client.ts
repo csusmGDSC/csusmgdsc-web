@@ -13,7 +13,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       try {
         // Attempt to refresh the access token
-        await axios.post(
+        await axios.patch(
           `${import.meta.env.VITE_BACKEND_URL}${API_ROUTES.AUTH.REFRESH}`,
           {},
           { withCredentials: true }

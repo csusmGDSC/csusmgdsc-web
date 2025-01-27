@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "./api-client";
-import { GDSCUser } from "@/types/gdsc-user";
+import { GDSCUser, User } from "@/types/gdsc-user";
 import { toast } from "sonner";
 
 import * as userStore from "./user.localstore";
@@ -27,12 +27,12 @@ interface Credentials {
  * @returns An object with a single property, `user`, which contains the user or null if not found.
  *
  */
-export function useUser(): { user: GDSCUser | null } {
+export function useUser(): User | null {
   // Fetch the user from the API, or from local storage
-  const { data: user } = useQuery<GDSCUser | null>({
+  const { data: user } = useQuery<User | null>({
     queryKey: [QUERY_KEYS.USER],
-    queryFn: async (): Promise<GDSCUser | null> => {
-      const { data } = await api.get(API_ROUTES.AUTH.GETUSER);
+    queryFn: async (): Promise<User | null> => {
+      const { data } = await userStore.getUserFromLocalStorage();
       return data;
     },
     refetchOnMount: false,
@@ -48,9 +48,7 @@ export function useUser(): { user: GDSCUser | null } {
   }, [user]);
 
   // Return the user, or null if not found
-  return {
-    user: user ?? null,
-  };
+  return user ? user : null;
 }
 
 /**
@@ -118,11 +116,10 @@ export function useSignIn() {
  */
 export function useSignUp() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   return useMutation<GDSCUser, unknown, Credentials>({
     mutationFn: async ({ email, password }) => {
-      const { data } = await api.post<GDSCUser>(API_ROUTES.AUTH.SIGNUP, {
+      const { data } = await api.post<GDSCUser>(API_ROUTES.AUTH.REGISTER, {
         email,
         password,
       });
@@ -130,7 +127,7 @@ export function useSignUp() {
     },
     onSuccess: (data) => {
       queryClient.setQueryData([QUERY_KEYS.USER], data);
-      navigate("/");
+      userStore.saveUserToLocalStorage(data);
     },
     onError: (error) => {
       toast.error("Oops, something went wrong when creating an account.");
@@ -202,7 +199,7 @@ export function useSignOut() {
       console.error("Logout failed:", error);
     } finally {
       queryClient.setQueryData([QUERY_KEYS.USER], null);
-      navigate("/auth/sign-in");
+      userStore.removeUserFromLocalStorage();
     }
   }, [navigate, queryClient]);
 

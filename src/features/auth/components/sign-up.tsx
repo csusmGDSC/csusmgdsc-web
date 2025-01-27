@@ -136,9 +136,10 @@ const SignUp = () => {
             />
           </div>
           <div className="w-full text-center my-10">
-            <p>Thank you</p>
-            <p>
-              A confirmation email is on its way to {form.getValues("email")}
+            <p className="text-primary text-lg">Thank you</p>
+            <p className="text-sm text-muted-foreground">
+              A confirmation email is on its way to{" "}
+              <span className="font-medium">{form.getValues("email")}</span>
             </p>
           </div>
 

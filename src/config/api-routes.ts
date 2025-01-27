@@ -16,16 +16,18 @@
  */
 export const API_ROUTES = {
   AUTH: {
-    LOGIN: "/login",
-    SIGNUP: "/signup",
-    LOGOUT: "/logout",
-    RESETPASSWORD: "/reset-password",
-    VERIFYEMAIL: "/verify-email",
-    GETUSER: "/getuser",
-    REFRESH: "/refresh",
-    UPDATE_USER: "/update",
+    LOGIN: "/auth/login",
+    REGISTER: "/auth/register",
+    LOGOUT: "/auth/logout",
+    REFRESH: "/auth/refresh",
+    GOOGLE_LOGIN: "/auth/google/login",
+    GITHUB_LOGIN: "/auth/github/login",
+    DELETE_USER: "/auth/delete",
+    UPDATE_USER: "auth//update",
   },
-  EVENTS: {},
+  EVENTS: {
+    GET_EVENTS: "/events",
+  },
   PROJECTS: {},
   TEAMS: {},
   USERS: {},

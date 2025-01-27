@@ -95,5 +95,5 @@ export interface User {
 
 export interface GDSCUser {
   accessToken: string;
-  user: GDSCUser;
+  user: User;
 }
