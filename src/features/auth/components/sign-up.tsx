@@ -26,9 +26,9 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 
 // Utils
-import { toast } from "sonner";
 import { SignUpSchema } from "../schemas/auth-schemas";
 import FormCard from "./form-card";
+import { useSignUp } from "@/auth/auth-api";
 
 /**
  * SignUp component renders a sign-up form with email and password fields.
@@ -39,6 +39,7 @@ import FormCard from "./form-card";
  * @returns JSX element representing the sign-up page.
  */
 const SignUp = () => {
+  const signUp = useSignUp();
   const id = useId();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
@@ -51,7 +52,12 @@ const SignUp = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    toast.success("Successfully signed up with " + values.email);
+    if (values.password !== values.confirmPassword) {
+      return;
+    }
+    signUp.mutate(values, {
+      onSuccess: () => setShowSuccess(true),
+    });
   }
 
   return (
@@ -98,7 +104,7 @@ const SignUp = () => {
                     <Button
                       type="submit"
                       className="w-full"
-                      onClick={() => setShowSuccess(true)}
+                      disabled={signUp.isPending}
                     >
                       Register
                     </Button>

@@ -23,9 +23,9 @@ import { Form } from "@/components/ui/form";
 
 // Utils
 import { useId } from "react";
-import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { SignInSchema } from "../schemas/auth-schemas";
+import { useSignIn } from "@/auth/auth-api";
 
 /**
  * SignIn component renders a sign-in form with email and password fields.
@@ -36,6 +36,7 @@ import { SignInSchema } from "../schemas/auth-schemas";
  * @returns JSX element representing the sign-in component.
  */
 const SignIn = () => {
+  const signIn = useSignIn();
   const id = useId();
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -46,7 +47,7 @@ const SignIn = () => {
   });
 
   function onSubmit(values: z.infer<typeof SignInSchema>) {
-    toast.success("Successfully signed in with " + values.email);
+    signIn.mutate(values);
   }
 
   return (
@@ -90,7 +91,11 @@ const SignIn = () => {
                   />
                   <PasswordInput id={id} showForgotPassword={true} />
 
-                  <Button type="submit" className="w-full bg-blue">
+                  <Button
+                    type="submit"
+                    className="w-full bg-blue"
+                    disabled={signIn.isPending}
+                  >
                     Sign In
                   </Button>
                 </form>
