@@ -28,7 +28,7 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
       <Accordion
         type="single"
         collapsible
-        className="w-full px-4 rounded-md shadow-sm border border-border dark:bg-primary-foreground"
+        className="w-full px-4 rounded-sm shadow-sm border border-border dark:bg-primary-foreground"
       >
         {accordionTuples.map((tuple, index) => (
           <AccordionItem key={index} value={`item-${index}}`}>

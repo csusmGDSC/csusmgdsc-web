@@ -8,7 +8,7 @@ export default function MembersFilter() {
   const [currentYear, setCurrentYear] = useState(2025);
 
   return (
-    <div className="bg-white rounded-sm border border-border p-6">
+    <div className="rounded-sm border border-border p-6">
       <div className="space-y-6">
         {/* Search */}
         <div className="relative">
@@ -23,7 +23,7 @@ export default function MembersFilter() {
         {/* Filter Controls */}
         <div className="flex flex-col gap-4">
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <div className="flex items-center gap-2 text-sm font-medium text-primary">
               <Filter className="w-4 h-4" />
               Filter by branch
             </div>
@@ -36,7 +36,7 @@ export default function MembersFilter() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+          <div className="flex items-center gap-2 text-sm font-medium text-primary">
             <Calendar className="w-4 h-4" />
             Filter by year
           </div>

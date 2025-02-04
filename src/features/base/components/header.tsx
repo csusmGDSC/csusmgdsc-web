@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@/auth/auth-api";
+import { useUser } from "@/api/auth-api";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -72,7 +72,8 @@ const Header = () => {
     <header
       className={cn(
         "w-full h-[4.5rem] items-center flex flex-col fixed top-0 z-[40] bg-background border-b border-b-border",
-        hasShadow && "shadow-md transition-shadow duration-700 ease-in-out"
+        hasShadow &&
+          "shadow-md transition-shadow dark:backdrop-blur-xl dark:bg-background/80 duration-700 ease-in-out"
       )}
     >
       <div className="h-full flex flex-row justify-center lg:justify-between items-center custom-max-width">

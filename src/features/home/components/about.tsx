@@ -13,7 +13,7 @@ const About = () => {
               subtitle="Google Developer Student Club"
             />
 
-            <p className="text-gray-600">
+            <p className="text-primary/80">
               We are a community of software engineers at{" "}
               <Link
                 to="https://www.csusm.edu"
@@ -34,7 +34,7 @@ const About = () => {
           </div>
 
           <img
-            src="/images/stock/stock-7.jpeg"
+            src="/images/stock/stock-2.jpeg"
             alt="about-image"
             className="hidden md:block"
           />

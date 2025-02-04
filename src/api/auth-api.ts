@@ -1,6 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "./api-client";
-import { GDSCUser, User } from "@/types/gdsc-user";
+import {
+  GDSC_BRANCH_IOTA,
+  GDSC_POSITION_IOTA,
+  UserLoginAPIResponse,
+  User,
+  UserSignUpAPIResponse,
+} from "@/types/gdsc-user";
 import { toast } from "sonner";
 
 import * as userStore from "./user.localstore";
@@ -8,6 +14,8 @@ import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_ROUTES } from "@/config/api-routes";
 import { QUERY_KEYS } from "@/config/query-keys";
+import { z } from "zod";
+import { OnboardingSchema } from "@/features/onboarding/schemas/onboarding-schema";
 
 interface Credentials {
   email: string;
@@ -28,27 +36,52 @@ interface Credentials {
  *
  */
 export function useUser(): User | null {
-  // Fetch the user from the API, or from local storage
+  // Fetch user from API
+  const fetchUser = async (): Promise<User | null> => {
+    const { data } = await api.get(API_ROUTES.AUTH.GET_CURRENT_USER);
+    data.graduation_date = new Date(data.graduation_date);
+    console.log("GOT USER DATA FROM API /me:", data);
+    return data;
+  };
+
+  // Fetch access token from local storage
+  const fetchAccessToken = async (): Promise<string | null> => {
+    const { data } = await userStore.getAccessTokenFromLocalStorage();
+    return data;
+  };
+
+  // Query user data
   const { data: user } = useQuery<User | null>({
     queryKey: [QUERY_KEYS.USER],
-    queryFn: async (): Promise<User | null> => {
-      const { data } = await userStore.getUserFromLocalStorage();
-      return data;
-    },
+    queryFn: fetchUser,
+    initialData: userStore.getUserFromLocalStorage,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
-    initialData: userStore.getUserFromLocalStorage,
   });
 
-  // When the user changes, save or remove them from local storage
-  useEffect(() => {
-    if (!user) userStore.removeUserFromLocalStorage();
-    else userStore.saveUserToLocalStorage(user);
-  }, [user]);
+  // Query access token
+  const { data: accessToken } = useQuery<string | null>({
+    queryKey: [QUERY_KEYS.ACCESS_TOKEN],
+    queryFn: fetchAccessToken,
+    initialData: userStore.getAccessTokenFromLocalStorage,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
 
-  // Return the user, or null if not found
-  return user ? user : null;
+  // Sync local storage with user state
+  useEffect(() => {
+    if (user) {
+      userStore.saveUserToLocalStorage(user);
+      userStore.saveAccessTokenToLocalStorage(accessToken || "");
+    } else {
+      userStore.removeUserFromLocalStorage();
+      userStore.removeAccessTokenFromLocalStorage();
+    }
+  }, [user, accessToken]);
+
+  return user || null;
 }
 
 /**
@@ -75,16 +108,20 @@ export function useSignIn() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation<GDSCUser, unknown, Credentials>({
+  return useMutation<UserLoginAPIResponse, unknown, Credentials>({
     mutationFn: async ({ email, password }) => {
-      const { data } = await api.post<GDSCUser>(API_ROUTES.AUTH.LOGIN, {
-        email,
-        password,
-      });
+      const { data } = await api.post<UserLoginAPIResponse>(
+        API_ROUTES.AUTH.LOGIN,
+        {
+          email,
+          password,
+        }
+      );
       return data;
     },
     onSuccess: (data) => {
-      queryClient.setQueryData([QUERY_KEYS.USER], data);
+      queryClient.setQueryData([QUERY_KEYS.USER], data.user);
+      queryClient.setQueryData([QUERY_KEYS.ACCESS_TOKEN], data.accessToken);
       navigate("/");
     },
     onError: (error) => {
@@ -115,19 +152,22 @@ export function useSignIn() {
  * @returns A mutation function that can be called to sign up the user.
  */
 export function useSignUp() {
-  const queryClient = useQueryClient();
-
-  return useMutation<GDSCUser, unknown, Credentials>({
+  return useMutation<UserSignUpAPIResponse, unknown, Credentials>({
     mutationFn: async ({ email, password }) => {
-      const { data } = await api.post<GDSCUser>(API_ROUTES.AUTH.REGISTER, {
-        email,
-        password,
-      });
+      const { data } = await api.post<UserSignUpAPIResponse>(
+        API_ROUTES.AUTH.REGISTER,
+        {
+          email,
+          password,
+        }
+      );
       return data;
     },
-    onSuccess: (data) => {
-      queryClient.setQueryData([QUERY_KEYS.USER], data);
-      userStore.saveUserToLocalStorage(data);
+    onSuccess: () => {
+      // TO-DO: SEND CONFIRMATION EMAIL
+      toast.success(
+        "Successfully signed up! Please check your email to confirm your account."
+      );
     },
     onError: (error) => {
       toast.error("Oops, something went wrong when creating an account.");
@@ -155,19 +195,58 @@ export function useSignUp() {
  * @param user The user object to update.
  * @returns A mutation function that can be called to update the user.
  */
-export function useUpdateUser() {
+export function useOnboarding() {
   const queryClient = useQueryClient();
+  const user = useUser();
 
-  return useMutation<GDSCUser, unknown, GDSCUser>({
-    mutationFn: async (user) => {
-      const { data } = await api.put<GDSCUser>(
-        API_ROUTES.AUTH.UPDATE_USER,
-        user
+  if (user?.isOnboarded) {
+    throw new Error("User is already onboarded.");
+  }
+
+  if (!user) {
+    throw new Error("User not found, can't update user.");
+  }
+
+  const userId = user.id;
+
+  return useMutation<any, unknown, z.infer<typeof OnboardingSchema>>({
+    mutationFn: async (values: z.infer<typeof OnboardingSchema>) => {
+      const payload = Object.fromEntries(
+        Object.entries({
+          position: values.position
+            ? GDSC_POSITION_IOTA[values.position]
+            : null,
+          branch: values.branch ? GDSC_BRANCH_IOTA[values.branch] : null,
+          graduation_date: values.graduation_date ?? null,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          full_name: `${values.first_name} ${values.last_name}`,
+          github: values.github,
+          linkedin: values.linkedin,
+          instagram: values.instagram,
+          discord: values.discord,
+          website: values.website,
+          bio: values.bio,
+          tags: values.tags,
+          isOnboarded: true,
+          image: "https://avatar.iran.liara.run/public",
+        }).filter(
+          ([_, value]) => value !== undefined && value !== "" && value !== null
+        )
       );
-      return data;
+
+      console.log("SENDING PAYLOAD: ", payload);
+
+      await api.put<any>(API_ROUTES.AUTH.UPDATE_USER + "/" + userId, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
     onSuccess: (data) => {
+      console.log("SUCCESS IN UPDATING USER: ", data);
       queryClient.setQueryData([QUERY_KEYS.USER], data);
+      toast.success("Successfully updated your profile!");
     },
     onError: (error) => {
       toast.error("Oops, something went wrong when updating your profile.");
@@ -199,7 +278,9 @@ export function useSignOut() {
       console.error("Logout failed:", error);
     } finally {
       queryClient.setQueryData([QUERY_KEYS.USER], null);
+      queryClient.setQueryData([QUERY_KEYS.ACCESS_TOKEN], null);
       userStore.removeUserFromLocalStorage();
+      userStore.removeAccessTokenFromLocalStorage();
     }
   }, [navigate, queryClient]);
 

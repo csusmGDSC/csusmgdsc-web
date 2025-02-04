@@ -8,7 +8,7 @@ export const SectionTitle = ({
   return (
     <span>
       <h2 className="text-3xl font-bold text-primary">{title}</h2>
-      <p className="[word-spacing:-5px] font-mono text-blue">{subtitle}</p>
+      <p className="font-mono text-blue">{subtitle}</p>
     </span>
   );
 };

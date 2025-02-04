@@ -44,7 +44,7 @@ export const GradFormInput = () => {
   return (
     <FormField
       control={form.control}
-      name="gradDate"
+      name="graduation_date"
       render={({ field }) => (
         <FormItem className="flex-1">
           <FormLabel>

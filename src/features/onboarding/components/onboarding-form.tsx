@@ -1,5 +1,5 @@
 // React imports
-import React, { useEffect, useId, useState } from "react";
+import React, { useId, useState } from "react";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -22,9 +22,14 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 
 // Utils and Hooks
-import { toast } from "sonner";
-import { GDSC_POSITIONS_WITH_GRAD_DATE } from "@/types/gdsc-user";
+import {
+  GDSC_POSITIONS_WITH_GRAD_DATE,
+  IOTA_TO_GDSC_BRANCH,
+  IOTA_TO_GDSC_POSITION,
+} from "@/types/gdsc-user";
 import { OnboardingSchema } from "../schemas/onboarding-schema";
+import { useOnboarding, useUser } from "@/api/auth-api";
+import { useImagePreview } from "@/hooks/use-image-preview";
 
 /**
  * OnboardingForm component renders a multi-step form for user onboarding.
@@ -38,64 +43,41 @@ import { OnboardingSchema } from "../schemas/onboarding-schema";
  * @returns JSX element representing the onboarding form.
  */
 export const OnboardingForm = () => {
-  //   const [previewMode, setPreviewMode] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const { mutate, isPending } = useOnboarding();
+  const user = useUser();
   const id = useId();
 
   const form = useForm<z.infer<typeof OnboardingSchema>>({
     resolver: zodResolver(OnboardingSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "jaedonspurlock@gmail.com",
+      first_name: user?.first_name || "",
+      last_name: user?.last_name || "",
+      email: user?.email || "No Email",
       image: "https://avatar.iran.liara.run/public",
-      gradDate: undefined,
-      branch: null,
-      position: null,
-      bio: "",
-      tags: [],
-      website: "",
-      github: "",
-      linkedin: "",
-      instagram: "",
-      twitter: "",
-      discord: "",
+      graduation_date: user?.graduation_date || undefined,
+      branch: user?.branch
+        ? IOTA_TO_GDSC_BRANCH[user.branch as unknown as 1 | 2 | 3]
+        : null,
+      position: user?.position
+        ? IOTA_TO_GDSC_POSITION[user.position as unknown as 1 | 2]
+        : null,
+      bio: user?.bio || "",
+      tags: user?.tags || [],
+      website: user?.website || "",
+      github: user?.github || "",
+      linkedin: user?.linkedin || "",
+      instagram: user?.instagram || "",
+      twitter: user?.twitter || "",
+      discord: user?.discord || "",
     },
   });
 
-  const image = form.watch("image");
-  useEffect(() => {
-    if (image instanceof File) {
-      const imageUrl = URL.createObjectURL(image);
-      setImagePreview(imageUrl);
-      return () => URL.revokeObjectURL(imageUrl);
-    }
-    if (typeof image === "string") {
-      setImagePreview(image);
-    }
-  }, [image]);
+  const { imagePreview, setImagePreview } = useImagePreview(
+    form.watch("image")
+  );
 
   const onSubmit = async (values: z.infer<typeof OnboardingSchema>) => {
-    console.log(values);
-
-    let imageUrl: string | undefined;
-    if (values.image instanceof File) {
-      // build FormData for uploading image
-      const formData = new FormData();
-      formData.append("file", values.image);
-
-      // upload image
-      imageUrl = await new Promise<string>((resolve) => {
-        setTimeout(() => {
-          resolve("https://via.placeholder.com/150");
-        }, 1000);
-      });
-    } else {
-      imageUrl = values.image; // Use the existing image URL for updating mode
-    }
-
-    toast.success("Submitted successfully! Check console for imageUrl");
-    console.log(imageUrl);
+    mutate(values);
   };
 
   return (
@@ -130,7 +112,7 @@ export const OnboardingForm = () => {
             <div className="flex flex-col sm:flex-row gap-6">
               {/* FIRST NAME INPUT */}
               <SimpleFormInput
-                name="firstName"
+                name="first_name"
                 placeholder="First Name"
                 id={id}
                 label="First Name"
@@ -140,7 +122,7 @@ export const OnboardingForm = () => {
 
               {/* LAST NAME INPUT */}
               <SimpleFormInput
-                name="lastName"
+                name="last_name"
                 placeholder="Last Name"
                 id={id}
                 label="Last Name"
@@ -171,7 +153,7 @@ export const OnboardingForm = () => {
             <TagsFormInput />
             <SocialInputField />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
               Submit
             </Button>
           </form>
@@ -180,7 +162,7 @@ export const OnboardingForm = () => {
 
       <div className="relative">
         <ProfileCard
-          name={form.watch("firstName") + " " + form.watch("lastName")}
+          name={form.watch("first_name") + " " + form.watch("last_name")}
           bio={form.watch("bio")}
           role={form.watch("branch") || ""}
           imageSrc={imagePreview || ""}
@@ -191,7 +173,7 @@ export const OnboardingForm = () => {
           website={form.watch("website")}
           tags={form.watch("tags") || []}
           hideReport
-          userId="67683838-cc0a-4cd4-aa68-02756335285e"
+          userId={user?.id || ""}
           className="sticky top-12 h-fit"
         />
       </div>

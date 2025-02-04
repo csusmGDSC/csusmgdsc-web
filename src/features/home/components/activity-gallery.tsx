@@ -59,7 +59,7 @@ export default function ActivityGallery() {
                       {activity.date}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  <h3 className="text-xl font-semibold text-primary mb-2">
                     {activity.title}
                   </h3>
                   <p className="text-gray-600">{activity.description}</p>

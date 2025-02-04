@@ -24,7 +24,7 @@ const PageHeader = ({
           "./src/assets/images/placeholder/header-background.png"
         }
         alt="header-background"
-        className="absolute object-cover w-full h-full opacity-60 z-0"
+        className="absolute object-cover w-full h-full opacity-60 dark:opacity-10 z-0"
       />
 
       <div className="text-center space-y-2 z-10">

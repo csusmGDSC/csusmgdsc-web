@@ -23,12 +23,15 @@ export const API_ROUTES = {
     GOOGLE_LOGIN: "/auth/google/login",
     GITHUB_LOGIN: "/auth/github/login",
     DELETE_USER: "/auth/delete",
-    UPDATE_USER: "auth//update",
+    UPDATE_USER: "/auth/update",
+    GET_CURRENT_USER: "/auth/me",
   },
   EVENTS: {
     GET_EVENTS: "/events",
   },
   PROJECTS: {},
   TEAMS: {},
-  USERS: {},
+  USERS: {
+    GET_USERS: "/users",
+  },
 };

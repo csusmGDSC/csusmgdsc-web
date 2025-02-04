@@ -31,12 +31,12 @@ const EventCard = ({ event }: { event: any }) => (
         <img
           src="https://placehold.co/600x400"
           alt="Event Image"
-          className="w-full h-[14rem] object-cover transition-transform group-hover:scale-105"
+          className="w-full dark:opacity-40 h-[14rem] object-cover transition-transform group-hover:scale-105"
         />
       </div>
 
       <CardHeader>
-        <CardTitle className="text-xl font-bold text-gray-800 flex justify-between">
+        <CardTitle className="text-xl font-bold text-primary flex justify-between">
           {event.name}
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${

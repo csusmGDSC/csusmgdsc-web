@@ -28,7 +28,7 @@ import { Form } from "@/components/ui/form";
 // Utils
 import { SignUpSchema } from "../schemas/auth-schemas";
 import FormCard from "./form-card";
-import { useSignUp } from "@/auth/auth-api";
+import { useSignUp } from "@/api/auth-api";
 
 /**
  * SignUp component renders a sign-up form with email and password fields.

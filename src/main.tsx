@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { PageLayout } from "./features/base";
+import { PageLayout, PageAdminLayout } from "./features/base";
 import HomePage from "./pages/home-page";
 import EventsPage from "./pages/events-page";
 import ProjectsPage from "./pages/projects-page";
@@ -22,6 +22,13 @@ import ResetPage from "./pages/forgot-password-page";
 import ResetPasswordPage from "./pages/reset-password-page";
 import EmailVerificationPage from "./pages/email-verification-page";
 import TwoFactorAuthPage from "./pages/two-factor-auth-page";
+import DashboardPage from "./pages/dashboard-page";
+import NotFoundPage from "./pages/not-found-page";
+import AdminEventsPage from "./pages/admin-events-page";
+import AdminUsersPage from "./pages/admin-users-page";
+import SettingsPage from "./pages/settings-page";
+import { ThemeProvider } from "./lib/providers";
+import { AdminEventCreationPage } from "./pages/admin-event-creation-page";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +67,14 @@ const router = createBrowserRouter([
         path: "/profile/:userId",
         element: <ProfilePage />,
       },
+      {
+        path: "settings",
+        element: <SettingsPage />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
     ],
   },
   {
@@ -95,6 +110,28 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/admin",
+    element: <PageAdminLayout />,
+    children: [
+      {
+        path: "dashboard",
+        element: <DashboardPage />,
+      },
+      {
+        path: "events",
+        element: <AdminEventsPage />,
+      },
+      {
+        path: "users",
+        element: <AdminUsersPage />,
+      },
+      {
+        path: "create-event",
+        element: <AdminEventCreationPage />,
+      },
+    ],
+  },
 ]);
 
 export const queryClient = new QueryClient();
@@ -102,8 +139,10 @@ export const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>
 );

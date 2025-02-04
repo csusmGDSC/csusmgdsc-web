@@ -29,4 +29,9 @@ export const PAGE_ROUTES = {
     TEAM: "/team",
     PROFILE: "/profile/:userId",
   },
+  ADMIN: {
+    DASHBOARD: "/admin/dashboard",
+    EVENTS: "/admin/events",
+    USERS: "/admin/users",
+  },
 };

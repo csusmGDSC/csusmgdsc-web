@@ -20,7 +20,7 @@ export function AnimatedShapes() {
         }}
       />
       <motion.div
-        className="absolute h-32 w-32 rounded-lg bg-red opacity-50"
+        className="absolute h-32 w-32 rounded-sm bg-red opacity-50"
         animate={{
           x: ["100%", "-10%"],
           y: ["10%", "90%"],
@@ -50,7 +50,7 @@ export function AnimatedShapes() {
         }}
       />
       <motion.div
-        className="absolute h-36 w-36 rounded-lg bg-green opacity-50"
+        className="absolute h-36 w-36 rounded-sm bg-green opacity-50"
         animate={{
           x: ["-10%", "110%"],
           y: ["110%", "-10%"],

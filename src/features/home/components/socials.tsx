@@ -10,8 +10,8 @@ export default function Socials() {
       <SectionTitle title="Socials" subtitle="Follow us to stay connected" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {socialsList.map((item) => (
-          <Card>
+        {socialsList.map((item, index) => (
+          <Card key={index}>
             <CardContent className="mt-4 space-y-2">
               <span className="text-blue text-4xl">
                 {socialIcons[item.social as keyof typeof socialIcons]}

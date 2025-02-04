@@ -51,7 +51,10 @@ export const GDSC_BRANCH_DECSRIPTIONS = {
     "Help outreach the community through networking and social media presence",
 };
 
-export const GDSC_POSITION_IOTA = {
+export const GDSC_POSITION_IOTA: Record<
+  (typeof GDSC_POSITIONS)[number],
+  number
+> = {
   student: 1,
   alumni: 2,
   mentor: 3,
@@ -60,17 +63,39 @@ export const GDSC_POSITION_IOTA = {
   sponsor: 6,
 };
 
-export const GDSC_BRANCH_IOTA = {
-  project: 1,
-  interview: 2,
-  marketing: 3,
+export const IOTA_TO_GDSC_POSITION: Record<
+  number,
+  (typeof GDSC_POSITIONS)[number]
+> = {
+  1: "student",
+  2: "alumni",
+  3: "mentor",
+  4: "leader",
+  5: "advisor",
+  6: "sponsor",
+};
+
+export const GDSC_BRANCH_IOTA: Record<(typeof GDSC_BRANCHES)[number], number> =
+  {
+    project: 1,
+    interview: 2,
+    marketing: 3,
+  };
+
+export const IOTA_TO_GDSC_BRANCH: Record<
+  number,
+  (typeof GDSC_BRANCHES)[number]
+> = {
+  1: "project",
+  2: "interview",
+  3: "marketing",
 };
 
 export interface User {
   id: string;
-  fullName?: string;
-  firstName?: string;
-  lastName?: string;
+  full_name?: string;
+  first_name?: string;
+  last_name?: string;
   email: string;
   image?: string;
   password?: string;
@@ -85,7 +110,7 @@ export interface User {
   bio?: string;
   tags: string[];
   website?: string;
-  graduationDate?: Date;
+  graduation_date?: Date;
   createdAt?: Date;
   updatedAt?: Date;
   provider?: string;
@@ -93,7 +118,9 @@ export interface User {
   isOnboarded: boolean;
 }
 
-export interface GDSCUser {
+export interface UserLoginAPIResponse {
   accessToken: string;
   user: User;
 }
+
+export type UserSignUpAPIResponse = User;

@@ -58,17 +58,17 @@ const ProjectCard = ({
 
       <CardContent className="space-y-4 mt-8 flex-grow flex flex-col">
         <div className="flex flex-col justify-between">
-          <CardTitle className="text-xl font-bold text-gray-800">
+          <CardTitle className="text-xl font-bold text-primary">
             {title}
           </CardTitle>
-          <div className="flex items-center gap-2 text-gray-600 text-sm">
+          <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <Calendar className="w-4 h-4" />
             <span>{date}</span>
           </div>
         </div>
 
         {/* Description */}
-        <CardDescription className="text-gray-600 flex-grow line-clamp-3">
+        <CardDescription className="text-primary/70 flex-grow line-clamp-3">
           {description}
         </CardDescription>
 
@@ -78,7 +78,7 @@ const ProjectCard = ({
             <Badge
               key={tagIndex}
               variant="secondary"
-              className="bg-gray-100 text-gray-700 hover:bg-gray-200"
+              className="dark:bg-primary-foreground bg-gray-100 text-primary/70 hover:bg-gray-200"
             >
               {tag}
             </Badge>

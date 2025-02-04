@@ -91,10 +91,10 @@ export default function Branches() {
             className="flex-1 group hover:shadow-lg transition-shadow duration-300"
           >
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-gray-800">
+              <CardTitle className="text-2xl font-bold text-primary">
                 {team.title}
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-primary/70">
                 {team.description}
               </CardDescription>
             </CardHeader>
@@ -104,7 +104,7 @@ export default function Branches() {
                   {team.features.map((feature, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center space-x-3 text-gray-700"
+                      className="flex items-center space-x-3 text-primary/80"
                     >
                       {feature.icon}
                       <span>{feature.text}</span>
@@ -114,7 +114,7 @@ export default function Branches() {
 
                 {team.technologies.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                    <h4 className="text-sm font-semibold text-primary/80 mb-3">
                       Skills used
                     </h4>
                     <div className="flex flex-wrap gap-3">

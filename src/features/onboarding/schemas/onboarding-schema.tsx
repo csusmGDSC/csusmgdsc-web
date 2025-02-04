@@ -3,23 +3,18 @@ import { z } from "zod";
 
 export const OnboardingSchema = z
   .object({
-    firstName: z.string().min(2).max(100),
-    lastName: z.string().min(2).max(100),
+    first_name: z.string().min(2).max(100),
+    last_name: z.string().min(2).max(100),
     email: z.string().email("Invalid email address").min(2).max(200),
     image: z.union([
       z.instanceof(File, { message: "Image is required" }),
       z.string().optional(), // Allow the existing image URL for editing mode
     ]),
-    gradDate: z.date().optional(),
+    graduation_date: z.date().optional(),
     branch: z.enum(GDSC_BRANCHES).nullable(),
     position: z.enum(GDSC_POSITIONS).nullable(),
     bio: z.string().min(0).max(250).optional(),
-    tags: z.array(
-      z.object({
-        id: z.string(),
-        text: z.string(),
-      })
-    ),
+    tags: z.array(z.string()),
     website: z.string().url().optional().or(z.literal("")), // OPTIONAL URL: https://github.com/colinhacks/zod/discussions/1254
     github: z.string().url().optional().or(z.literal("")),
     linkedin: z.string().url().optional().or(z.literal("")),
@@ -39,7 +34,7 @@ export const OnboardingSchema = z
     (data) => {
       if (
         (data.position === "student" || data.position === "alumni") &&
-        !data.gradDate
+        !data.graduation_date
       ) {
         return false;
       }

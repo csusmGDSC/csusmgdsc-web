@@ -53,7 +53,16 @@ export const TagsFormInput = () => {
               className="sm:min-w-[450px]"
               setTags={(newTags) => {
                 setTags(newTags);
-                form.setValue("tags", newTags as [Tag, ...Tag[]]);
+                form.setValue(
+                  "tags",
+                  form.setValue(
+                    "tags",
+                    (newTags as Tag[]).map((tag) => tag.text) as [
+                      string,
+                      ...string[]
+                    ]
+                  )
+                );
               }}
             />
           </FormControl>

@@ -13,7 +13,7 @@ export default function EventsFilter({
   setSelectedTags,
 }: EventsFilterProps) {
   return (
-    <div className="bg-white rounded-sm border border-border p-6">
+    <div className="rounded-sm border border-border p-6">
       <div className="space-y-6">
         {/* Search */}
         <div className="relative">
@@ -28,7 +28,7 @@ export default function EventsFilter({
         {/* Filter Controls */}
         <div className="flex flex-col gap-4">
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <div className="flex items-center gap-2 text-sm font-medium text-primary">
               <Filter className="w-4 h-4" />
               Event Type
             </div>

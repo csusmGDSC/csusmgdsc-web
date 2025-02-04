@@ -25,7 +25,7 @@ import { Form } from "@/components/ui/form";
 import { useId } from "react";
 import { Link } from "react-router-dom";
 import { SignInSchema } from "../schemas/auth-schemas";
-import { useSignIn } from "@/auth/auth-api";
+import { useSignIn } from "@/api/auth-api";
 
 /**
  * SignIn component renders a sign-in form with email and password fields.
@@ -57,7 +57,7 @@ const SignIn = () => {
           {/* Left side: Animated shapes */}
           <div className="relative flex-1 hidden md:flex items-center">
             <img
-              src="/images/stock/stock-2.jpeg"
+              src="/images/stock/stock-3.jpeg"
               alt="background-image"
               className="select-none"
               width={700}

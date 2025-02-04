@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import RandomBadge from "@/components/ui/random-badge";
-import { Tag } from "emblor";
 import { Copy, Flag } from "lucide-react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaDiscord, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
@@ -26,7 +25,7 @@ interface ProfileCardProps {
   linkedin?: string;
   instagram?: string;
   website?: string;
-  tags?: Tag[];
+  tags?: string[];
   className?: string;
 }
 
@@ -152,7 +151,7 @@ const ProfileCard = ({
                 {tags.map((tag, index) => (
                   <RandomBadge
                     key={index}
-                    text={tag.text}
+                    text={tag}
                     className="text-sm font-medium rounded-sm px-3"
                   />
                 ))}
