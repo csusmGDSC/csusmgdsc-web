@@ -100,8 +100,8 @@ export interface User {
   image?: string;
   password?: string;
   role?: "USER" | "ADMIN";
-  position?: (typeof GDSC_POSITIONS)[number];
-  branch?: (typeof GDSC_BRANCHES)[number];
+  position?: (typeof GDSC_POSITIONS)[number] | keyof typeof IOTA_TO_GDSC_BRANCH;
+  branch?: (typeof GDSC_BRANCHES)[number] | keyof typeof IOTA_TO_GDSC_POSITION;
   github?: string;
   linkedin?: string;
   instagram?: string;

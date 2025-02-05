@@ -1,5 +1,5 @@
 import { useSignOut, useUser } from "@/api/auth-api";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,38 +11,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ChevronDown, Key, LogOut, Settings } from "lucide-react";
+import { Key, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function AvatarButton() {
   const user = useUser();
   const signOut = useSignOut();
 
-  console.log("HEADER USER: ", user);
-
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        asChild
-        className="[&[data-state=open]>svg]:rotate-180"
-      >
+      <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
-            {user?.image ? (
-              <AvatarImage src={user.image} alt="Profile image" />
-            ) : (
-              <AvatarFallback>{"👤"}</AvatarFallback>
-            )}
+            <AvatarImage
+              src={user?.image || "https://avatar.iran.liara.run/public"}
+              alt="Profile image"
+            />
           </Avatar>
-          <ChevronDown
-            size={16}
-            strokeWidth={2}
-            className="ms-2 opacity-60 transition-transform duration-200"
-            aria-hidden="true"
-          />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-w-64">
+      <DropdownMenuContent className="max-w-64" align="end">
         <DropdownMenuLabel className="flex min-w-0 flex-col">
           <span className="truncate text-sm font-medium text-foreground">
             {user?.full_name === undefined ? "Unknown user" : user.full_name}

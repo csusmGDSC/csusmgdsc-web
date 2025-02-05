@@ -25,7 +25,7 @@ export default function CreateEvent() {
     isFirstStep,
     isLastStep,
     showSuccessMsg,
-  } = useMultipleStepForm(4);
+  } = useMultipleStepForm(3);
 
   const form = useForm<z.infer<typeof EventSchema>>({
     resolver: zodResolver(EventSchema),
@@ -173,12 +173,12 @@ export default function CreateEvent() {
           <ProgressItem
             number={2}
             title="Description and Media"
-            active={currentStepIndex === 2}
+            active={currentStepIndex === 1}
           />
           <ProgressItem
-            number={3}
+            number={2}
             title="Review and Submit"
-            active={currentStepIndex === 3}
+            active={currentStepIndex === 2}
           />
         </div>
       </div>

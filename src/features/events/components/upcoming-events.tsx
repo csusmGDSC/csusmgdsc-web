@@ -7,13 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Title from "@/components/ui/title";
+import { GDSCEvent } from "@/types/gdsc-event";
+import { formatDate } from "date-fns";
 import { Calendar, Clock, ExternalLink, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type EventType = "workshop" | "leetcode" | "hackathon" | "social";
 
 interface UpcomingEventsProps {
-  events: any[];
+  events: GDSCEvent[];
 }
 
 const typeColors: Record<EventType, string> = {
@@ -23,7 +25,7 @@ const typeColors: Record<EventType, string> = {
   social: "bg-yellow/20 text-yellow",
 };
 
-const EventCard = ({ event }: { event: any }) => (
+const EventCard = ({ event }: { event: GDSCEvent }) => (
   <Link to={`/events/${event.id}`}>
     <Card className="group overflow-hidden hover:shadow-md transition-all">
       {/* Project Image */}
@@ -37,7 +39,7 @@ const EventCard = ({ event }: { event: any }) => (
 
       <CardHeader>
         <CardTitle className="text-xl font-bold text-primary flex justify-between">
-          {event.name}
+          {event.title}
           <span
             className={`px-3 py-1 rounded-full text-sm font-medium ${
               typeColors[event.type as EventType] || "bg-gray-100 text-gray-800"
@@ -52,12 +54,19 @@ const EventCard = ({ event }: { event: any }) => (
         <div className="space-y-3">
           <EventDetail
             icon={<Calendar className="w-5 h-5" />}
-            text={event.date}
+            text={formatDate(event.startTime, "PPP") || ""}
           />
-          <EventDetail icon={<Clock className="w-5 h-5" />} text={event.time} />
+          <EventDetail
+            icon={<Clock className="w-5 h-5" />}
+            text={
+              formatDate(event.startTime, "p") +
+                " - " +
+                formatDate(event.endTime, "p") || ""
+            }
+          />
           <EventDetail
             icon={<MapPin className="w-5 h-5" />}
-            text={event.location}
+            text={event.location || "Virtual"}
           />
         </div>
         {/* Description */}

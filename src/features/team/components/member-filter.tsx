@@ -28,9 +28,13 @@ export default function MembersFilter() {
               Filter by branch
             </div>
             <div className="flex flex-wrap gap-2">
-              {["Technical", "Interview", "Marketing", "Other"].map((type) => (
-                <Button variant="outline">{type}</Button>
-              ))}
+              {["Technical", "Interview", "Marketing", "Other"].map(
+                (type, index) => (
+                  <Button variant="outline" key={index}>
+                    {type}
+                  </Button>
+                )
+              )}
             </div>
           </div>
         </div>

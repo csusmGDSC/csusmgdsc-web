@@ -13,6 +13,7 @@
  * });
  *
  * api.get(API_ROUTES.AUTH.LOGIN);
+ * api.get(API_ROUTES.EVENTS.GET_EVENTS({ page: 1, limit: 10 }));
  */
 export const API_ROUTES = {
   AUTH: {
@@ -27,11 +28,25 @@ export const API_ROUTES = {
     GET_CURRENT_USER: "/auth/me",
   },
   EVENTS: {
-    GET_EVENTS: "/events",
+    GET_EVENTS: (params?: Record<string, string | number>) =>
+      `/events${params ? formatQueryParams(params) : ""}`,
+    GET_EVENT_BY_ID: (id: string) => `/events/${id}`,
   },
   PROJECTS: {},
   TEAMS: {},
   USERS: {
-    GET_USERS: "/users",
+    GET_USERS: (params?: Record<string, string | number>) =>
+      `/users${params ? formatQueryParams(params) : ""}`,
+    GET_USER_BY_ID: (id: string) => `/users/${id}`,
   },
 };
+
+/**
+ * Utility function to format query parameters.
+ */
+function formatQueryParams(params: Record<string, string | number>): string {
+  const queryString = new URLSearchParams(
+    params as Record<string, string>
+  ).toString();
+  return queryString ? `?${queryString}` : "";
+}

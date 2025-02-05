@@ -12,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useState } from "react";
 
 interface ProfileCardProps {
   name: string;
@@ -44,6 +45,19 @@ const ProfileCard = ({
   tags,
   className,
 }: ProfileCardProps) => {
+  const [copied, setCopied] = useState<boolean>(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(
+      `${import.meta.env.VITE_FRONTEND_URL}/profile/${userId}`
+    );
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  };
+
   return (
     <div className={className}>
       <Card className="flex flex-col items-center justify-center">
@@ -63,15 +77,16 @@ const ProfileCard = ({
                 <Button
                   variant="outline"
                   className="relative rounded-full text-xs !h-8 w-1/2"
+                  onClick={handleCopy}
                 >
                   <span className="overflow-hidden text-ellipsis whitespace-nowrap w-full block">
-                    g.profile/{userId}
+                    profile/{userId}
                   </span>
                   <Copy />
                 </Button>
               </TooltipTrigger>
               <TooltipContent className="text-primary text-xs font-medium rounded-sm">
-                Copy profile link
+                {copied ? "Copied ✅" : "Copy profile link"}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
