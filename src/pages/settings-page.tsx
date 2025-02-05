@@ -4,6 +4,21 @@ import { SectionTitle } from "@/features/home/components/section-title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Appearence, ProfileForm } from "@/features/settings";
 
+const tabs = [
+  {
+    value: "tab-1",
+    title: "Profile",
+    subtitle: "Change your profile details",
+    content: <ProfileForm />,
+  },
+  {
+    value: "tab-2",
+    title: "Appearance",
+    subtitle: "Customize your experience",
+    content: <Appearence />,
+  },
+];
+
 export default function SettingsPage() {
   return (
     <main>
@@ -17,49 +32,25 @@ export default function SettingsPage() {
         <Tabs
           defaultValue="tab-1"
           orientation="vertical"
-          className="flex w-full gap-2"
+          className="flex w-full gap-10"
         >
           <TabsList className="h-fit flex-col rounded-none border-l border-border bg-transparent p-0">
-            <TabsTrigger
-              value="tab-1"
-              className="text-lg relative w-full font-normal justify-start rounded-none after:absolute after:inset-y-0 after:start-0 after:w-[3px] data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:after:bg-blue"
-            >
-              Profile
-            </TabsTrigger>
-            <TabsTrigger
-              value="tab-2"
-              className="text-lg relative w-full font-normal justify-start rounded-none after:absolute after:inset-y-0 after:start-0 after:w-[3px] data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:after:bg-blue"
-            >
-              Appearence
-            </TabsTrigger>
-            <TabsTrigger
-              value="tab-3"
-              className="text-lg relative w-full font-normal justify-start rounded-none after:absolute after:inset-y-0 after:start-0 after:w-[3px] data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:after:bg-blue"
-            >
-              Notifications
-            </TabsTrigger>
+            {tabs.map((tab) => (
+              <TabsTrigger
+                value={tab.value}
+                className="relative w-full font-normal justify-start rounded-none after:absolute after:inset-y-0 after:start-0 after:w-[3px] data-[state=active]:shadow-none data-[state=active]:after:bg-blue data-[state=active]:bg-blue/20"
+              >
+                {tab.title}
+              </TabsTrigger>
+            ))}
           </TabsList>
           <div className="grow rounded-sm">
-            <TabsContent value="tab-1" className="space-y-4">
-              <SectionTitle
-                title="Profile"
-                subtitle="Change your profile details"
-              />
-              <ProfileForm />
-            </TabsContent>
-            <TabsContent value="tab-2" className="space-y-4">
-              <SectionTitle
-                title="Appearence"
-                subtitle="Customize the appearance of the app. Automatically switch between day and night themes."
-              />
-              <Appearence />
-            </TabsContent>
-            <TabsContent value="tab-3" className="space-y-4">
-              <SectionTitle
-                title="Notifications"
-                subtitle="Configure how you receive notifications."
-              />
-            </TabsContent>
+            {tabs.map((tab) => (
+              <TabsContent value={tab.value} className="space-y-4">
+                <SectionTitle title={tab.title} subtitle={tab.subtitle} />
+                {tab.content}
+              </TabsContent>
+            ))}
           </div>
         </Tabs>
       </PageContent>

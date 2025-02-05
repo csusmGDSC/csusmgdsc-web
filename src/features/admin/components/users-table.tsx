@@ -34,7 +34,7 @@ const UsersTable = () => {
       updatedAt: new Date(),
       provider: "google",
       authId: "google-001",
-      isOnboarded: true,
+      is_onboarded: true,
     },
     {
       id: "user-002",
@@ -54,7 +54,7 @@ const UsersTable = () => {
       updatedAt: new Date(),
       provider: "github",
       authId: "github-002",
-      isOnboarded: false,
+      is_onboarded: false,
     },
     {
       id: "user-003",
@@ -75,7 +75,7 @@ const UsersTable = () => {
       updatedAt: new Date(),
       provider: "linkedin",
       authId: "linkedin-003",
-      isOnboarded: true,
+      is_onboarded: true,
     },
   ];
 

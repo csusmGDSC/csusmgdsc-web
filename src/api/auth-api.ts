@@ -199,7 +199,7 @@ export function useOnboarding() {
   const queryClient = useQueryClient();
   const user = useUser();
 
-  if (user?.isOnboarded) {
+  if (user?.is_onboarded) {
     throw new Error("User is already onboarded.");
   }
 
@@ -228,7 +228,7 @@ export function useOnboarding() {
           website: values.website,
           bio: values.bio,
           tags: values.tags,
-          isOnboarded: true,
+          is_onboarded: true,
           image: "https://avatar.iran.liara.run/public",
         }).filter(
           ([_, value]) => value !== undefined && value !== "" && value !== null
@@ -242,9 +242,11 @@ export function useOnboarding() {
           "Content-Type": "application/json",
         },
       });
+
+      return payload;
     },
-    onSuccess: (data) => {
-      console.log("SUCCESS IN UPDATING USER: ", data);
+    onSuccess: (updatedFields) => {
+      const data = { ...user, ...updatedFields };
       queryClient.setQueryData([QUERY_KEYS.USER], data);
       toast.success("Successfully updated your profile!");
     },

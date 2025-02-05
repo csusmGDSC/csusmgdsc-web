@@ -55,13 +55,10 @@ export const TagsFormInput = () => {
                 setTags(newTags);
                 form.setValue(
                   "tags",
-                  form.setValue(
-                    "tags",
-                    (newTags as Tag[]).map((tag) => tag.text) as [
-                      string,
-                      ...string[]
-                    ]
-                  )
+                  (newTags as Tag[]).map((tag) => tag.text) as [
+                    string,
+                    ...string[]
+                  ]
                 );
               }}
             />

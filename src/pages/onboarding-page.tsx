@@ -1,4 +1,4 @@
-import { useSignOut } from "@/api/auth-api";
+import { useSignOut, useUser } from "@/api/auth-api";
 import { Button } from "@/components/ui/button";
 import { PageContent } from "@/features/base";
 import { OnboardingForm } from "@/features/onboarding/components/onboarding-form";
@@ -8,8 +8,12 @@ import { useNavigate } from "react-router-dom";
 export default function OnboardingPage() {
   const signOut = useSignOut();
   const navigate = useNavigate();
+  const user = useUser();
 
-  // todo, redirect user if onboarding complete
+  if (user?.is_onboarded) {
+    navigate("/");
+  }
+
   return (
     <main>
       <PageContent className="my-20">

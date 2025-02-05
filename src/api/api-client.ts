@@ -1,5 +1,6 @@
 import { API_ROUTES } from "@/config/api-routes";
 import axios from "axios";
+import { saveAccessTokenToLocalStorage } from "./user.localstore";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -31,13 +32,30 @@ api.interceptors.response.use(
         return Promise.reject(error);
       }
 
+      console.log(
+        "TRYING TO REFRESH TOKEN USING URL: ",
+        `${import.meta.env.VITE_BACKEND_URL}${API_ROUTES.AUTH.REFRESH}`
+      );
+
       try {
         // Attempt to refresh the access token
-        await axios.patch(
+        const refreshResponse = await axios.patch(
           `${import.meta.env.VITE_BACKEND_URL}${API_ROUTES.AUTH.REFRESH}`,
           {},
           { withCredentials: true }
         );
+
+        // Save the new access token
+        const newAccessToken = refreshResponse.data.accessToken;
+        if (newAccessToken) {
+          saveAccessTokenToLocalStorage(newAccessToken);
+        } else {
+          console.error("No new access token received from refresh.");
+          return Promise.reject(error);
+        }
+
+        // Retry the original request with updated token
+        error.config.headers.Authorization = `Bearer ${newAccessToken}`;
 
         // Retry the original request
         return api(error.config);

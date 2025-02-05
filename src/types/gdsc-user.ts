@@ -115,7 +115,7 @@ export interface User {
   updatedAt?: Date;
   provider?: string;
   authId?: string;
-  isOnboarded: boolean;
+  is_onboarded: boolean;
 }
 
 export interface UserLoginAPIResponse {
