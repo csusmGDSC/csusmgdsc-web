@@ -12,6 +12,14 @@ import { formatDate } from "date-fns";
 import { Calendar, Clock, ExternalLink, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
 type EventType = "workshop" | "leetcode" | "hackathon" | "social";
 
 interface UpcomingEventsProps {
@@ -104,11 +112,23 @@ export default function UpcomingEvents({ events }: UpcomingEventsProps) {
     <section id="upcoming-events">
       <Title>Upcoming Events</Title>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
-      </div>
+      </div> */}
+
+      <Carousel className="">
+        <CarouselContent>
+          {events.map((event) => (
+            <CarouselItem key={event.id} className="md:basis-1/2 xl:basis-1/3">
+              <EventCard event={event} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </section>
   );
 }

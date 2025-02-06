@@ -30,6 +30,7 @@ import {
 import { OnboardingSchema } from "../schemas/onboarding-schema";
 import { useOnboarding, useUser } from "@/api/auth-api";
 import { useImagePreview } from "@/hooks/use-image-preview";
+import { Loader2 } from "lucide-react";
 
 /**
  * OnboardingForm component renders a multi-step form for user onboarding.
@@ -154,7 +155,13 @@ export const OnboardingForm = () => {
             <SocialInputField />
 
             <Button type="submit" className="w-full" disabled={isPending}>
-              Submit
+              {isPending ? (
+                <span className="flex items-center gap-2">
+                  Submitting... <Loader2 className="animate-spin" />
+                </span>
+              ) : (
+                "Submit"
+              )}
             </Button>
           </form>
         </Form>

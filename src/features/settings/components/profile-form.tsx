@@ -1,16 +1,18 @@
-import { useEffect, useId, useState } from "react";
-import { ProfileSchema } from "../schemas/profile-schema";
+import { useEffect, useId } from "react";
 
 // Form handling
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { SimpleFormInput } from "@/components/form-inputs/simple-form-input";
 import { StatusFormInput } from "@/features/onboarding/components/status-form-input";
-import { GDSC_POSITIONS_WITH_GRAD_DATE } from "@/types/gdsc-user";
+import {
+  GDSC_POSITIONS_WITH_GRAD_DATE,
+  IOTA_TO_GDSC_BRANCH,
+  IOTA_TO_GDSC_POSITION,
+} from "@/types/gdsc-user";
 import { GradFormInput } from "@/features/onboarding/components/grad-form-input";
 import { ProfileImageInput } from "@/components/form-inputs/profile-image-input";
 import { BranchFormInput } from "@/features/onboarding/components/branch-form-input";
@@ -20,66 +22,58 @@ import { SocialInputField } from "@/features/onboarding/components/socials-form-
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { IoWarning } from "react-icons/io5";
+import { useUser } from "@/api/auth-api";
+import { useImagePreview } from "@/hooks/use-image-preview";
+import { Loader2 } from "lucide-react";
+import { ProfileSchema } from "../schemas/profile-schema";
+import { useUpdateUser } from "@/api/user-api";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/config/query-keys";
 
 const ProfileForm = () => {
-  //   const [previewMode, setPreviewMode] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const user = useUser();
+  const { mutate, isPending, isSuccess } = useUpdateUser();
   const id = useId();
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "jaedonspurlock@gmail.com",
+      first_name: user?.first_name || "",
+      last_name: user?.last_name || "",
       image: "https://avatar.iran.liara.run/public",
-      gradDate: undefined,
-      branch: null,
-      position: null,
-      bio: "",
-      tags: [],
-      website: "",
-      github: "",
-      linkedin: "",
-      instagram: "",
-      twitter: "",
-      discord: "",
+      graduation_date: new Date(user?.graduation_date || "") || undefined,
+      branch: user?.branch
+        ? IOTA_TO_GDSC_BRANCH[user.branch as unknown as 1 | 2 | 3]
+        : null,
+      position: user?.position
+        ? IOTA_TO_GDSC_POSITION[user.position as unknown as 1 | 2]
+        : null,
+      bio: user?.bio || "",
+      tags: user?.tags || [],
+      website: user?.website || "",
+      github: user?.github || "",
+      linkedin: user?.linkedin || "",
+      instagram: user?.instagram || "",
+      twitter: user?.twitter || "",
+      discord: user?.discord || "",
     },
   });
 
-  const image = form.watch("image");
   useEffect(() => {
-    if (image instanceof File) {
-      const imageUrl = URL.createObjectURL(image);
-      setImagePreview(imageUrl);
-      return () => URL.revokeObjectURL(imageUrl);
+    if (isSuccess) {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
     }
-    if (typeof image === "string") {
-      setImagePreview(image);
-    }
-  }, [image]);
+  }, [isSuccess]);
+
+  const { imagePreview, setImagePreview } = useImagePreview(
+    form.watch("image")
+  );
 
   const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
-    console.log(values);
-
-    let imageUrl: string | undefined;
-    if (values.image instanceof File) {
-      // build FormData for uploading image
-      const formData = new FormData();
-      formData.append("file", values.image);
-
-      // upload image
-      imageUrl = await new Promise<string>((resolve) => {
-        setTimeout(() => {
-          resolve("https://via.placeholder.com/150");
-        }, 1000);
-      });
-    } else {
-      imageUrl = values.image; // Use the existing image URL for updating mode
-    }
-
-    toast.success("Submitted successfully! Check console for imageUrl");
-    console.log(imageUrl);
+    console.log("VALUES: ", values);
+    console.log("ERRORS: ", form.formState.errors);
+    mutate(values);
   };
 
   return (
@@ -89,7 +83,7 @@ const ProfileForm = () => {
           <div className="flex flex-col sm:flex-row gap-6">
             {/* FIRST NAME INPUT */}
             <SimpleFormInput
-              name="firstName"
+              name="first_name"
               placeholder="First Name"
               id={id}
               label="First Name"
@@ -99,7 +93,7 @@ const ProfileForm = () => {
 
             {/* LAST NAME INPUT */}
             <SimpleFormInput
-              name="lastName"
+              name="last_name"
               placeholder="Last Name"
               id={id}
               label="Last Name"
@@ -130,13 +124,35 @@ const ProfileForm = () => {
           <TagsFormInput />
           <SocialInputField />
 
-          <Button type="submit">Update Account</Button>
+          <Button
+            type="submit"
+            disabled={isPending}
+            onClick={() => {
+              console.log("VALUES: ", form.getValues());
+              console.log("ERRORS: ", form.formState.errors);
+            }}
+          >
+            {isPending ? (
+              <span className="flex items-center gap-2">
+                Submitting... <Loader2 className="animate-spin" />
+              </span>
+            ) : (
+              "Update Profile"
+            )}
+          </Button>
+
           <div>
             <p className="text-sm flex items-center gap-2 font-semibold mb-2">
               <IoWarning /> Account Deletion
             </p>
             <Separator className="mb-4" />
-            <Button className="bg-destructive hover:bg-destructive/80">
+            <Button
+              className="bg-destructive hover:bg-destructive/80"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
               Delete
             </Button>
           </div>

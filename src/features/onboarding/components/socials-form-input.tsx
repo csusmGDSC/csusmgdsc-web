@@ -29,6 +29,7 @@ export const SocialInputField = ({}: {}) => {
       <FormLabel>Links</FormLabel>
       {socialLinks.map((link) => (
         <FormField
+          key={link.name}
           control={form.control}
           name={link.name}
           render={({ field }) => (

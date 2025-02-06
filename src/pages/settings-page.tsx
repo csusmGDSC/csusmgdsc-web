@@ -37,6 +37,7 @@ export default function SettingsPage() {
           <TabsList className="h-fit flex-col rounded-none border-l border-border bg-transparent p-0">
             {tabs.map((tab) => (
               <TabsTrigger
+                key={tab.value}
                 value={tab.value}
                 className="relative w-full font-normal justify-start rounded-none after:absolute after:inset-y-0 after:start-0 after:w-[3px] data-[state=active]:shadow-none data-[state=active]:after:bg-blue data-[state=active]:bg-blue/20"
               >
@@ -46,7 +47,11 @@ export default function SettingsPage() {
           </TabsList>
           <div className="grow rounded-sm">
             {tabs.map((tab) => (
-              <TabsContent value={tab.value} className="space-y-4">
+              <TabsContent
+                value={tab.value}
+                className="space-y-4"
+                key={tab.value}
+              >
                 <SectionTitle title={tab.title} subtitle={tab.subtitle} />
                 {tab.content}
               </TabsContent>

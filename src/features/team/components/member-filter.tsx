@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { Calendar, Filter, Search } from "lucide-react";
-import { useState } from "react";
+import { GDSC_BRANCHES } from "@/types/gdsc-user";
+import { Filter, Search } from "lucide-react";
+// import { useState } from "react";
 
-export default function MembersFilter() {
-  const [currentYear, setCurrentYear] = useState(2025);
+export default function MembersFilter({
+  setSearchQuery,
+  setSelectedTags,
+  selectedTags,
+}: {
+  setSearchQuery: (string: string) => void;
+  setSelectedTags: (tags: (typeof GDSC_BRANCHES)[number][]) => void;
+  selectedTags: (typeof GDSC_BRANCHES)[number][];
+}) {
+  // const [currentYear, setCurrentYear] = useState(2025);
 
   return (
     <div className="rounded-sm border border-border p-6">
@@ -17,6 +25,7 @@ export default function MembersFilter() {
             type="text"
             placeholder="Search for a member"
             className="focus:ring-blue focus:ring-2 focus:outline-none"
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
@@ -28,18 +37,33 @@ export default function MembersFilter() {
               Filter by branch
             </div>
             <div className="flex flex-wrap gap-2">
-              {["Technical", "Interview", "Marketing", "Other"].map(
-                (type, index) => (
-                  <Button variant="outline" key={index}>
-                    {type}
-                  </Button>
-                )
-              )}
+              {GDSC_BRANCHES.map((type, index) => (
+                <Button
+                  variant="outline"
+                  key={index}
+                  className={
+                    selectedTags.includes(type)
+                      ? "border-blue/80 bg-blue/10 text-darkBlue"
+                      : ""
+                  }
+                  onClick={() => {
+                    if (selectedTags.includes(type)) {
+                      setSelectedTags(
+                        selectedTags.filter((tag) => tag !== type)
+                      );
+                    } else {
+                      setSelectedTags([...selectedTags, type]);
+                    }
+                  }}
+                >
+                  {type}
+                </Button>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        {/* <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 text-sm font-medium text-primary">
             <Calendar className="w-4 h-4" />
             Filter by year
@@ -60,7 +84,7 @@ export default function MembersFilter() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );

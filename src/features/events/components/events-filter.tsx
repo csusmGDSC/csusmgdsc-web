@@ -6,11 +6,13 @@ import { Filter, Search } from "lucide-react";
 interface EventsFilterProps {
   selectedTags: string[];
   setSelectedTags: (tags: string[]) => void;
+  setSearchQuery: (string: string) => void;
 }
 
 export default function EventsFilter({
   selectedTags,
   setSelectedTags,
+  setSearchQuery,
 }: EventsFilterProps) {
   return (
     <div className="rounded-sm border border-border p-6">
@@ -22,6 +24,7 @@ export default function EventsFilter({
             type="text"
             placeholder="Search events..."
             className="focus:ring-blue focus:ring-2 focus:outline-none"
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
