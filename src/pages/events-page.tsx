@@ -1,60 +1,41 @@
+import { useEvents } from "@/api/event-api";
 import { PageContent, PageHeader } from "@/features/base";
 import { EventsFilter, PastEvents, UpcomingEvents } from "@/features/events";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const upcomingEvents = [
-  {
-    id: 1,
-    name: "Q2 Planning Session",
-    date: "2024-04-25",
-    time: "10:00 AM",
-    room: "Conference Room A",
-    capacity: 50,
-    type: "leetcode",
-    tags: ["planning", "quarterly"],
-    location: "Conference Room A",
-    description:
-      "This is a description of the event. It should be at least a few sentences long. We love short descriptions.",
-  },
-  {
-    id: 2,
-    name: "Tech Workshop",
-    date: "2024-05-15",
-    type: "workshop",
-    time: "10:00 AM",
-    room: "Conference Room A",
-    capacity: 50,
-    tags: ["technical", "learning"],
-    location: "Virtual",
-    description:
-      "This is a description of the event. It should be at least a few sentences long. We love short descriptions.",
-  },
-  {
-    id: 3,
-    name: "Tech Workshop",
-    date: "2024-05-15",
-    type: "workshop",
-    time: "10:00 AM",
-    room: "Conference Room A",
-    capacity: 50,
-    tags: ["technical", "learning"],
-    location: "Virtual",
-    description:
-      "This is a description of the event. It should be at least a few sentences long. We love short descriptions.",
-  },
-];
-
 export default function EventsPage() {
+  const { data: events, isLoading } = useEvents();
+
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [events, setEvents] = useState(upcomingEvents);
+  const [filteredEvents, setFilteredEvents] = useState(events || []);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setEvents(
-      upcomingEvents.filter((event) =>
-        selectedTags.every((tag) => event.type.includes(tag))
+    // Since events may not be immediately available, return early if there are no events. This won't affect selecting tags
+    if (!events || selectedTags.length === 0 || events.length === 0) {
+      setFilteredEvents(events);
+      return;
+    }
+    setFilteredEvents(
+      events.filter((event) =>
+        selectedTags.some((tag) => event.type.includes(tag))
       )
     );
   }, [selectedTags]);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      setFilteredEvents(events);
+      return;
+    }
+
+    setFilteredEvents(
+      events.filter((event) =>
+        event.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery]);
 
   return (
     <main>
@@ -64,12 +45,38 @@ export default function EventsPage() {
         backgroundImageSrc="/images/placeholder/homeBackground.jpg"
       />
       <PageContent>
-        <UpcomingEvents events={events} />
+        {isLoading ? (
+          <Loader2 className="animate-spin text-blue mx-auto size-10" />
+        ) : events.length > 0 ? (
+          <UpcomingEvents
+            events={events.filter(
+              (event) => new Date(event.startTime) > new Date()
+            )}
+          />
+        ) : (
+          <p className="text-primary text-2xl font-bold">
+            No upcoming events found
+          </p>
+        )}
         <EventsFilter
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}
+          setSearchQuery={setSearchQuery}
         />
-        <PastEvents />
+
+        {isLoading ? (
+          <Loader2 className="animate-spin text-blue mx-auto size-10" />
+        ) : filteredEvents.length > 0 ? (
+          <PastEvents
+            events={filteredEvents.filter(
+              (event) => event.startTime < new Date()
+            )}
+          />
+        ) : (
+          <p className="text-primary text-2xl font-bold">
+            No past events found
+          </p>
+        )}
       </PageContent>
     </main>
   );

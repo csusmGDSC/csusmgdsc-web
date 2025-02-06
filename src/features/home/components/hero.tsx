@@ -50,16 +50,18 @@ const Hero = () => {
       <div className="px-2 md:px-0 flex flex-col justify-center items-center custom-max-width gap-6 z-10">
         <h1
           className="text-center text-2xl md:text-3xl lg:text-6xl
-            font-medium text-secondary"
+            font-medium text-secondary dark:text-primary"
         >
           Google Developer Student Club
         </h1>
 
-        <h2 className="text-center text-lg md:text-xl lg:text-2xl font-medium text-secondary/90">
+        <h2 className="text-center text-lg md:text-xl lg:text-2xl font-medium text-secondary/90 dark:text-primary/90">
           California State University, San Marcos
         </h2>
 
-        <p className="text-center text-secondary/90 mb-6">{description}</p>
+        <p className="text-center text-secondary/90 dark:text-primary/90 mb-6">
+          {description}
+        </p>
 
         <span className="flex gap-4">
           <Link to="/join">
@@ -68,7 +70,7 @@ const Hero = () => {
 
           <a href="https://developers.google.com/community" target="_blank">
             {/** Added a div here for white background behind hover effect */}
-            <div className="w-fit h-fit bg-white rounded-lg">
+            <div className="w-fit h-fit bg-white dark:bg-background rounded-sm">
               <Button size="lg" variant="outline">
                 Learn More
               </Button>

@@ -5,7 +5,7 @@ import Header from "./header";
 
 export default function PageLayout() {
   return (
-    <main className="min-h-screen bg-background flex flex-col font-sans antialiased overflow-x-hidden">
+    <main className="min-h-screen bg-background flex flex-col font-sans antialiased">
       <div className="flex-1">
         <Header />
         <div className="mt-[4.5rem]">

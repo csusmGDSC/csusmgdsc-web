@@ -64,18 +64,13 @@ const InfoCard = ({
 const InfoCards = () => {
   return (
     <div>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-8">
         {/* Join Our Teams Card */}
         <InfoCard
           icon={Users}
-          title="Join Our Teams"
-          description="Jump into exciting projects and collaborate with talented peers. Our teams work on:"
-          points={[
-            "Web & Mobile Development",
-            "AI/ML Projects",
-            "UI/UX Design",
-            "Technical Writing",
-          ]}
+          title="Join Microsoft Teams"
+          description="Join our group chat with integrated calendars and meetings. This acts as our single source of communication for all channels in the organization."
+          points={[]}
           buttonText="Join Teams"
           buttonIcon={Users}
           buttonLink={"/team"}
@@ -90,12 +85,11 @@ const InfoCards = () => {
           points={[
             "Event notifications",
             "Access to comments on events",
-            "Official membership access",
-            "Achievement tracking",
+            "Official membership",
           ]}
           buttonText="Sign In / Register"
           buttonIcon={LogIn}
-          buttonLink={"/sign-in"}
+          buttonLink={"/auth/sign-in"}
           targetBlank={true}
         />
 

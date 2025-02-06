@@ -24,7 +24,7 @@ const PageHeader = ({
           "./src/assets/images/placeholder/header-background.png"
         }
         alt="header-background"
-        className="absolute object-cover w-full h-full opacity-60 z-0"
+        className="absolute object-cover w-full h-full opacity-60 dark:opacity-10 z-0"
       />
 
       <div className="text-center space-y-2 z-10">
@@ -33,6 +33,8 @@ const PageHeader = ({
         </h1>
         <h2 className="text-xs text-[#5f6368] sm:text-sm">{subTitle}</h2>
       </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </header>
   );
 };
