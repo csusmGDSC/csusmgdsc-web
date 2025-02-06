@@ -78,7 +78,7 @@ const teams = [
 ];
 export default function Branches() {
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4" id="branches">
       <SectionTitle
         title="Branches"
         subtitle="We are split into three disciplines"

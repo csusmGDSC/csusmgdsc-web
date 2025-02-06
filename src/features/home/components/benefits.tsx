@@ -5,7 +5,7 @@ import { IoCubeOutline } from "react-icons/io5";
 
 export default function Benefits() {
   return (
-    <div className="flex flex-row items-center gap-20">
+    <div className="flex flex-row items-center gap-20" id="benefits">
       <div className="w-full md:w-1/2">
         <h1 className="text-3xl font-bold text-primary">
           Built on strong foundations

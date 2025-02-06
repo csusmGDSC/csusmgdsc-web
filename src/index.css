@@ -156,3 +156,8 @@
 .w-md-editor {
   --md-editor-font-family: "GoogleSans", sans-serif !important;
 }
+
+html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 180px;
+}

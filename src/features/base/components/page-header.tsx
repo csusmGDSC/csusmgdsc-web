@@ -33,6 +33,8 @@ const PageHeader = ({
         </h1>
         <h2 className="text-xs text-[#5f6368] sm:text-sm">{subTitle}</h2>
       </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </header>
   );
 };

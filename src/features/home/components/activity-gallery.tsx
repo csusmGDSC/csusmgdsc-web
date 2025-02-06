@@ -26,7 +26,7 @@ export default function ActivityGallery() {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full" id="activity">
       <div className="w-full space-y-4">
         <SectionTitle
           title="Community in Action"

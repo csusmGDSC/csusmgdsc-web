@@ -8,9 +8,9 @@ import {
   About,
   ApplyNow,
   Benefits,
+  Socials,
+  NavBar,
 } from "@/features/home";
-import Socials from "@/features/home/components/socials";
-// import { Link } from "react-router-dom";
 
 export default function HomePage() {
   return (
@@ -30,7 +30,8 @@ export default function HomePage() {
         <Hero />
       </div>
 
-      <PageContent className="gap-28">
+      <PageContent className="gap-28 relative">
+        <NavBar />
         <About />
         <Branches />
         <Benefits />
