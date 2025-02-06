@@ -13,6 +13,7 @@ import InfoPage from "./pages/info-page";
 import TeamPage from "./pages/team-page";
 import ProfilePage from "./pages/profile-page";
 import SignInPage from "./pages/sign-in-page";
+import TermsPage from "./pages/terms-page";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId",
         element: <ProfilePage />,
+      },
+      {
+        path: "/terms",
+        element: <TermsPage />,
       },
     ],
   },
