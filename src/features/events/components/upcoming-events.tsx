@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Title from "@/components/ui/title";
 import { GDSCEvent } from "@/types/gdsc-event";
 import { formatDate } from "date-fns";
 import { Calendar, Clock, ExternalLink, MapPin } from "lucide-react";
@@ -19,11 +18,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SectionTitle } from "@/features/base";
 
 type EventType = "workshop" | "leetcode" | "hackathon" | "social";
 
 interface UpcomingEventsProps {
-  events: GDSCEvent[];
+  events?: GDSCEvent[];
+  skeletonMode?: boolean;
 }
 
 const typeColors: Record<EventType, string> = {
@@ -32,6 +34,48 @@ const typeColors: Record<EventType, string> = {
   hackathon: "bg-purple-100 text-purple-800",
   social: "bg-yellow/20 text-yellow",
 };
+
+export default function UpcomingEvents({
+  events,
+  skeletonMode,
+}: UpcomingEventsProps) {
+  if (skeletonMode) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[...Array(3)].map((_, index) => (
+          <Skeleton key={index} className="h-[28rem] rounded-sm w-full" />
+        ))}
+      </div>
+    );
+  }
+
+  if (!events || events.length === 0) {
+    return (
+      <p className="text-primary text-2xl font-bold">No events coming up.</p>
+    );
+  }
+
+  const upcomingEvents = events.filter(
+    (event) => new Date(event.startTime) > new Date()
+  );
+
+  return (
+    <section id="upcoming-events">
+      <SectionTitle title="Upcoming Events" />
+      <Carousel className="">
+        <CarouselContent>
+          {upcomingEvents.map((event) => (
+            <CarouselItem key={event.id} className="md:basis-1/2 xl:basis-1/3">
+              <EventCard event={event} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </section>
+  );
+}
 
 const EventCard = ({ event }: { event: GDSCEvent }) => (
   <Link to={`/events/${event.id}`}>
@@ -106,29 +150,3 @@ const EventDetail = ({
     <span>{text}</span>
   </div>
 );
-
-export default function UpcomingEvents({ events }: UpcomingEventsProps) {
-  return (
-    <section id="upcoming-events">
-      <Title>Upcoming Events</Title>
-
-      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </div> */}
-
-      <Carousel className="">
-        <CarouselContent>
-          {events.map((event) => (
-            <CarouselItem key={event.id} className="md:basis-1/2 xl:basis-1/3">
-              <EventCard event={event} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </section>
-  );
-}

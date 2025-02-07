@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Key, LogOut, Settings } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function AvatarButton() {
@@ -52,7 +52,7 @@ export default function AvatarButton() {
               <span>Settings</span>
             </DropdownMenuItem>
           </Link>
-          <Link to="/admin/dashboard">
+          {/* <Link to="/admin/dashboard">
             <DropdownMenuItem>
               <Key
                 size={16}
@@ -62,7 +62,7 @@ export default function AvatarButton() {
               />
               <span>Admin</span>
             </DropdownMenuItem>
-          </Link>
+          </Link> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>

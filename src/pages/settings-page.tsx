@@ -1,8 +1,10 @@
 import { Separator } from "@/components/ui/separator";
 import { PageContent } from "@/features/base";
-import { SectionTitle } from "@/features/home/components/section-title";
+import { SectionTitle } from "@/features/base";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Appearence, ProfileForm } from "@/features/settings";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 const tabs = [
   {
@@ -20,6 +22,8 @@ const tabs = [
 ];
 
 export default function SettingsPage() {
+  const isMobile = useIsMobile();
+
   return (
     <main>
       <PageContent className="mt-10 gap-6">
@@ -31,15 +35,23 @@ export default function SettingsPage() {
 
         <Tabs
           defaultValue="tab-1"
-          orientation="vertical"
-          className="flex w-full gap-10"
+          orientation={isMobile ? "horizontal" : "vertical"}
+          className={cn(
+            "flex w-full gap-10",
+            isMobile ? "flex-col" : "flex-row"
+          )}
         >
-          <TabsList className="h-fit flex-col rounded-none border-l border-border bg-transparent p-0">
+          <TabsList
+            className={cn(
+              "gap-1 bg-transparent py-0 ",
+              isMobile ? "flex-row" : "flex-col mt-8"
+            )}
+          >
             {tabs.map((tab) => (
               <TabsTrigger
                 key={tab.value}
                 value={tab.value}
-                className="relative w-full font-normal justify-start rounded-none after:absolute after:inset-y-0 after:start-0 after:w-[3px] data-[state=active]:shadow-none data-[state=active]:after:bg-blue data-[state=active]:bg-blue/20"
+                className="w-full py-2 justify-start data-[state=active]:bg-blue/10 data-[state=active]:shadow-none"
               >
                 {tab.title}
               </TabsTrigger>
