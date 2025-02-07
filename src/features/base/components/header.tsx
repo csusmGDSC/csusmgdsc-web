@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/api/auth-api";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -7,6 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { PAGE_ROUTES } from "@/config/routes";
+import AvatarButton from "@/features/auth/components/avatar-button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
@@ -48,6 +51,8 @@ const Header = () => {
 
   const [hasShadow, setHasShadow] = useState(false);
 
+  const user = useUser();
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -66,9 +71,9 @@ const Header = () => {
   return (
     <header
       className={cn(
-        "w-full h-[4.5rem] items-center flex flex-col fixed top-0 z-[40] bg-background",
+        "w-full h-[4.5rem] items-center flex flex-col fixed top-0 z-[40] bg-background border-b border-b-border",
         hasShadow &&
-          "shadow-md transition-shadow duration-700 ease-in-out border-b border-b-border"
+          "shadow-md transition-shadow dark:backdrop-blur-xl dark:bg-background/80 duration-700 ease-in-out"
       )}
     >
       <div className="h-full flex flex-row justify-center lg:justify-between items-center custom-max-width">
@@ -128,9 +133,13 @@ const Header = () => {
             </SheetContent>
           </Sheet>
 
-          <Link to="/sign-in" target="_blank" rel="noopener noreferrer">
-            <Button>Sign In</Button>
-          </Link>
+          {user ? (
+            <AvatarButton />
+          ) : (
+            <Link to={PAGE_ROUTES.AUTH.SIGN_IN}>
+              <Button>Sign In</Button>
+            </Link>
+          )}
         </nav>
       </div>
     </header>

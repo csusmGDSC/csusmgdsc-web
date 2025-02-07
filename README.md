@@ -1,4 +1,4 @@
-![gdsc](https://github.com/user-attachments/assets/5c3aa1c0-beed-4981-86d5-ec31304112fc)
+![GDSC](https://github.com/user-attachments/assets/459131a5-ae68-44fa-ba25-18a7e11622bf)
 
 ## Introduction
 

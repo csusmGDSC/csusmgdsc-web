@@ -56,13 +56,13 @@ const Footer: React.FC = () => {
   return (
     <footer>
       {/* Main footer content with logo and links */}
-      <div className = "w-full sm:h-[12rem] pb-4 shadow-inner sm:pb-0 border-t border-b-border bg-background items-center flex flex-col mt-20">
-        <div className = "h-full grid grid-cols-1 sm:grid-cols-4 custom-max-width">
-          <div className = "flex flex-col items-center h-full pt-10 sm:col-span-2 pl-4 md:pl-0 mr-auto">
+      <div className="w-full sm:h-[12rem] pb-4 shadow-inner sm:pb-0 border-t border-b-border bg-background items-center flex flex-col mt-20">
+        <div className="h-full grid grid-cols-1 mr-0 sm:mr-10 md:mr-0 sm:grid-cols-3 md:grid-cols-4 custom-max-width">
+          <div className="flex-col  hidden sm:flex items-center h-full pt-10 sm:col-span-1 md:col-span-2 pl-4 md:pl-0 mr-auto">
             <img
-              src = "/images/club/logo-title-light.png"
-              alt = "navbar-logo"
-              className = "w-[450px] h-auto"
+              src="/images/club/logo-title-light.png"
+              alt="navbar-logo"
+              className="w-full md:w-[65%] ml-4 mr-auto h-auto"
             />
           </div>
           <LinkSection title="Quick Links" links={quickLinks} />

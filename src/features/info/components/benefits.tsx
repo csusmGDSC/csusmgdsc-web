@@ -1,3 +1,4 @@
+import { SectionTitle } from "@/features/base";
 import { Award, Book, Trophy, Users } from "lucide-react";
 
 // Reusable Benefit Item Component
@@ -23,11 +24,12 @@ const BenefitItem = ({
 
 export default function Benefits() {
   return (
-    <div>
+    <div className="space-y-6">
       {/* Section Title */}
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-        Why Join Us?
-      </h2>
+      <SectionTitle
+        title="Why join us?"
+        subtitle="Gain a series of great benefits through GDSC"
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Benefit Items */}
         <BenefitItem

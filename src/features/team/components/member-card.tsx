@@ -14,7 +14,7 @@ const MemberCard = ({
   userId: string;
 }) => {
   return (
-    <Card className="flex flex-col items-center justify-center">
+    <Card className="flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
       <img
         src={imageSrc}
         alt="avatar"
@@ -22,7 +22,7 @@ const MemberCard = ({
       />
 
       <CardContent className="flex flex-col items-center">
-        <p className="text-primary text-lg font-medium">{name}</p>
+        <p className="text-primary text-lg font-medium line-clamp-2">{name}</p>
         <p className="text-primary text-lg">{role}</p>
       </CardContent>
 
