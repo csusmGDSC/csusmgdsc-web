@@ -5,13 +5,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { IdCard, MoreHorizontal, Pen, Trash, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DataTableColumnHeader from "./table-sorting-button";
-import { User as GDSCUser } from "@/types/gdsc-user";
+import {
+  User as GDSCUser,
+  IOTA_TO_GDSC_BRANCH,
+  IOTA_TO_GDSC_POSITION,
+} from "@/types/gdsc-user";
+import { Link } from "react-router-dom";
 
 export const UserTableColumns: ColumnDef<GDSCUser>[] = [
   {
@@ -21,13 +27,13 @@ export const UserTableColumns: ColumnDef<GDSCUser>[] = [
     cell: ({ row }) => <p className="text-xs">{row.getValue("id")}</p>,
   },
   {
-    accessorKey: "fullName",
+    accessorKey: "full_name",
     enableHiding: false,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => (
-      <p className="text-xs font-semibold">{row.getValue("fullName")}</p>
+      <p className="text-xs font-semibold">{row.getValue("full_name")}</p>
     ),
   },
   {
@@ -50,14 +56,18 @@ export const UserTableColumns: ColumnDef<GDSCUser>[] = [
     accessorKey: "position",
     enableHiding: false,
     header: "Position",
-    cell: ({ row }) => <p className="text-xs">{row.getValue("position")}</p>,
+    cell: ({ row }) => (
+      <p className="text-xs">
+        {IOTA_TO_GDSC_POSITION[row.getValue("position") as number]}
+      </p>
+    ),
   },
   {
     accessorKey: "branch",
     enableHiding: false,
     header: "Branch",
     cell: ({ row }) => {
-      const branch = row.getValue("branch") as GDSCUser["branch"];
+      const branch = IOTA_TO_GDSC_BRANCH[row.getValue("branch") as number];
 
       const branchColors: Record<
         "project" | "interview" | "marketing",
@@ -83,7 +93,7 @@ export const UserTableColumns: ColumnDef<GDSCUser>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -94,7 +104,22 @@ export const UserTableColumns: ColumnDef<GDSCUser>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem className="hover:cursor-pointer">
-              Edit
+              <Pen className="h-4 w-4" /> Edit
+            </DropdownMenuItem>
+            <Link to={`/profile/${row.getValue("id")}`} target="_blank">
+              <DropdownMenuItem className="hover:cursor-pointer">
+                <User className="h-4 w-4" /> Profile
+              </DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem
+              className="hover:cursor-pointer"
+              onClick={() => navigator.clipboard.writeText(row.getValue("id"))}
+            >
+              <IdCard className="h-4 w-4" /> Copy ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="hover:cursor-pointer text-destructive focus:text-destructive">
+              <Trash className="h-4 w-4" /> Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
