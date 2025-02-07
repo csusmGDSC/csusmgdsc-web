@@ -383,7 +383,10 @@ export default function TermsPage() {
               those that are specifically endorsed or approved by us. As a user
               of the Services, you agree not to:
             </p>
-            <ul>
+            <ul
+              className="list-disc list-inside"
+              style={{ marginLeft: "20px" }}
+            >
               <li>
                 Systematically retrieve data or other content from the Services
                 to create or compile, directly or indirectly, a collection,
