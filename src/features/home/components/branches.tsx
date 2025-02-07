@@ -13,7 +13,7 @@ import {
   BookOpen,
   GitBranch,
 } from "lucide-react";
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "@/features/base";
 import RandomBadge from "@/components/ui/random-badge";
 
 const teams = [

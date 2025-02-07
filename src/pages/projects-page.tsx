@@ -2,6 +2,7 @@ import { PageContent, PageHeader } from "@/features/base";
 import {
   ProjectContributions,
   ProjectList,
+  ProjectRequirements,
 } from "@/features/projects";
 import { GDSCProject } from "@/types/gdsc-project";
 
@@ -39,6 +40,7 @@ export default function ProjectsPage() {
       <PageContent>
         <ProjectContributions />
         <ProjectList projects={exampleProjects} />
+        <ProjectRequirements />
       </PageContent>
     </main>
   );

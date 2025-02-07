@@ -22,7 +22,7 @@ const MemberCard = ({
       />
 
       <CardContent className="flex flex-col items-center">
-        <p className="text-primary text-lg font-medium">{name}</p>
+        <p className="text-primary text-lg font-medium line-clamp-2">{name}</p>
         <p className="text-primary text-lg">{role}</p>
       </CardContent>
 

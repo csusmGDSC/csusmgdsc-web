@@ -1,4 +1,4 @@
-import { SectionTitle } from "@/features/home/components/section-title";
+import { SectionTitle } from "@/features/base";
 import { Award, Book, Trophy, Users } from "lucide-react";
 
 // Reusable Benefit Item Component

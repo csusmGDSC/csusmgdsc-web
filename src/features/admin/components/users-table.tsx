@@ -9,79 +9,50 @@ import {
   TableActionButtonProps,
 } from "./table-action-button";
 import { DataTable } from "./data-table";
-import { User } from "@/types/gdsc-user";
 import { UserTableColumns } from "./users-column-def";
+import { useUsers } from "@/api/user-api";
+import { QUERY_KEYS } from "@/config/query-keys";
+import { useQueryClient } from "@tanstack/react-query";
+import StatCard from "./stat-card";
+import { User } from "lucide-react";
 
 const UsersTable = () => {
-  const team: User[] = [
-    {
-      id: "user-001",
-      full_name: "Alice Johnson",
-      first_name: "Alice",
-      last_name: "Johnson",
-      email: "alice@example.com",
-      image: "https://gdsc-users.com/images/alice.png",
-      role: "ADMIN",
-      position: "leader",
-      branch: "project",
-      github: "https://github.com/alicejohnson",
-      linkedin: "https://linkedin.com/in/alicejohnson",
-      bio: "Passionate software developer and GDSC leader.",
-      tags: ["typescript", "react", "nextjs"],
-      website: "https://alice.dev",
-      graduation_date: new Date("2025-06-01"),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      provider: "google",
-      authId: "google-001",
-      is_onboarded: true,
-    },
-    {
-      id: "user-002",
-      full_name: "Bob Smith",
-      first_name: "Bob",
-      last_name: "Smith",
-      email: "bob@example.com",
-      image: "https://gdsc-users.com/images/bob.png",
-      role: "USER",
-      position: "student",
-      branch: "interview",
-      github: "https://github.com/bsmith",
-      linkedin: "https://linkedin.com/in/bsmith",
-      instagram: "https://instagram.com/bsmith",
-      tags: ["python", "machine learning", "data science"],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      provider: "github",
-      authId: "github-002",
-      is_onboarded: false,
-    },
-    {
-      id: "user-003",
-      full_name: "Charlie Davis",
-      first_name: "Charlie",
-      last_name: "Davis",
-      email: "charlie@example.com",
-      role: "USER",
-      position: "mentor",
-      branch: "marketing",
-      github: "https://github.com/charliedavis",
-      twitter: "https://twitter.com/charliedavis",
-      discord: "charliedavis#1234",
-      bio: "Marketing enthusiast and tech mentor.",
-      tags: ["seo", "content marketing", "branding"],
-      website: "https://charliedavis.com",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      provider: "linkedin",
-      authId: "linkedin-003",
-      is_onboarded: true,
-    },
-  ];
+  const { data: team } = useUsers();
+  const queryClient = useQueryClient();
 
   return (
-    <div>
-      <UsersTableActions refresh={() => {}} />
+    <div className="m-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
+        <StatCard
+          title="Project Team"
+          value={team?.length || 0}
+          color="blue"
+          Icon={User}
+        />
+        <StatCard
+          title="Leetcode Team"
+          value={team?.length || 0}
+          color="yellow"
+          Icon={User}
+        />
+        <StatCard
+          title="Marketing Team"
+          value={team?.length || 0}
+          color="red"
+          Icon={User}
+        />
+        <StatCard
+          title="Admins"
+          value={team?.length || 0}
+          color="green"
+          Icon={User}
+        />
+      </div>
+      <UsersTableActions
+        refresh={() =>
+          queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USERS] })
+        }
+      />
       <DataTable columns={UserTableColumns} data={team} loading={false} />
     </div>
   );
@@ -108,7 +79,7 @@ const UsersTableActions = ({ refresh }: { refresh: () => void }) => {
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row items-center pb-4 justify-between">
+    <div className="flex flex-row items-center pb-4 gap-4 lg:gap-0 lg:justify-between">
       <span className="flex items-center gap-4 text-blue">
         {ButtonActions.map((action) => (
           <TableActionButton key={action.action} {...action} />

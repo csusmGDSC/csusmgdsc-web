@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Code, Coffee } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "@/features/base";
 
 export default function ActivityGallery() {
   const activities = [
