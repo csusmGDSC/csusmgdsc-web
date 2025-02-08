@@ -23,9 +23,7 @@ export default function TermsPage() {
             </div>
             <div>
               <div>
-                <span>We are ____________</span>
-                ("<strong>Company</strong>," "<strong>we</strong>," "
-                <strong>us</strong>," "<strong>our</strong>").
+                <span>We are GDSC-CSUSM</span>
               </div>
             </div>
             <div>
@@ -34,11 +32,10 @@ export default function TermsPage() {
             <div>
               <div>
                 <span>
-                  We operate the website <span>__________</span> (the "
-                  <strong>Site</strong>") , as well as any other related
-                  products and services that refer or link to these legal terms
-                  (the "<strong>Legal Terms</strong>" ) (collectively, the "
-                  <strong>Services</strong>" ).
+                  We operate the website <span>GDSC-CSUSM</span>, as well as any
+                  other related products and services that refer or link to
+                  these legal terms (the "<strong>Legal Terms</strong>" )
+                  (collectively, the "<strong>Services</strong>" ).
                 </span>
               </div>
               <div>
@@ -47,8 +44,8 @@ export default function TermsPage() {
               </div>
               <div>
                 <span>
-                  You can contact us by email at __________ or by mail to
-                  ________________.
+                  You can contact us by email at gdsc-csusm@example.com or by
+                  mail to gdsc-csusm@example.com.
                 </span>
               </div>
               <div>
@@ -59,7 +56,7 @@ export default function TermsPage() {
                 <span>
                   These Legal Terms constitute a legally binding agreement made
                   between you, whether personally or on behalf of an entity ( "
-                  <strong>you</strong>" ), and ________________, concerning your
+                  <strong>you</strong>" ), and GDSC-CSUSM, concerning your
                   access to and use of the Services. You agree that by accessing
                   the Services, you have read, understood, and agreed to be
                   bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH
@@ -222,13 +219,13 @@ export default function TermsPage() {
                 <span>
                   If you wish to make any use of the Services, Content, or Marks
                   other than as set out in this section or elsewhere in our
-                  Legal Terms, please address your request to: __________. If we
-                  ever grant you the permission to post, reproduce, or publicly
-                  display any part of our Services or Content, you must identify
-                  us as the owners or licensors of the Services, Content, or
-                  Marks and ensure that any copyright or proprietary notice
-                  appears or is visible on posting, reproducing, or displaying
-                  our Content.
+                  Legal Terms, please address your request to:
+                  gdsc-csusm@example.com. If we ever grant you the permission to
+                  post, reproduce, or publicly display any part of our Services
+                  or Content, you must identify us as the owners or licensors of
+                  the Services, Content, or Marks and ensure that any copyright
+                  or proprietary notice appears or is visible on posting,
+                  reproducing, or displaying our Content.
                 </span>
               </div>
               <div>
@@ -642,13 +639,13 @@ export default function TermsPage() {
               We care about data privacy and security. By using the Services,
               you agree to be bound by our Privacy Policy posted on the
               Services, which is incorporated into these Legal Terms. Please be
-              advised the Services are hosted in __________. If you access the
-              Services from any other region of the world with laws or other
-              requirements governing personal data collection, use, or
-              disclosure that differ from applicable laws in __________, then
-              through your continued use of the Services, you are transferring
-              your data to __________, and you expressly consent to have your
-              data transferred to and processed in __________.
+              advised the Services are hosted in US. If you access the Services
+              from any other region of the world with laws or other requirements
+              governing personal data collection, use, or disclosure that differ
+              from applicable laws in US, then through your continued use of the
+              Services, you are transferring your data to GDSC-CSUSM, and you
+              expressly consent to have your data transferred to and processed
+              in GDSC-CSUSM.
             </p>
           </div>
           <div className="my-[24px]" id="terms">
@@ -682,10 +679,9 @@ export default function TermsPage() {
             <h2 className="font-bold">12. GOVERNING LAW</h2>
             <p>
               These Legal Terms shall be governed by and defined following the
-              laws of __________. __________ and yourself irrevocably consent
-              that the courts of __________ shall have exclusive jurisdiction to
-              resolve any dispute which may arise in connection with these Legal
-              Terms.
+              laws of US. GDSC-CSUSM and yourself irrevocably consent that the
+              courts of US shall have exclusive jurisdiction to resolve any
+              dispute which may arise in connection with these Legal Terms.
             </p>
           </div>
           <div className="my-[24px]" id="disputes">
@@ -699,10 +695,8 @@ export default function TermsPage() {
               Arbitration Chamber (Belgium, Brussels, Avenue Louise, 146)
               according to the Rules of this ICAC, which, as a result of
               referring to it, is considered as the part of this clause. The
-              number of arbitrators shall be __________. The seat, or legal
-              place, or arbitration shall be __________. The language of the
-              proceedings shall be __________. The governing law of these Legal
-              Terms shall be substantive law of __________.
+              language of the proceedings shall be English. The governing law of
+              these Legal Terms shall be substantive law of US.
             </p>
             <h3>Restrictions</h3>
             <p>
@@ -743,12 +737,12 @@ export default function TermsPage() {
               THE SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT
               WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT
               NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-              PARTICULAR PURPOSE, OR NON-INFRINGEMENT. NEITHER __________ NOR
-              ANY PERSON ASSOCIATED WITH __________ MAKES ANY WARRANTY OR
+              PARTICULAR PURPOSE, OR NON-INFRINGEMENT. NEITHER GDSC-CSUSM NOR
+              ANY PERSON ASSOCIATED WITH GDSC-CSUSM MAKES ANY WARRANTY OR
               REPRESENTATION WITH RESPECT TO THE COMPLETENESS, SECURITY,
               RELIABILITY, QUALITY, ACCURACY, OR AVAILABILITY OF THE SERVICES.
-              WITHOUT LIMITING THE FOREGOING, NEITHER __________ NOR ANYONE
-              ASSOCIATED WITH __________ REPRESENTS OR WARRANTS THAT THE
+              WITHOUT LIMITING THE FOREGOING, NEITHER GDSC-CSUSM NOR ANYONE
+              ASSOCIATED WITH GDSC-CSUSM REPRESENTS OR WARRANTS THAT THE
               SERVICES, THEIR CONTENT, OR ANY SERVICES OR ITEMS OBTAINED THROUGH
               THE SERVICES WILL BE ACCURATE, RELIABLE, ERROR-FREE, OR
               UNINTERRUPTED, THAT DEFECTS WILL BE CORRECTED, THAT THE SERVICES
