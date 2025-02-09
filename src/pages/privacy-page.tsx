@@ -4,14 +4,9 @@ export default function PrivacyPolicyPage() {
   return (
     <main>
       <PageHeader
-        title={
-          <div className="text-center relative">
-            Privacy Policy
-            <span className="absolute block h-1 bg-primary bottom-0 left-1/2 transform -translate-x-1/2 mt-2"></span>
-          </div>
-        }
+        title="Privacy Policy"
         subTitle=""
-        backgroundImageSrc="/images/placeholder/homeBackground-4.jpg"
+        backgroundImageSrc="/images/placeholder/homeBackground.jpg"
       />
       <PageContent className="max-w-4xl mx-auto px-6 py-12 space-y-8">
         <div className="prose dark:prose-invert max-w-none">
