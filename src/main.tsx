@@ -27,6 +27,7 @@ import NotFoundPage from "./pages/not-found-page";
 import AdminEventsPage from "./pages/admin-events-page";
 import AdminUsersPage from "./pages/admin-users-page";
 import SettingsPage from "./pages/settings-page";
+import TermsPage from "./pages/terms-page"
 
 const mainRoutes = {
   path: "/",
@@ -41,6 +42,7 @@ const mainRoutes = {
     { path: "/team", element: <TeamPage /> },
     { path: "/profile/:userId", element: <ProfilePage /> },
     { path: "/settings", element: <SettingsPage /> },
+    { path: "/terms", element: <TermsPage /> },
     { path: "*", element: <NotFoundPage /> },
   ],
 };
