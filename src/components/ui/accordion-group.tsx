@@ -24,11 +24,11 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
 }) => {
   return (
     <div className="w-full px-2 md:px-0">
-      <h1 className="text-lg text-foreground/80 font-semibold mb-2">{title}</h1>
+      <h1 className="font-mono text-blue mb-2">{title}</h1>
       <Accordion
         type="single"
         collapsible
-        className="w-full px-4 rounded-md shadow-sm border border-border dark:bg-primary-foreground"
+        className="w-full px-4 rounded-sm shadow-sm border border-border dark:bg-primary-foreground"
       >
         {accordionTuples.map((tuple, index) => (
           <AccordionItem key={index} value={`item-${index}}`}>

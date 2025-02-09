@@ -1,5 +1,5 @@
 import AccordionGroup from "@/components/ui/accordion-group";
-import Title from "@/components/ui/title";
+import { SectionTitle } from "@/features/base";
 
 const group1: [string, string][] = [
   [
@@ -23,7 +23,7 @@ const group1: [string, string][] = [
 const ProjectRequirements = () => {
   return (
     <section>
-      <Title>Frequently Asked Questions</Title>
+      <SectionTitle title="Frequently Asked Questions" />
       <AccordionGroup
         title="Contributing to community projects"
         accordionTuples={group1}

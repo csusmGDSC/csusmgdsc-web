@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,53 +6,36 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Github,
   Code,
   Users,
   Cloud,
-  Play,
   Terminal,
   BookOpen,
+  GitBranch,
 } from "lucide-react";
+import { SectionTitle } from "@/features/base";
+import RandomBadge from "@/components/ui/random-badge";
 
 const teams = [
   {
-    title: "Project Team",
+    title: "Project",
     description:
       "Collaborate on a variety of software applications and business solutions",
     features: [
       {
         icon: <Code className="w-5 h-5" />,
-        text: "Contribute in Coding Projects",
+        text: "Contribute in coding projects",
       },
-      { icon: <Play className="w-5 h-5" />, text: "Collaborate on Sprints" },
-      { icon: <Cloud className="w-5 h-5" />, text: "Deploy Real Software" },
+      {
+        icon: <GitBranch className="w-5 h-5" />,
+        text: "Learn industry workflows",
+      },
+      { icon: <Cloud className="w-5 h-5" />, text: "Deploy real software" },
     ],
-    technologies: ["HTML5", "CSS3", "TypeScript", "React", "Next.js", "GitHub"],
-    techIcons: [
-      <div key="html" className="bg-orange-500 p-2 rounded-lg">
-        <Code className="w-4 h-4 text-white" />
-      </div>,
-      <div key="css" className="bg-blue p-2 rounded-lg">
-        <Code className="w-4 h-4 text-white" />
-      </div>,
-      <div key="ts" className="bg-blue p-2 rounded-lg">
-        <Terminal className="w-4 h-4 text-white" />
-      </div>,
-      <div key="react" className="bg-cyan-500 p-2 rounded-lg">
-        <Code className="w-4 h-4 text-white" />
-      </div>,
-      <div key="next" className="bg-black p-2 rounded-lg">
-        <Terminal className="w-4 h-4 text-white" />
-      </div>,
-      <div key="github" className="bg-gray-800 p-2 rounded-lg">
-        <Github className="w-4 h-4 text-white" />
-      </div>,
-    ],
-    action: "View Projects",
+    technologies: ["HTML", "CSS", "TypeScript", "React", "GoLang", "GitHub"],
   },
   {
-    title: "Interview Team",
+    title: "Interview",
     description:
       "Improve your technical skills to propel your chances of winning interviews",
     features: [
@@ -67,45 +49,52 @@ const teams = [
         text: "Learn Interview Problems",
       },
     ],
-    technologies: ["Python", "Go", "GitHub", "HackerRank"],
-    techIcons: [
-      <div key="python" className="bg-blue p-2 rounded-lg">
-        <Terminal className="w-4 h-4 text-white" />
-      </div>,
-      <div key="go" className="bg-cyan-600 p-2 rounded-lg">
-        <Code className="w-4 h-4 text-white" />
-      </div>,
-      <div key="github" className="bg-gray-800 p-2 rounded-lg">
-        <Github className="w-4 h-4 text-white" />
-      </div>,
-      <div key="hackerrank" className="bg-green p-2 rounded-lg">
-        <Terminal className="w-4 h-4 text-white" />
-      </div>,
+    technologies: ["Python", "Leetcode", "C++", "HackerRank"],
+  },
+  {
+    title: "Marketing",
+    description: "Help grow the community by marketing and promoting GDSC",
+    features: [
+      {
+        icon: <Users className="w-5 h-5" />,
+        text: "Create social media content strategy",
+      },
+      {
+        icon: <Terminal className="w-5 h-5" />,
+        text: "Develop campus outreach programs",
+      },
+      {
+        icon: <BookOpen className="w-5 h-5" />,
+        text: "Organize networking events",
+      },
     ],
-    action: "View Interview",
+    technologies: [
+      "Analytics",
+      "Email Marketing",
+      "Social Media",
+      "Networking",
+    ],
   },
 ];
 export default function Branches() {
   return (
-    <div className="w-full">
-      <div className=" mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-3">Branches</h1>
-        <p className="text-xl text-gray-600">
-          Choose your desired team at GDSC
-        </p>
-      </div>
+    <div className="w-full space-y-4" id="branches">
+      <SectionTitle
+        title="Branches"
+        subtitle="We are split into three disciplines"
+      />
 
-      <div className="flex flex-col md:flex-row gap-6 w-full justify-center">
+      <div className="flex flex-col lg:flex-row gap-6 w-full justify-center">
         {teams.map((team, index) => (
           <Card
             key={index}
             className="flex-1 group hover:shadow-lg transition-shadow duration-300"
           >
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-gray-800">
+              <CardTitle className="text-2xl font-bold text-primary">
                 {team.title}
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-primary/70">
                 {team.description}
               </CardDescription>
             </CardHeader>
@@ -115,7 +104,7 @@ export default function Branches() {
                   {team.features.map((feature, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center space-x-3 text-gray-700"
+                      className="flex items-center space-x-3 text-primary/80"
                     >
                       {feature.icon}
                       <span>{feature.text}</span>
@@ -123,16 +112,22 @@ export default function Branches() {
                   ))}
                 </div>
 
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-3">
-                    Technologies You'll Learn
-                  </h4>
-                  <div className="flex flex-wrap gap-3">{team.techIcons}</div>
-                </div>
-
-                <Button className="w-full" size="lg">
-                  {team.action}
-                </Button>
+                {team.technologies.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-primary/80 mb-3">
+                      Skills used
+                    </h4>
+                    <div className="flex flex-wrap gap-3">
+                      {team.technologies.map((tech, idx) => (
+                        <RandomBadge
+                          text={tech}
+                          key={idx}
+                          className="p-1 text-xs rounded-sm"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
