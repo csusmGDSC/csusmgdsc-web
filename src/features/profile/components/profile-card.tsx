@@ -68,7 +68,9 @@ const ProfileCard = ({
         />
 
         <CardContent className="flex flex-col items-center gap-4">
-          <p className="text-primary text-3xl font-medium">{name}</p>
+          <p className="text-primary text-2xl font-medium line-clamp-2">
+            {name}
+          </p>
           <p className="text-primary text-lg">{role}</p>
 
           <TooltipProvider delayDuration={0}>

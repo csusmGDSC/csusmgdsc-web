@@ -1,16 +1,40 @@
 import { Button } from "@/components/ui/button";
-import Title from "@/components/ui/title";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SectionTitle } from "@/features/base";
 import { GDSCEvent } from "@/types/gdsc-event";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function PastEvents({ events }: { events: GDSCEvent[] }) {
+interface PastEventsProps {
+  events?: GDSCEvent[];
+  skeletonMode?: boolean;
+}
+
+export default function PastEvents({ events, skeletonMode }: PastEventsProps) {
+  if (skeletonMode) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {[...Array(6)].map((_, index) => (
+          <Skeleton key={index} className="w-full rounded-sm h-[10rem]" />
+        ))}
+      </div>
+    );
+  }
+
+  if (!events || events.length === 0) {
+    return <p className="text-primary text-2xl font-bold">No past events.</p>;
+  }
+
+  const pastEvents = events.filter(
+    (event) => new Date(event.startTime) < new Date()
+  );
+
   return (
     <section id="past-events">
-      <Title>Past Events</Title>
+      <SectionTitle title="Past Events" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {events.map((event) => (
+        {pastEvents.map((event) => (
           <Link key={event.id} to={`/events/${event.id}`}>
             <div
               key={event.id}

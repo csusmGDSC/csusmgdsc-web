@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "@/features/base";
 
 const About = () => {
   return (

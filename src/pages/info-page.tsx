@@ -1,5 +1,5 @@
 import { PageContent, PageHeader } from "@/features/base";
-import { SectionTitle } from "@/features/home/components/section-title";
+import { SectionTitle } from "@/features/base";
 import { Benefits, InfoCards } from "@/features/info";
 
 export default function InfoPage() {

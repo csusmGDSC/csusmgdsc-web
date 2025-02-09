@@ -1,9 +1,9 @@
-export const SectionTitle = ({
+const SectionTitle = ({
   title,
   subtitle,
 }: {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }) => {
   return (
     <span>
@@ -12,3 +12,5 @@ export const SectionTitle = ({
     </span>
   );
 };
+
+export default SectionTitle;

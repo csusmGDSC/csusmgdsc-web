@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import socialIcons from "@/components/ui/social-icons";
 import { socialsList } from "@/config/data";
-import { SectionTitle } from "./section-title";
+import { SectionTitle } from "@/features/base";
 
 export default function Socials() {
   return (

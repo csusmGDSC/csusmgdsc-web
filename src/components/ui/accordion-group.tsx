@@ -24,7 +24,7 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
 }) => {
   return (
     <div className="w-full px-2 md:px-0">
-      <h1 className="text-lg text-foreground/80 font-semibold mb-2">{title}</h1>
+      <h1 className="font-mono text-blue mb-2">{title}</h1>
       <Accordion
         type="single"
         collapsible

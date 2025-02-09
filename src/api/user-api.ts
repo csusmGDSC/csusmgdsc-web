@@ -8,11 +8,18 @@ import { ProfileSchema } from "@/features/settings/schemas/profile-schema";
 import { toast } from "sonner";
 import { z } from "zod";
 
-async function fetchUsers(): Promise<User[]> {
+interface FetchUsersRequest {
+  users: User[];
+  limit: number;
+  page: number;
+  totalCount: number;
+}
+
+async function fetchUsers(): Promise<FetchUsersRequest> {
   const { data } = await api.get(
     API_ROUTES.USERS.GET_USERS({ limit: 500 }) // TODO: Handle pagination when it becomes an issue using useInfiniteQuery
   );
-  return data.users || [];
+  return data;
 }
 
 export const useUsers = () => {
@@ -21,14 +28,14 @@ export const useUsers = () => {
     queryFn: fetchUsers,
   });
 
-  return { data: data || [], isLoading };
+  return { data: data?.users || [], isLoading };
 };
 
 export const useUserById = (id: string) => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEYS.USERS, id],
     queryFn: () =>
-      fetchUsers().then((users) => users.find((user) => user.id === id)), // TODO: Discuss whether we do this or use fetch user by id api call
+      fetchUsers().then((data) => data.users.find((user) => user.id === id)), // TODO: Discuss whether we do this or use fetch user by id api call
   });
 
   return { data, isLoading };
