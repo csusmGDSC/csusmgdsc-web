@@ -27,6 +27,7 @@ import NotFoundPage from "./pages/not-found-page";
 import AdminEventsPage from "./pages/admin-events-page";
 import AdminUsersPage from "./pages/admin-users-page";
 import SettingsPage from "./pages/settings-page";
+<<<<<<< Updated upstream
 
 const mainRoutes = {
   path: "/",
@@ -42,6 +43,119 @@ const mainRoutes = {
     { path: "/profile/:userId", element: <ProfilePage /> },
     { path: "/settings", element: <SettingsPage /> },
     { path: "*", element: <NotFoundPage /> },
+=======
+import { ThemeProvider } from "./lib/providers";
+import { AdminEventCreationPage } from "./pages/admin-event-creation-page";
+import PrivacyPolicyPage from "./pages/privacy-page";
+
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <PageLayout/>,
+      children: [
+        {
+          path: "/",
+          element: <HomePage/>,
+        },
+        {
+          path: "/events",
+          element: <EventsPage/>,
+        },
+        {
+          path: "/projects",
+          element: <ProjectsPage/>,
+        },
+        {
+          path: "/resources",
+          element: <ResourcesPage/>,
+        },
+        {
+          path: "/events/:eventId",
+          element: <EventPage/>,
+        },
+        {
+          path: "/join",
+          element: <InfoPage/>,
+        },
+        {
+          path: "/team",
+          element: <TeamPage/>,
+        },
+        {
+          path: "/profile/:userId",
+          element: <ProfilePage/>,
+        },
+        {
+          path: "/settings",
+          element: <SettingsPage/>,
+        },
+        {
+          path: "/privacy",
+          element: <PrivacyPolicyPage/>,
+        },
+        {
+          path: "*",
+          element: <NotFoundPage/>,
+        },
+      ],
+    },
+    {
+      path: "/auth",
+      children: [
+        {
+          path: "sign-in",
+          element: <SignInPage/>,
+        },
+        {
+          path: "sign-up",
+          element: <SignUpPage/>,
+        },
+        {
+          path: "forgot-password",
+          element: <ResetPage/>,
+        },
+        {
+          path: "reset-password",
+          element: <ResetPasswordPage/>,
+        },
+        {
+          path: "email-verification",
+          element: <EmailVerificationPage/>,
+        },
+        {
+          path: "two-factor-auth",
+          element: <TwoFactorAuthPage/>,
+        },
+        {
+          path: "onboarding",
+          element: <OnboardingPage/>,
+        },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <PageAdminLayout/>,
+      children: [
+        {
+          path: "dashboard",
+          element: <DashboardPage/>,
+        },
+        {
+          path: "events",
+          element: <AdminEventsPage/>,
+        },
+        {
+          path: "users",
+          element: <AdminUsersPage/>,
+        },
+        {
+          path: "create-event",
+          element: <AdminEventCreationPage/>,
+        },
+      ],
+    },
+>>>>>>> Stashed changes
   ],
 };
 
