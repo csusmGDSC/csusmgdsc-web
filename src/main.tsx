@@ -29,7 +29,7 @@ import AdminUsersPage from "./pages/admin-users-page";
 import SettingsPage from "./pages/settings-page";
 import PrivacyPolicyPage from "./pages/privacy-page";
 
-// Yo I dont know who it is but please stop deleting my Privacy Page, I'm still working on it, still learning Tailwind and React, At least comment it out or like ask question on github.
+
 
 const mainRoutes = {
   path: "/",
