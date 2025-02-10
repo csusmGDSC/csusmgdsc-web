@@ -28,8 +28,7 @@ import AdminEventsPage from "./pages/admin-events-page";
 import AdminUsersPage from "./pages/admin-users-page";
 import SettingsPage from "./pages/settings-page";
 import PrivacyPolicyPage from "./pages/privacy-page";
-
-
+import TermsPage from "./pages/terms-page"
 
 const mainRoutes = {
   path: "/",
@@ -45,6 +44,7 @@ const mainRoutes = {
     { path: "/profile/:userId", element: <ProfilePage /> },
     { path: "/settings", element: <SettingsPage /> },
     { path: "/privacy" , element: <PrivacyPolicyPage />},
+    { path: "/terms", element: <TermsPage /> },
     { path: "*", element: <NotFoundPage /> },
   ],
 };
