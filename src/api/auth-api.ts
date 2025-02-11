@@ -50,16 +50,6 @@ export function useUser(): User | null {
     return data;
   };
 
-  // Query user data
-  const { data: user } = useQuery<User | null>({
-    queryKey: [QUERY_KEYS.USER],
-    queryFn: fetchUser,
-    initialData: userStore.getUserFromLocalStorage,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-  });
-
   // Query access token
   const { data: accessToken } = useQuery<string | null>({
     queryKey: [QUERY_KEYS.ACCESS_TOKEN],
@@ -68,6 +58,19 @@ export function useUser(): User | null {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    staleTime: Infinity,
+  });
+
+  // Query user data
+  const { data: user } = useQuery<User | null>({
+    queryKey: [QUERY_KEYS.USER],
+    queryFn: fetchUser,
+    initialData: userStore.getUserFromLocalStorage,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    enabled: !!accessToken,
+    staleTime: Infinity,
   });
 
   // Sync local storage with user state

@@ -39,6 +39,16 @@ export const API_ROUTES = {
       `/users${params ? formatQueryParams(params) : ""}`,
     GET_USER_BY_ID: (id: string) => `/users/${id}`,
   },
+  COMMENTS: {
+    GET_COMMENTS_BY_EVENT_ID: (id: string) => `/comments?event_id=${id}`,
+    GET_COMMENT_BY_USER_ID: (id: string) => `/comments?user_id=${id}`,
+    GET_COMMENTS_BY_USER_AND_EVENT_ID: (userId: string, eventId: string) =>
+      `/comments?user_id=${userId}&event_id=${eventId}`,
+    CREATE_COMMENT: "/comments",
+    GET_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+    UPDATE_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+    DELETE_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+  },
 };
 
 /**

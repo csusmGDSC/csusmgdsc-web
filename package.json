@@ -33,6 +33,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.5.2",
     "emblor": "^1.4.7",
+    "emoji-picker-react": "^4.12.0",
     "framer-motion": "^11.13.1",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.460.0",
