@@ -3,8 +3,9 @@
 Welcome! I'm glad to hear your interest in improving the GDSC platform as a software developer. Here are some quick things to recognize before getting started,
 
 1. You need some experience with React, TypeScript, and TailwindCSS
-2. All your changes should be relating to fixing a issue through GitHub issues
-3. You should always be on a separate branch from "main"
+2. You will need git and github set up. You can install git using the [link](https://git-scm.com/downloads)
+3. All your changes should be relating to fixing a issue through GitHub issues
+4. You should always be on a separate branch from "main"
 
 ## Getting Started With Local Development
 
@@ -50,6 +51,7 @@ git branch --show-curent
 ```
 
 If you accidentally made changes on the main branch, you can move those changes to a new branch by doing the following,
+
 ```bash
 git stash
 git checkout -b new-branch-name
