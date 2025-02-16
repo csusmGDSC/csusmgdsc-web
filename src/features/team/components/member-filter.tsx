@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SectionTitle } from "@/features/base";
-import { GDSC_BRANCHES } from "@/types/gdsc-user";
+import { GDSC_BRANCHES } from "@/types/user";
 import { Filter, Search } from "lucide-react";
 // import { useState } from "react";
 

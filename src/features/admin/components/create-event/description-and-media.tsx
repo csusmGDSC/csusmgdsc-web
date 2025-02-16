@@ -13,30 +13,33 @@ import "@uiw/react-markdown-preview/markdown.css";
 import { useFormContext } from "react-hook-form";
 import { EmbedYoutubeLink } from "./embed-youtube-link";
 import { SimpleFormInput } from "@/components/form-inputs/simple-form-input";
-import UserSelectForm from "../inputs/user-select-form";
+import { UserSelectForm } from "../inputs/user-select-form";
 import { RoomSelectForm } from "../inputs/room-select-form";
+import { z } from "zod";
+import { EventSchema } from "../../schemas/event-schema";
+import { IOTA_TO_EVENT_TYPE } from "@/types/event";
 
 export const DescriptionAndMediaForm = () => {
-  const form = useFormContext();
+  const form = useFormContext<z.infer<typeof EventSchema>>();
   return (
     <div className="space-y-10">
-      <div className="flex flex-col md:flex-row gap-4">
-        <SimpleFormInput
-          name="location"
-          label="Location"
-          required
-          id="location"
-          placeholder="Enter location (i.e. California State San Marcos)"
-          className="flex-1"
-        />
+      <SimpleFormInput
+        name="location"
+        label="Location"
+        required
+        id="location"
+        placeholder="Enter location (i.e. California State San Marcos)"
+        className="flex-1"
+      />
 
-        <RoomSelectForm
-          name="room"
-          label="Room"
-          required
-          buttonClassName="flex-1"
-        />
-      </div>
+      <RoomSelectForm
+        name="room"
+        label="Room"
+        required={
+          IOTA_TO_EVENT_TYPE[form.watch("type")] !== "virtual" &&
+          IOTA_TO_EVENT_TYPE[form.watch("type")] !== "leetcode"
+        }
+      />
 
       <UserSelectForm name="organizerIds" label="Organizers" required />
 

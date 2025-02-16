@@ -8,10 +8,7 @@ import {
 } from "@/components/ui/form";
 import { IconItem } from "@/components/ui/icon-item";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  GDSC_POSITIONS_ICONS,
-  GDSC_POSITIONS_SELECTABLE,
-} from "@/types/gdsc-user";
+import { GDSC_POSITIONS_ICONS, GDSC_POSITIONS_SELECTABLE } from "@/types/user";
 import { useFormContext } from "react-hook-form";
 
 export const StatusFormInput = ({ id }: { id: string }) => {

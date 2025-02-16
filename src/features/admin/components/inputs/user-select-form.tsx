@@ -8,19 +8,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FormLabel } from "@/components/ui/form";
 import { leads } from "@/tests/mock/team";
-import { X } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+import { EventSchema } from "../../schemas/event-schema";
+import { z } from "zod";
+import { AvatarCard } from "@/components/ui/avatar-card";
 
-export default function UserSelectForm({
+export const UserSelectForm = ({
   name,
   label,
   required = false,
 }: {
-  name: string;
+  name: "organizerIds";
   label: string;
   required?: boolean;
-}) {
-  const form = useFormContext();
+}) => {
+  const form = useFormContext<z.infer<typeof EventSchema>>();
 
   return (
     <div className="flex flex-col gap-2">
@@ -29,36 +31,27 @@ export default function UserSelectForm({
       </FormLabel>
 
       {form.watch(name).length > 0 &&
-        form.watch(name).map((userId: string) => (
-          <div className="relative border border-border rounded-sm py-1 pl-2 pr-20 flex items-center gap-2 w-fit">
-            <div
-              className="flex size-8 items-center justify-center rounded-lg border border-border bg-background"
-              aria-hidden="true"
-            >
-              <img src={""} className="object-cover" />
-            </div>
-            <div>
-              <div className="text-sm font-medium overflow-ellipsis truncate max-w-[150px]">
-                {userId}
-              </div>
-              <div className="text-xs text-muted-foreground">
-                test@gmail.com
-              </div>
-            </div>
-
-            <Button
-              size="icon"
-              className="absolute size-6 rounded-full -top-2 -right-3"
-              onClick={() => {
-                form.setValue(
-                  name,
-                  form.watch(name).filter((id: string) => id !== userId)
-                );
-              }}
-            >
-              <X className="size-4" />
-            </Button>
-          </div>
+        form.watch(name).map((userId: string, index: number) => (
+          <AvatarCard
+            key={index}
+            imageSrc={
+              leads.find((lead) => lead.userId === userId)?.imageSrc || ""
+            }
+            fullName={
+              leads.find((lead) => lead.userId === userId)?.name || "No Name"
+            }
+            email={
+              leads.find((lead) => lead.userId === userId)?.email || "No Email"
+            }
+            userId={userId}
+            removeButton
+            onRemove={() => {
+              form.setValue(
+                name,
+                form.watch(name).filter((id: string) => id !== userId)
+              );
+            }}
+          />
         ))}
 
       <DropdownMenu>
@@ -79,6 +72,7 @@ export default function UserSelectForm({
 
           {leads.map((lead) => (
             <DropdownMenuItem
+              key={lead.userId}
               onClick={() =>
                 form.setValue(name, [...form.watch(name), lead.userId])
               }
@@ -104,6 +98,7 @@ export default function UserSelectForm({
 
           {leads.map((lead) => (
             <DropdownMenuItem
+              key={lead.userId}
               onClick={() =>
                 form.setValue(name, [...form.watch(name), lead.userId])
               }
@@ -129,6 +124,7 @@ export default function UserSelectForm({
 
           {leads.map((lead) => (
             <DropdownMenuItem
+              key={lead.userId}
               onClick={() =>
                 form.setValue(name, [...form.watch(name), lead.userId])
               }
@@ -153,4 +149,4 @@ export default function UserSelectForm({
       </DropdownMenu>
     </div>
   );
-}
+};

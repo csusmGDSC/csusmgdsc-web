@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { EVENT_TYPES } from "@/types/gdsc-event";
+import { EVENT_TYPES } from "@/types/event";
 import { Filter, Search } from "lucide-react";
 
 interface EventsFilterProps {

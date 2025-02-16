@@ -1,12 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "./api-client";
 import {
-  GDSC_BRANCH_IOTA,
-  GDSC_POSITION_IOTA,
   UserLoginAPIResponse,
   User,
   UserSignUpAPIResponse,
-} from "@/types/gdsc-user";
+} from "@/types/user";
 import { toast } from "sonner";
 
 import * as userStore from "./user.localstore";
@@ -15,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { API_ROUTES } from "@/config/api-routes";
 import { QUERY_KEYS } from "@/config/query-keys";
 import { z } from "zod";
-import { OnboardingSchema } from "@/features/onboarding/schemas/onboarding-schema";
+import { ProfileSchema } from "@/features/onboarding/schemas/profile-schema";
 
 interface Credentials {
   email: string;
@@ -212,15 +210,13 @@ export function useOnboarding() {
 
   const userId = user.id;
 
-  return useMutation<any, unknown, z.infer<typeof OnboardingSchema>>({
-    mutationFn: async (values: z.infer<typeof OnboardingSchema>) => {
+  return useMutation<any, unknown, z.infer<typeof ProfileSchema>>({
+    mutationFn: async (values: z.infer<typeof ProfileSchema>) => {
       const payload = Object.fromEntries(
         Object.entries({
-          position: values.position
-            ? GDSC_POSITION_IOTA[values.position]
-            : null,
-          branch: values.branch ? GDSC_BRANCH_IOTA[values.branch] : null,
-          graduation_date: values.graduation_date ?? null,
+          position: values.position,
+          branch: values.branch,
+          graduation_date: JSON.stringify(values.graduation_date) ?? null,
           first_name: values.first_name,
           last_name: values.last_name,
           full_name: `${values.first_name} ${values.last_name}`,

@@ -2,11 +2,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "./api-client";
 import { API_ROUTES } from "@/config/api-routes";
 import { QUERY_KEYS } from "@/config/query-keys";
-import { GDSC_BRANCH_IOTA, GDSC_POSITION_IOTA, User } from "@/types/gdsc-user";
+import { User } from "@/types/user";
 import { useUser } from "./auth-api";
-import { ProfileSchema } from "@/features/settings/schemas/profile-schema";
+
 import { toast } from "sonner";
 import { z } from "zod";
+import { ProfileSchema } from "@/features/onboarding/schemas/profile-schema";
 
 interface FetchUsersRequest {
   users: User[];
@@ -55,15 +56,9 @@ export function useUpdateUser() {
     mutationFn: async (values: z.infer<typeof ProfileSchema>) => {
       const payload = Object.fromEntries(
         Object.entries({
-          position: values.position
-            ? GDSC_POSITION_IOTA[
-                values.position as keyof typeof GDSC_POSITION_IOTA
-              ]
-            : null,
-          branch: values.branch
-            ? GDSC_BRANCH_IOTA[values.branch as keyof typeof GDSC_BRANCH_IOTA]
-            : null,
-          graduation_date: values.graduation_date ?? null,
+          position: values.position,
+          branch: values.branch,
+          graduation_date: JSON.stringify(values.graduation_date) ?? null,
           first_name: values.first_name,
           last_name: values.last_name,
           full_name: `${values.first_name} ${values.last_name}`,

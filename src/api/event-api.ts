@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "./api-client";
 import { API_ROUTES } from "@/config/api-routes";
 import { QUERY_KEYS } from "@/config/query-keys";
-import { GDSCEvent } from "@/types/gdsc-event";
+import { Event } from "@/types/event";
 
 interface FetchEventRequest {
-  events: GDSCEvent[];
+  events: Event[];
   limit: number;
   page: number;
   totalCount: number;

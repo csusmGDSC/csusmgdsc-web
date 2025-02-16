@@ -447,7 +447,7 @@ const EventComments = () => {
 
   useEffect(() => {
     if (!comments) {
-      return;
+      return; 
     }
 
     // Sort comments by pinned status

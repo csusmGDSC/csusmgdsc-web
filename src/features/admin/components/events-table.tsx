@@ -11,19 +11,24 @@ import {
 } from "./table-action-button";
 import { DataTable } from "./data-table";
 import { EventTableColumns } from "./events-column-def";
-import { GDSCEvent } from "@/types/gdsc-event";
+import { Event } from "@/types/event";
 import { useNavigate } from "react-router-dom";
 
 const EventsTable = () => {
-  const mockGDSCEvents: GDSCEvent[] = [
+  const mockEvents: Event[] = [
     {
       id: "event-001",
       title: "Intro to LeetCode",
-      room: null,
+      room: {
+        building: "ACD",
+        room: 123,
+        type: 1,
+        capacity: 10,
+      },
       tags: ["leetcode", "coding", "interview prep"],
       startTime: new Date("2024-09-15T10:00:00"),
       endTime: new Date("2024-09-15T12:00:00"),
-      type: "leetcode",
+      type: 1,
       location: "California State University San Marcos",
       date: new Date("2024-09-15"),
       githubRepo: "https://github.com/gdsc/leetcode-workshop",
@@ -47,7 +52,7 @@ const EventsTable = () => {
       tags: ["hackathon", "teamwork", "innovation"],
       startTime: new Date("2024-10-01T14:00:00"),
       endTime: new Date("2024-10-01T16:00:00"),
-      type: "hackathon",
+      type: 2,
       location: "Online",
       date: new Date("2024-10-01"),
       githubRepo: "https://github.com/gdsc/hackathon",
@@ -67,11 +72,16 @@ const EventsTable = () => {
     {
       id: "event-003",
       title: "Workshop on TypeScript",
-      room: null,
+      room: {
+        building: "ACD",
+        room: 123,
+        type: 1,
+        capacity: 10,
+      },
       tags: ["typescript", "frontend", "web dev"],
       startTime: new Date("2024-09-20T09:00:00"),
       endTime: new Date("2024-09-20T11:00:00"),
-      type: "workshop",
+      type: 3,
       location: "California State University San Marcos",
       date: new Date("2024-09-20"),
       githubRepo: "https://github.com/gdsc/typescript-workshop",
@@ -96,7 +106,7 @@ const EventsTable = () => {
       <EventsTableActions refresh={() => {}} />
       <DataTable
         columns={EventTableColumns}
-        data={mockGDSCEvents}
+        data={mockEvents}
         loading={false}
       />
     </div>
@@ -131,12 +141,10 @@ const EventsTableActions = ({ refresh }: { refresh: () => void }) => {
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row items-center pb-4 justify-between">
-      <span className="flex items-center gap-4 text-blue">
-        {ButtonActions.map((action) => (
-          <TableActionButton key={action.action} {...action} />
-        ))}
-      </span>
+    <div className="flex items-center flex-wrap gap-4 text-blue pb-4">
+      {ButtonActions.map((action) => (
+        <TableActionButton key={action.action} {...action} />
+      ))}
       <span className="relative w-[20rem]">
         <Input placeholder="Filter events..." className="max-w-xs" />
         <FaSearch className="absolute right-4 top-1 translate-y-1/2 text-blue" />

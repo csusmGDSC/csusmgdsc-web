@@ -10,9 +10,8 @@ import { SimpleFormInput } from "@/components/form-inputs/simple-form-input";
 import { StatusFormInput } from "@/features/onboarding/components/status-form-input";
 import {
   GDSC_POSITIONS_WITH_GRAD_DATE,
-  IOTA_TO_GDSC_BRANCH,
   IOTA_TO_GDSC_POSITION,
-} from "@/types/gdsc-user";
+} from "@/types/user";
 import { GradFormInput } from "@/features/onboarding/components/grad-form-input";
 import { ProfileImageInput } from "@/components/form-inputs/profile-image-input";
 import { BranchFormInput } from "@/features/onboarding/components/branch-form-input";
@@ -25,10 +24,11 @@ import { IoWarning } from "react-icons/io5";
 import { useUser } from "@/api/auth-api";
 import { useImagePreview } from "@/hooks/use-image-preview";
 import { Loader2 } from "lucide-react";
-import { ProfileSchema } from "../schemas/profile-schema";
+
 import { useUpdateUser } from "@/api/user-api";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/config/query-keys";
+import { ProfileSchema } from "@/features/onboarding/schemas/profile-schema";
 
 const ProfileForm = () => {
   const queryClient = useQueryClient();
@@ -43,12 +43,8 @@ const ProfileForm = () => {
       last_name: user?.last_name || "",
       image: "https://avatar.iran.liara.run/public",
       graduation_date: new Date(user?.graduation_date || "") || undefined,
-      branch: user?.branch
-        ? IOTA_TO_GDSC_BRANCH[user.branch as unknown as 1 | 2 | 3]
-        : null,
-      position: user?.position
-        ? IOTA_TO_GDSC_POSITION[user.position as unknown as 1 | 2]
-        : null,
+      branch: user?.branch ? user.branch : 0,
+      position: user?.position ? user.position : 0,
       bio: user?.bio || "",
       tags: user?.tags || [],
       website: user?.website || "",
@@ -107,9 +103,8 @@ const ProfileForm = () => {
 
           {/* GRADUATION DATE INPUT FOR USER'S GDSC POSITION (i.e student, alumni) */}
           {GDSC_POSITIONS_WITH_GRAD_DATE.includes(
-            form.watch(
-              "position"
-            ) as (typeof GDSC_POSITIONS_WITH_GRAD_DATE)[number]
+            // @ts-ignore
+            IOTA_TO_GDSC_POSITION[form.watch("position")]
           ) && <GradFormInput />}
 
           {/* PROFILE IMAGE INPUT */}

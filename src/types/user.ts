@@ -25,7 +25,10 @@ export const GDSC_POSITIONS_WITH_GRAD_DATE = [
   "leader",
 ] as const;
 
-export const GDSC_POSITIONS_ICONS = {
+export const GDSC_POSITIONS_ICONS: Record<
+  (typeof GDSC_POSITIONS)[number],
+  React.ComponentType
+> = {
   student: GoPerson,
   alumni: PiStudent,
   mentor: GrUserWorker,
@@ -36,13 +39,19 @@ export const GDSC_POSITIONS_ICONS = {
 
 export const GDSC_BRANCHES = ["project", "interview", "marketing"] as const;
 
-export const GDSC_BRANCHES_ICONS = {
+export const GDSC_BRANCHES_ICONS: Record<
+  (typeof GDSC_BRANCHES)[number],
+  React.ComponentType
+> = {
   project: FaCode,
   interview: SiLeetcode,
   marketing: IoShareSocialOutline,
 };
 
-export const GDSC_BRANCH_DECSRIPTIONS = {
+export const GDSC_BRANCH_DESCRIPTIONS: Record<
+  (typeof GDSC_BRANCHES)[number],
+  string
+> = {
   project:
     "Collaborate on a variety of software applications and business solutions",
   interview:
@@ -51,45 +60,22 @@ export const GDSC_BRANCH_DECSRIPTIONS = {
     "Help outreach the community through networking and social media presence",
 };
 
-export const GDSC_POSITION_IOTA: Record<
-  (typeof GDSC_POSITIONS)[number],
-  number
-> = {
-  student: 1,
-  alumni: 2,
-  mentor: 3,
-  leader: 4,
-  advisor: 5,
-  sponsor: 6,
-};
+// Convert the array to an object of switchable iota
+export const GDSC_POSITION_IOTA = Object.fromEntries(
+  GDSC_POSITIONS.map((pos, index) => [pos, index + 1])
+) as Record<(typeof GDSC_POSITIONS)[number], number>;
 
-export const IOTA_TO_GDSC_POSITION: Record<
-  number,
-  (typeof GDSC_POSITIONS)[number]
-> = {
-  1: "student",
-  2: "alumni",
-  3: "mentor",
-  4: "leader",
-  5: "advisor",
-  6: "sponsor",
-};
+export const IOTA_TO_GDSC_POSITION = Object.fromEntries(
+  Object.entries(GDSC_POSITION_IOTA).map(([key, value]) => [value, key])
+) as Record<number, (typeof GDSC_POSITIONS)[number]>;
 
-export const GDSC_BRANCH_IOTA: Record<(typeof GDSC_BRANCHES)[number], number> =
-  {
-    project: 1,
-    interview: 2,
-    marketing: 3,
-  };
+export const GDSC_BRANCH_IOTA = Object.fromEntries(
+  GDSC_BRANCHES.map((branch, index) => [branch, index + 1])
+) as Record<(typeof GDSC_BRANCHES)[number], number>;
 
-export const IOTA_TO_GDSC_BRANCH: Record<
-  number,
-  (typeof GDSC_BRANCHES)[number]
-> = {
-  1: "project",
-  2: "interview",
-  3: "marketing",
-};
+export const IOTA_TO_GDSC_BRANCH = Object.fromEntries(
+  Object.entries(GDSC_BRANCH_IOTA).map(([key, value]) => [value, key])
+) as Record<number, (typeof GDSC_BRANCHES)[number]>;
 
 export interface User {
   id: string;
@@ -100,8 +86,8 @@ export interface User {
   image?: string;
   password?: string;
   role?: "USER" | "ADMIN";
-  position?: (typeof GDSC_POSITIONS)[number] | keyof typeof IOTA_TO_GDSC_BRANCH;
-  branch?: (typeof GDSC_BRANCHES)[number] | keyof typeof IOTA_TO_GDSC_POSITION;
+  position?: keyof typeof IOTA_TO_GDSC_POSITION;
+  branch?: keyof typeof IOTA_TO_GDSC_BRANCH;
   github?: string;
   linkedin?: string;
   instagram?: string;

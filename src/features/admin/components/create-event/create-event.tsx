@@ -31,20 +31,18 @@ export default function CreateEvent() {
     resolver: zodResolver(EventSchema),
     defaultValues: {
       title: "",
-      room: "",
+      room: null,
       tags: [],
-      startTime: "",
-      endTime: "",
-      type: null,
-      location: "",
+      startTime: null,
+      endTime: null,
+      type: 0,
+      location: "California State University, San Marcos",
       date: new Date(),
       githubRepo: "",
       slidesURL: "",
       virtualURL: "",
-      imageSrc: undefined,
       description: "",
       about: "",
-      extraImageSrcs: [],
       organizerIds: [],
     },
   });
@@ -60,16 +58,26 @@ export default function CreateEvent() {
     switch (currentStepIndex) {
       case STEPS.BASIC_INFORMATION:
         isValid = await form.trigger([
+          "imageSrc",
           "title",
           "date",
+          "description",
           "startTime",
           "endTime",
           "type",
           "tags",
+          "virtualURL",
+          "githubRepo",
+          "slidesURL",
         ]);
         break;
       case STEPS.DESCRIPTION_AND_MEDIA:
-        isValid = await form.trigger(["description", "about", "imageSrc"]);
+        isValid = await form.trigger([
+          "location",
+          "organizerIds",
+          "room",
+          "about",
+        ]);
         break;
       case STEPS.REVIEW_AND_SUBMIT:
         isValid = form.formState.isValid;
@@ -89,8 +97,6 @@ export default function CreateEvent() {
     if (isValid) {
       nextStep();
     }
-
-    console.log("INCORRECT VALUES AND CANNOT MOVE ON: ", values);
   };
 
   const stepComponents = [
@@ -117,10 +123,7 @@ export default function CreateEvent() {
       <div className="flex h-full">
         <div className="flex-1 h-full">
           <FormProvider {...form}>
-            <form
-              className="space-y-6 p-4"
-              onSubmit={form.handleSubmit(handleSubmit)}
-            >
+            <form className="space-y-6 p-4">
               {stepComponents[currentStepIndex]}
 
               {/* FORM BUTTONS */}
@@ -144,8 +147,7 @@ export default function CreateEvent() {
                     type="button"
                     onClick={(e) => {
                       e.preventDefault();
-                      nextStep();
-                      //handleSubmit(form.getValues());
+                      handleSubmit(form.getValues());
                     }}
                     className="relative px-10"
                   >

@@ -16,7 +16,7 @@ import {
   User as GDSCUser,
   IOTA_TO_GDSC_BRANCH,
   IOTA_TO_GDSC_POSITION,
-} from "@/types/gdsc-user";
+} from "@/types/user";
 import { Link } from "react-router-dom";
 
 export const UserTableColumns: ColumnDef<GDSCUser>[] = [
