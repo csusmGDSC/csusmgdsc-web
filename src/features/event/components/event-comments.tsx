@@ -13,7 +13,7 @@ import { SectionTitle } from "@/features/base";
 import { cn } from "@/lib/utils";
 import { GrEmoji } from "react-icons/gr";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,6 +45,10 @@ import {
   useDeleteComment,
   useUpdateComment,
 } from "@/api/comment-api";
+import { useUser } from "@/api/auth-api";
+import { toast } from "sonner";
+import { User } from "@/types/user";
+import { useUserById, useUsers } from "@/api/user-api";
 
 const ProfileImage = ({
   user_id,
@@ -53,10 +57,22 @@ const ProfileImage = ({
   user_id: string;
   className?: string;
 }) => {
+  const { data: user } = useUserById(user_id);
+
+  if (!user || !user.image) {
+    return (
+      <img
+        src="https://avatar.iran.liara.run/public"
+        alt="User Avatar"
+        className="w-10 h-10 rounded-full"
+      />
+    );
+  }
+
   return (
     <Link to={`/profile/${user_id}`} className={className}>
       <img
-        src={"/images/person.jpg"}
+        src={user.image}
         alt="User Avatar"
         className="w-10 h-10 rounded-full"
       />
@@ -72,6 +88,7 @@ const CommentInput = ({
   isLoading,
   existingContent,
   className,
+  userId,
 }: {
   replyMode: boolean;
   toggleVisibility?: () => void;
@@ -80,6 +97,7 @@ const CommentInput = ({
   existingContent?: string;
   editMode?: boolean;
   isLoading?: boolean;
+  userId: string;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [comment, setComment] = useState(existingContent || "");
@@ -87,7 +105,7 @@ const CommentInput = ({
 
   return (
     <div className={cn("flex gap-4", className)}>
-      <ProfileImage user_id="1" />
+      <ProfileImage user_id={userId} />
       <div className="flex-1 relative">
         <Textarea
           placeholder="Add a comment..."
@@ -202,7 +220,8 @@ const CommentItem: React.FC<{
   replies?: Comment[];
   topLevelId: string;
   isTopLevel: boolean;
-}> = ({ comment, replies = [], topLevelId, isTopLevel }) => {
+  user: User;
+}> = ({ comment, replies = [], topLevelId, isTopLevel, user }) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   const [replyMode, setReplyMode] = useState(false);
@@ -217,14 +236,13 @@ const CommentItem: React.FC<{
   const createReply = useCreateComment(comment.event_id);
   const deleteComment = useDeleteComment(comment.event_id);
   const updateComment = useUpdateComment(comment.event_id);
+  const { data: users } = useUsers();
 
   const handlePin = async (commentId: string) => {
     await updateComment.mutateAsync({
       comment: {
         id: commentId,
-        pinned_by: comment.pinned_by
-          ? null
-          : "f3fb13cb-fea2-444d-b094-918f5a1660f6",
+        pinned_by: comment.pinned_by ? null : user.id,
       },
     });
   };
@@ -245,7 +263,9 @@ const CommentItem: React.FC<{
         <div className="flex items-center justify-between w-full">
           {!editMode && (
             <div className="flex items-center gap-2">
-              <p className="font-medium text-sm text-primary">John Doe</p>
+              <p className="font-medium text-sm text-primary">
+                {user?.full_name || "Anonymous User"}
+              </p>
               {comment.created_at && (
                 <p className="text-xs text-muted-foreground">
                   {formatDistanceToNow(comment.created_at, { addSuffix: true })}
@@ -329,6 +349,7 @@ const CommentItem: React.FC<{
               setEditMode(false);
             }}
             toggleVisibility={() => setEditMode(false)}
+            userId={user.id}
           />
         ) : (
           <>
@@ -393,14 +414,20 @@ const CommentItem: React.FC<{
             replyMode={replyMode}
             handlePostComment={(string: string) => {
               createReply.mutateAsync({
-                userId: "a71ee6b6-f6ba-4899-80d8-34641057c8c4",
-                content: `@${comment.user_id}` + string,
+                userId: user.id,
+                content:
+                  `@${
+                    users?.find((u) => u.id === comment.user_id)?.full_name
+                  }` +
+                  "  " +
+                  string,
                 parentId: topLevelId,
               });
               setShowReplies(true);
               setReplyMode(false);
             }}
             toggleVisibility={() => setReplyMode(false)}
+            userId={user.id}
           />
         )}
 
@@ -430,6 +457,7 @@ const CommentItem: React.FC<{
                 comment={reply}
                 topLevelId={topLevelId}
                 isTopLevel={false}
+                user={users.find((user) => user.id === reply.user_id) as User}
               />
             ))}
           </div>
@@ -440,14 +468,21 @@ const CommentItem: React.FC<{
 };
 
 const EventComments = () => {
-  const testId = "b61de6b6-f6ba-4899-80d8-34641057c8c2";
-  const { data: comments, isLoading } = useCommentsByEventId(testId);
-  const createComment = useCreateComment(testId);
+  const eventId = useLocation().pathname.split("/").pop();
+
+  if (!eventId) {
+    return <Navigate to="/not-found" />;
+  }
+
+  const { data: comments, isLoading } = useCommentsByEventId(eventId);
+  const createComment = useCreateComment(eventId);
   const [sortedComments, setSortedComments] = useState(comments);
+  const user = useUser();
+  const { data: users } = useUsers();
 
   useEffect(() => {
     if (!comments) {
-      return; 
+      return;
     }
 
     // Sort comments by pinned status
@@ -459,11 +494,22 @@ const EventComments = () => {
   }, [comments]);
 
   const handlePostComment = async (content: string) => {
+    if (!user) {
+      toast.error("You must be logged in to comment!");
+      return;
+    }
+
     await createComment.mutateAsync({
-      userId: "a71ee6b6-f6ba-4899-80d8-34641057c8c4",
+      userId: user?.id,
       content,
     });
   };
+
+  if (!user) {
+    return (
+      <div className="space-y-6">Cannot comment as you are not logged in!</div>
+    );
+  }
 
   if (!comments || !sortedComments) {
     return (
@@ -473,6 +519,7 @@ const EventComments = () => {
           replyMode={false}
           handlePostComment={handlePostComment}
           isLoading={createComment.isPending}
+          userId={user.id}
         />
       </div>
     );
@@ -495,6 +542,7 @@ const EventComments = () => {
             replyMode={false}
             handlePostComment={handlePostComment}
             isLoading={createComment.isPending}
+            userId={user.id}
           />
 
           {/* Existing Comments */}
@@ -506,6 +554,7 @@ const EventComments = () => {
                 replies={comment.replies}
                 topLevelId={comment.id}
                 isTopLevel
+                user={users.find((user) => user.id === comment.user_id) as User}
               />
             ))}
           </div>

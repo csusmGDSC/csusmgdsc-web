@@ -14,9 +14,11 @@ import { IOTA_TO_EVENT_TYPE } from "@/types/event";
 
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
+import { useTheme } from "@/lib/providers";
 
 export const ReviewAndSubmit = () => {
   const form = useFormContext<z.infer<typeof EventSchema>>();
+  const theme = useTheme();
 
   return (
     <div className="space-y-4">
@@ -156,7 +158,7 @@ export const ReviewAndSubmit = () => {
       <Separator className="w-[calc(100%+2rem)] -mx-4" />
 
       {form.watch("about") && (form.watch("about") as string).length > 0 && (
-        <div>
+        <div data-color-mode={theme}>
           <FormLabel>About</FormLabel>
           <MDEditor.Markdown source={form.watch("about")} />
         </div>

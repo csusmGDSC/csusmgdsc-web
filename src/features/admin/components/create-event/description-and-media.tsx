@@ -18,9 +18,12 @@ import { RoomSelectForm } from "../inputs/room-select-form";
 import { z } from "zod";
 import { EventSchema } from "../../schemas/event-schema";
 import { IOTA_TO_EVENT_TYPE } from "@/types/event";
+import { useTheme } from "@/lib/providers";
 
 export const DescriptionAndMediaForm = () => {
   const form = useFormContext<z.infer<typeof EventSchema>>();
+  const theme = useTheme();
+
   return (
     <div className="space-y-10">
       <SimpleFormInput
@@ -49,7 +52,7 @@ export const DescriptionAndMediaForm = () => {
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <div className="w-full">
+              <div className="w-full" data-color-mode={theme}>
                 <FormLabel>Description</FormLabel>
                 <FormDescription>
                   In-depth description of the event. This editor has markdown

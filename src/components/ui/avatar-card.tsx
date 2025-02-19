@@ -32,12 +32,12 @@ export const AvatarCard = ({
       <Link to={`/profile/${userId}`} target="_blank">
         <div
           className={cn(
-            "flex size-8 items-center justify-center rounded-lg border border-border bg-background",
+            "relative overflow-hidden flex size-8 items-center justify-center rounded-lg border border-border bg-background",
             imageClassName
           )}
           aria-hidden="true"
         >
-          <img src={imageSrc} className="object-cover" />
+          <img src={imageSrc} className="object-cover scale-150" />
         </div>
       </Link>
       <div>

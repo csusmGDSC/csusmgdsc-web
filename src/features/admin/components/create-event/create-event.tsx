@@ -10,6 +10,8 @@ import { ReviewAndSubmit } from "./review-and-submit";
 import { DescriptionAndMediaForm } from "./description-and-media";
 import { BasicInfoForm } from "./basic-info-form";
 import { AdminPageTitle } from "../admin-page-title";
+import { useCreateEvent } from "@/api/event-api";
+import { Loader2 } from "lucide-react";
 
 enum STEPS {
   BASIC_INFORMATION = 0,
@@ -26,6 +28,8 @@ export default function CreateEvent() {
     isLastStep,
     showSuccessMsg,
   } = useMultipleStepForm(3);
+
+  const createEvent = useCreateEvent();
 
   const form = useForm<z.infer<typeof EventSchema>>({
     resolver: zodResolver(EventSchema),
@@ -92,6 +96,7 @@ export default function CreateEvent() {
 
     if (isLastStep && isValid) {
       console.log("SUBMITTING: ", values);
+      createEvent.mutateAsync(values);
     }
 
     if (isValid) {
@@ -150,8 +155,12 @@ export default function CreateEvent() {
                       handleSubmit(form.getValues());
                     }}
                     className="relative px-10"
+                    disabled={createEvent.isPending}
                   >
                     {isLastStep ? "Create" : "Next Step"}
+                    {createEvent.isPending && (
+                      <Loader2 className="text-blue animate-spin" />
+                    )}
                   </Button>
                 </div>
               </div>

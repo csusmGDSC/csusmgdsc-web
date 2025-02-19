@@ -17,7 +17,12 @@ export default function EventsPage() {
         backgroundImageSrc="/images/placeholder/homeBackground.jpg"
       />
       <PageContent>
-        <UpcomingEvents events={filteredEvents} skeletonMode={isLoading} />
+        <UpcomingEvents
+          events={events.filter(
+            (event) => new Date(event.startTime) > new Date()
+          )}
+          skeletonMode={isLoading}
+        />
         <EventsFilter
           selectedTags={selectedTags}
           setSelectedTags={setSelectedTags}

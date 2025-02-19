@@ -31,6 +31,7 @@ export const API_ROUTES = {
     GET_EVENTS: (params?: Record<string, string | number>) =>
       `/events${params ? formatQueryParams(params) : ""}`,
     GET_EVENT_BY_ID: (id: string) => `/events/${id}`,
+    CREATE_EVENT: "/events",
   },
   PROJECTS: {},
   TEAMS: {},

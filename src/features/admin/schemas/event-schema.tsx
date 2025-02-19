@@ -21,7 +21,7 @@ export const EventSchema = z
     githubRepo: z.string().url().optional().or(z.literal("")),
     slidesURL: z.string().url().optional().or(z.literal("")),
     virtualURL: z.string().url().optional().or(z.literal("")),
-    imageSrc: z.instanceof(File).optional(),
+    imageSrc: z.union([z.string().url(), z.instanceof(File)]),
     description: z.string().min(2).max(2000),
     about: z.string().max(2000).optional(),
     organizerIds: z.array(z.string()),
@@ -40,7 +40,8 @@ export const EventSchema = z
   })
   .refine(
     (data) =>
-      (data.room !== null && IOTA_TO_EVENT_TYPE[data.type] === "virtual") ||
+      data.room !== null ||
+      IOTA_TO_EVENT_TYPE[data.type] === "virtual" ||
       IOTA_TO_EVENT_TYPE[data.type] === "leetcode",
     {
       message: "Room is required.",
