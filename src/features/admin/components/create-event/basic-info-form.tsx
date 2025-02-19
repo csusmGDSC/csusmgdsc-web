@@ -69,7 +69,7 @@ export const BasicInfoForm = () => {
         <Button
           onClick={(e) => {
             e.preventDefault();
-            form.setValue("imageSrc", undefined);
+            form.setValue("imageSrc", "");
             setImagePreview("");
           }}
           variant="ghost"
