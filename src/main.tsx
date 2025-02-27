@@ -29,6 +29,7 @@ import AdminUsersPage from "./pages/admin-users-page";
 import SettingsPage from "./pages/settings-page";
 import PrivacyPolicyPage from "./pages/privacy-page";
 import TermsPage from "./pages/terms-page"
+import BrandPage from "./pages/brand-page"
 
 const mainRoutes = {
   path: "/",
@@ -45,6 +46,7 @@ const mainRoutes = {
     { path: "/settings", element: <SettingsPage /> },
     { path: "/privacy" , element: <PrivacyPolicyPage />},
     { path: "/terms", element: <TermsPage /> },
+    { path: "/brand-guidelines", element: <BrandPage /> },
     { path: "*", element: <NotFoundPage /> },
   ],
 };
