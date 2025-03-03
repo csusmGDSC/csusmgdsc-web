@@ -3,8 +3,9 @@
 Welcome! I'm glad to hear your interest in improving the GDSC platform as a software developer. Here are some quick things to recognize before getting started,
 
 1. You need some experience with React, TypeScript, and TailwindCSS
-2. All your changes should be relating to fixing a issue through GitHub issues
-3. You should always be on a separate branch from "main"
+2. Install git and have a github account. You can install [git](https://git-scm.com/downloads)
+3. All your changes should be relating to fixing a issue through GitHub issues
+4. You should always be on a separate branch from "main"
 
 ## Getting Started With Local Development
 
@@ -16,7 +17,7 @@ You can check if you have nodeJS installed by running the command in your termin
 node -v
 ```
 
-If you don't have node installed, you can download (Node-Version-Manager (NVM))[https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/] to install and manage node versions.
+If you don't have node installed, you can download Node-Version-Manager [NVM](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/) to install and manage node versions.
 
 ## Cloning the code onto your computer
 
@@ -50,6 +51,7 @@ git branch --show-curent
 ```
 
 If you accidentally made changes on the main branch, you can move those changes to a new branch by doing the following,
+
 ```bash
 git stash
 git checkout -b new-branch-name
