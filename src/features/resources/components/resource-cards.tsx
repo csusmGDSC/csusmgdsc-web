@@ -15,13 +15,13 @@ const ResourceCards = () => {
             title="Brand Guidelines & Logo"
             subtitle="Check out our brand guidelines"
             href="https://gdsc-csusm.com/"
-            imageSrc="images/resources/logo.png"
+            imageSrc="/images/resources/logo.png"
           />
           <ResourceCard
             title="CSU San Marcos"
             subtitle="Check out our university"
             href="https://www.csusm.edu/index.html"
-            imageSrc="images/resources/csusm.png"
+            imageSrc="/images/resources/csusm.png"
           />
         </div>
       </div>
