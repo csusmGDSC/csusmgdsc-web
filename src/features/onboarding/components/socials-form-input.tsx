@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaDiscord, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa6";
+import { z } from "zod";
+import { ProfileSchema } from "../schemas/profile-schema";
 
 const socialLinks = [
   { name: "github", icon: <FaGithub />, placeholder: "github" },
@@ -23,7 +25,7 @@ const socialLinks = [
 ];
 
 export const SocialInputField = ({}: {}) => {
-  const form = useFormContext();
+  const form = useFormContext<z.infer<typeof ProfileSchema>>();
   return (
     <div className="flex flex-col gap-4">
       <FormLabel>Links</FormLabel>
@@ -31,13 +33,17 @@ export const SocialInputField = ({}: {}) => {
         <FormField
           key={link.name}
           control={form.control}
-          name={link.name}
+          name={link.name as keyof z.infer<typeof ProfileSchema>}
           render={({ field }) => (
             <FormItem className="flex-1">
               <FormControl>
                 <div className="flex items-center gap-4">
                   {link.icon}{" "}
-                  <Input placeholder={link.placeholder} {...field} />
+                  <Input
+                    placeholder={link.placeholder}
+                    {...field}
+                    value={field.value?.toString()}
+                  />
                 </div>
               </FormControl>
               <FormMessage />

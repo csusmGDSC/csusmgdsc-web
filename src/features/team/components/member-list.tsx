@@ -1,5 +1,5 @@
 import MemberCard from "./member-card";
-import { IOTA_TO_GDSC_BRANCH, User } from "@/types/gdsc-user";
+import { IOTA_TO_GDSC_BRANCH, User } from "@/types/user";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SectionTitle } from "@/features/base";
 
@@ -32,7 +32,7 @@ const MemberList = ({ group, members, skeletonMode }: MemberListProps) => {
           <MemberCard
             key={member.id}
             name={member.full_name || "No Name"}
-            role={IOTA_TO_GDSC_BRANCH[member.branch as any] || "No Role"}
+            role={IOTA_TO_GDSC_BRANCH[member.branch || 0] || "No Role"}
             imageSrc={member.image || "https://avatar.iran.liara.run/public"}
             userId={member.id}
           />

@@ -1,5 +1,3 @@
-import { IconType } from "react-icons";
-
 /**
  * A utility component for rendering an IconType component
  * with props.
@@ -17,7 +15,7 @@ export const IconItem = ({
   icon: Icon,
   props,
 }: {
-  icon: IconType;
+  icon: React.ComponentType;
   props?: React.ComponentProps<typeof Icon>;
 }) => {
   return <Icon {...props} />;

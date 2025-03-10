@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SectionTitle } from "@/features/base";
-import { GDSCEvent } from "@/types/gdsc-event";
+import { Event } from "@/types/event";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface PastEventsProps {
-  events?: GDSCEvent[];
+  events?: Event[];
   skeletonMode?: boolean;
 }
 

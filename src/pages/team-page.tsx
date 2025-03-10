@@ -2,7 +2,7 @@ import { useUsers } from "@/api/user-api";
 import { PageContent, PageHeader } from "@/features/base";
 import { MemberList, MembersFilter } from "@/features/team";
 import { useFilteredUsers } from "@/hooks/use-filtered-users";
-import { GDSC_POSITIONS } from "@/types/gdsc-user";
+import { GDSC_POSITIONS } from "@/types/user";
 
 const POSITION_LABELS: Record<(typeof GDSC_POSITIONS)[number], string> = {
   leader: "Technical Leads",

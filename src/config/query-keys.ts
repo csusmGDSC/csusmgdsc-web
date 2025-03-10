@@ -4,5 +4,6 @@ export const QUERY_KEYS = {
   PROJECTS: "projects",
   TEAMS: "teams",
   USERS: "users",
+  COMMENTS: "comments",
   ACCESS_TOKEN: "accessToken",
 };

@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import RandomBadge from "@/components/ui/random-badge";
+import { Event } from "@/types/event";
 import { Calendar, Clock, MapPin } from "lucide-react";
 import "add-to-calendar-button";
 import { parse, format } from "date-fns";
@@ -12,10 +15,11 @@ interface EventSummaryProps {
 }
 
 export default function EventSummary({
-  date,
-  time,
-  location,
   title,
+  date,
+  location,
+  startTime,
+  endTime,
   tags,
   description,
 }: EventSummaryProps) {
@@ -28,7 +32,7 @@ export default function EventSummary({
     const parsedTime = parse(t, "hh:mm a", new Date());
     return format(parsedTime, "HH:mm");
   });
-
+}: Event) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -50,19 +54,18 @@ export default function EventSummary({
         ></add-to-calendar-button>
       </div>
       <div className="flex flex-wrap gap-2">
-        {tags.map((tag, index) => (
-          <span
+        {tags?.map((tag, index) => (
+          <RandomBadge
             key={index}
-            className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700"
-          >
-            {tag}
-          </span>
+            text={tag}
+            className="rounded-sm text-xs p-1"
+          />
         ))}
       </div>
       <div className="space-y-4">
         <div className="flex items-center">
           <Calendar className="mr-3" />
-          <span>{date}</span>
+          <span>{date?.toDateString()}</span>
         </div>
 
         <div className="flex items-center">
@@ -72,7 +75,17 @@ export default function EventSummary({
 
         <div className="flex items-center">
           <Clock className="mr-3" />
-          <span>{time}</span>
+          <span>
+            {new Date(startTime).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}{" "}
+            -{" "}
+            {new Date(endTime).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
         </div>
       </div>
     </div>

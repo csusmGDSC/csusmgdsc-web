@@ -1,3 +1,5 @@
+import { SectionTitle } from "@/features/base";
+
 interface EventDescriptionProps {
   description: string;
 }
@@ -7,7 +9,7 @@ export default function EventDescription({
 }: EventDescriptionProps) {
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-semibold">About This Event</h2>
+      <SectionTitle title="Description" />
       <div>
         <p>{description}</p>
       </div>

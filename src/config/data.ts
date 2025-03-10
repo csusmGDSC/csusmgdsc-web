@@ -1,4 +1,4 @@
-import { CSUSM_ROOM } from "@/types/gdsc-event";
+import { Room } from "@/types/room";
 
 export const socials = {
   github: "https://github.com/csusmGDSC",
@@ -24,65 +24,65 @@ export const buildings = [
   { name: "Science Hall 2", id: "SCI2" },
 ];
 
-export const rooms: CSUSM_ROOM[] = [
+export const rooms: Room[] = [
   {
     building: "ACD",
     room: 201,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "ACD",
     room: 202,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "ACD",
     room: 203,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "ACD",
     room: 204,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "UNIV",
     room: 201,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "UNIV",
     room: 202,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "UNIV",
     room: 203,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "UNIV",
     room: 204,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "USU",
     room: 201,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
   {
     building: "USU",
     room: 202,
-    type: "classroom",
+    type: 1,
     capacity: 30,
   },
 ];

@@ -1,7 +1,7 @@
-import { GDSC_BRANCHES, GDSC_POSITIONS } from "@/types/gdsc-user";
+import { IOTA_TO_GDSC_POSITION } from "@/types/user";
 import { z } from "zod";
 
-export const OnboardingSchema = z
+export const ProfileSchema = z
   .object({
     first_name: z.string().min(2).max(100),
     last_name: z.string().min(2).max(100),
@@ -11,8 +11,8 @@ export const OnboardingSchema = z
       z.string().optional(), // Allow the existing image URL for editing mode
     ]),
     graduation_date: z.date().optional(),
-    branch: z.enum(GDSC_BRANCHES).nullable(),
-    position: z.enum(GDSC_POSITIONS).nullable(),
+    branch: z.number(),
+    position: z.number(),
     bio: z.string().min(0).max(250).optional(),
     tags: z.array(z.string()),
     website: z.string().url().optional().or(z.literal("")), // OPTIONAL URL: https://github.com/colinhacks/zod/discussions/1254
@@ -33,7 +33,8 @@ export const OnboardingSchema = z
   .refine(
     (data) => {
       if (
-        (data.position === "student" || data.position === "alumni") &&
+        (IOTA_TO_GDSC_POSITION[data.position] === "student" ||
+          IOTA_TO_GDSC_POSITION[data.position] === "alumni") &&
         !data.graduation_date
       ) {
         return false;

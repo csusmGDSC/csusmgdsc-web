@@ -1,6 +1,7 @@
 import { useUserById } from "@/api/user-api";
 import { PageContent } from "@/features/base";
 import { ProfileCard } from "@/features/profile";
+import { IOTA_TO_GDSC_POSITION } from "@/types/user";
 import { Navigate, useLocation } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -13,6 +14,10 @@ const ProfilePage = () => {
 
   const { data: user } = useUserById(id);
 
+  if (!user) {
+    return <Navigate to="/team" />;
+  }
+
   return (
     <section>
       <PageContent>
@@ -20,7 +25,11 @@ const ProfilePage = () => {
           <div className="w-[350px] items-center justify-center">
             <ProfileCard
               name={user?.full_name || "No Name"}
-              role={(user?.position as any) || "No Role"}
+              role={
+                user?.position
+                  ? IOTA_TO_GDSC_POSITION[user.position]
+                  : "No Role"
+              }
               bio={user?.bio}
               linkedin={user?.linkedin}
               discord={user?.discord}

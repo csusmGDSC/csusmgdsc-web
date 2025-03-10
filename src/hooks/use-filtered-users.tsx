@@ -1,4 +1,4 @@
-import { GDSC_BRANCHES, IOTA_TO_GDSC_BRANCH, User } from "@/types/gdsc-user";
+import { GDSC_BRANCHES, IOTA_TO_GDSC_BRANCH, User } from "@/types/user";
 import { useEffect, useState } from "react";
 
 export function useFilteredUsers(users: User[] | undefined) {
