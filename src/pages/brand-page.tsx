@@ -16,13 +16,14 @@ export default function BrandPage() {
             title="Colors"
             subtitle="These are the official GDSC Colors."
           />
-          <BrandColors></BrandColors>
-          <SectionTitle title="Logo and Info" subtitle="Access our logo and Google's brand guidelines." />
-          <LogoInfo></LogoInfo>
+          <BrandColors />
+          <SectionTitle
+            title="Logo and Info"
+            subtitle="Access our logo and Google's brand guidelines."
+          />
+          <LogoInfo />
         </PageContent>
       </main>
     </>
   );
 }
-
-

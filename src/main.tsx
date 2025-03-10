@@ -28,8 +28,8 @@ import AdminEventsPage from "./pages/admin-events-page";
 import AdminUsersPage from "./pages/admin-users-page";
 import SettingsPage from "./pages/settings-page";
 import PrivacyPolicyPage from "./pages/privacy-page";
-import TermsPage from "./pages/terms-page"
-import BrandPage from "./pages/brand-page"
+import TermsPage from "./pages/terms-page";
+import BrandPage from "./pages/brand-page";
 
 const mainRoutes = {
   path: "/",
@@ -44,7 +44,7 @@ const mainRoutes = {
     { path: "/team", element: <TeamPage /> },
     { path: "/profile/:userId", element: <ProfilePage /> },
     { path: "/settings", element: <SettingsPage /> },
-    { path: "/privacy" , element: <PrivacyPolicyPage />},
+    { path: "/privacy", element: <PrivacyPolicyPage /> },
     { path: "/terms", element: <TermsPage /> },
     { path: "/brand-guidelines", element: <BrandPage /> },
     { path: "*", element: <NotFoundPage /> },
