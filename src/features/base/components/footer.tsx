@@ -25,8 +25,8 @@ const LinkSection: React.FC<LinkSectionProps> = ({ title, links }) => {
     <div className="flex flex-col text-sm gap-2 pt-10 pl-4 sm:pl-0 sm:ml-auto [&>h1]:font-semibold">
       <h1>{title}</h1>
       {links.map(({ label, path }) => (
-        <Link key={label} to={path}>
-          <Button variant="nav" className="p-0 m-0 h-fit">
+        <Link key = {label} to={path}>
+          <Button variant = "nav" className = "p-0 m-0 h-fit">
             {label}
           </Button>
         </Link>
@@ -71,10 +71,11 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer bottom with copyright and social media icons */}
-      <div className="w-full h-12 flex flex-col items-center justify-center">
-        <div className="flex flex-row items-center justify-between custom-max-width">
+      <div className ="w-full h-12 flex flex-col items-center justify-center">
+        <div className ="flex flex-row items-center justify-between custom-max-width">
+        <p className = "text-xs text-muted-foreground"> &copy; {new Date().getFullYear()} CSUSM GDSC. All Rights Reserved</p>
           <Link to="https://github.com/csusmGDSC/csusmgdsc-web" target="_blank">
-            <Button variant="link">
+            <Button className = "p-0" variant ="link">
               Improve this page on GitHub <ExternalLink />
             </Button>
           </Link>

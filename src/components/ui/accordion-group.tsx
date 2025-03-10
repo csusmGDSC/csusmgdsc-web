@@ -24,7 +24,7 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
 }) => {
   return (
     <div className="w-full px-2 md:px-0">
-      <h1 className="font-mono text-blue mb-2">{title}</h1>
+      <h1 className="text-lg font-mono text-blue mb-2">{title}</h1>
       <Accordion
         type="single"
         collapsible
@@ -32,10 +32,10 @@ const AccordionGroup: React.FC<AccordionGroupProps> = ({
       >
         {accordionTuples.map((tuple, index) => (
           <AccordionItem key={index} value={`item-${index}}`}>
-            <AccordionTrigger className="text-foreground/70 text-sm !text-left">
+            <AccordionTrigger className="text-foreground/70 text-base !text-left">
               {tuple[0]}
             </AccordionTrigger>
-            <AccordionContent className="text-foreground/70 text-xs">
+            <AccordionContent className="text-foreground/70 text-base">
               {tuple[1]}
             </AccordionContent>
           </AccordionItem>

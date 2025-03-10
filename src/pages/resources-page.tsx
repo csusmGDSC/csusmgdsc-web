@@ -1,5 +1,6 @@
 import { PageContent, PageHeader } from "@/features/base";
 import { ResourceCards } from "@/features/resources";
+import { FAQ } from "@/features/resources";
 
 export default function ResourcesPage() {
   return (
@@ -11,6 +12,7 @@ export default function ResourcesPage() {
       />
       <PageContent>
         <ResourceCards />
+        <FAQ />
       </PageContent>
     </main>
   );
