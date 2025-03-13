@@ -30,6 +30,9 @@ import { SignUpSchema } from "../schemas/auth-schemas";
 import FormCard from "./form-card";
 import { useSignUp } from "@/api/auth-api";
 
+// Theme management
+import { useTheme } from "@/lib/providers";
+
 /**
  * SignUp component renders a sign-up form with email and password fields.
  * It includes password strength validation and visual feedback for password requirements.
@@ -60,98 +63,106 @@ const SignUp = () => {
     });
   }
 
-  return (
-    <div className="w-full flex h-screen items-center justify-center">
-      {!showSuccess ? (
-        <Card className="w-full max-w-4xl overflow-hidden border-0 shadow-transparent rounded-none">
-          <div className="flex flex-col md:flex-row">
-            {/* Left side: Animated shapes */}
-            <div className="relative flex-1 hidden md:flex items-center">
+  const ReactComponent = () => {
+    const { theme } = useTheme();
+
+    return (
+      <div className="w-full flex h-screen items-center justify-center">
+        {!showSuccess ? (
+          <Card className="w-full max-w-4xl overflow-hidden border-0 shadow-transparent rounded-none">
+            <div className="flex flex-col md:flex-row">
+              {/* Left side: Animated shapes */}
+              <div className="relative flex-1 hidden md:flex items-center">
+                <img
+                  src={
+                    theme == "light"
+                      ? "images/stock/stock-3.jpeg"
+                      : "images/stock/stock-3-dark.jpeg"
+                  }
+                  alt="background-image"
+                  className="select-none"
+                  width={700}
+                  height={700}
+                />
+              </div>
+
+              <div className="flex-1 p-8">
+                <CardHeader>
+                  <HomeButton />
+                  <CardTitle className="text-2xl font-bold">
+                    Join the Club!
+                  </CardTitle>
+                  <CardDescription className="font-mono text-blue">
+                    Create your GDSC account
+                  </CardDescription>
+                </CardHeader>
+
+                <CardContent>
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-4"
+                    >
+                      <SimpleFormInput
+                        name="email"
+                        id={id}
+                        label="Email"
+                        placeholder="Enter your email"
+                      />
+                      <NewPasswordInput id={id} />
+
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={signUp.isPending}
+                      >
+                        Register
+                      </Button>
+                    </form>
+                  </Form>
+                </CardContent>
+
+                <CardFooter className="flex flex-col space-y-4">
+                  <OauthButtons />
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm">Already have an account?</span>
+                    <Link to={"/auth/sign-in"}>
+                      <Button variant="link" className="text-blue">
+                        Sign In
+                      </Button>
+                    </Link>
+                  </div>
+                </CardFooter>
+              </div>
+            </div>
+          </Card>
+        ) : (
+          <FormCard label="Account created">
+            <div className="w-full flex justify-center">
               <img
-                src="/images/stock/stock-3.jpeg"
-                alt="background-image"
-                className="select-none"
-                width={700}
-                height={700}
+                src="/images/stock/stock-1.png"
+                alt="sent email image"
+                className="w-[50%]"
               />
             </div>
-
-            <div className="flex-1 p-8">
-              <CardHeader>
-                <HomeButton />
-                <CardTitle className="text-2xl font-bold">
-                  Join the Club!
-                </CardTitle>
-                <CardDescription className="font-mono text-blue">
-                  Create your GDSC account
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-4"
-                  >
-                    <SimpleFormInput
-                      name="email"
-                      id={id}
-                      label="Email"
-                      placeholder="Enter your email"
-                    />
-                    <NewPasswordInput id={id} />
-
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={signUp.isPending}
-                    >
-                      Register
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-
-              <CardFooter className="flex flex-col space-y-4">
-                <OauthButtons />
-                <div className="flex items-center justify-between">
-                  <span className="text-sm">Already have an account?</span>
-                  <Link to={"/auth/sign-in"}>
-                    <Button variant="link" className="text-blue">
-                      Sign In
-                    </Button>
-                  </Link>
-                </div>
-              </CardFooter>
+            <div className="w-full text-center my-10">
+              <p className="text-primary text-lg">Thank you</p>
+              <p className="text-sm text-muted-foreground">
+                A confirmation email is on its way to{" "}
+                <span className="font-medium">{form.getValues("email")}</span>
+              </p>
             </div>
-          </div>
-        </Card>
-      ) : (
-        <FormCard label="Account created">
-          <div className="w-full flex justify-center">
-            <img
-              src="/images/stock/stock-1.png"
-              alt="sent email image"
-              className="w-[50%]"
-            />
-          </div>
-          <div className="w-full text-center my-10">
-            <p className="text-primary text-lg">Thank you</p>
-            <p className="text-sm text-muted-foreground">
-              A confirmation email is on its way to{" "}
-              <span className="font-medium">{form.getValues("email")}</span>
-            </p>
-          </div>
 
-          <div className="flex justify-center">
-            <Button>
-              <Link to="/auth/sign-in">Back to Sign In</Link>
-            </Button>
-          </div>
-        </FormCard>
-      )}
-    </div>
-  );
+            <div className="flex justify-center">
+              <Button>
+                <Link to="/auth/sign-in">Back to Sign In</Link>
+              </Button>
+            </div>
+          </FormCard>
+        )}
+      </div>
+    );
+  };
 };
 
 export default SignUp;
