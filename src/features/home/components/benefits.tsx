@@ -2,8 +2,10 @@ import { IconType } from "react-icons";
 import { BiSolidBarChartAlt2 } from "react-icons/bi";
 import { BsCheck2Circle, BsFillSuitDiamondFill } from "react-icons/bs";
 import { IoCubeOutline } from "react-icons/io5";
+import { useTheme } from "@/lib/providers";
 
 export default function Benefits() {
+  const { theme } = useTheme();
   return (
     <div className="flex flex-row items-center gap-20" id="benefits">
       <div className="w-full md:w-1/2">
@@ -68,7 +70,14 @@ export default function Benefits() {
           items-center justify-center overflow-hidden"
       >
         {/* <IconCloud iconSlugs={slugs} /> */}
-        <img src="/images/stock/stock-5.jpeg" alt="benefits image" />
+        <img
+          src={
+            theme == "light"
+              ? "/images/stock/stock-5.jpeg"
+              : "/images/stock/stock-5-dark.jpeg"
+          }
+          alt="benefits image"
+        />
       </div>
     </div>
   );

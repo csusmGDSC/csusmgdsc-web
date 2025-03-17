@@ -28,7 +28,7 @@ const InfoCard = ({
   buttonLink: string;
   targetBlank?: boolean;
 }) => (
-  <Card className="bg-white flex flex-col justify-between">
+  <Card className="bg-background flex flex-col justify-between">
     <CardHeader>
       {/* Card Header with Icon and Title */}
       <CardTitle className="flex items-center gap-2">
@@ -38,7 +38,7 @@ const InfoCard = ({
       {/* Card Description with Bullet Points */}
       <CardDescription className="mt-4">
         {description}
-        <ul className="mt-2 space-y-2 list-disc list-inside text-gray-600">
+        <ul className="mt-2 space-y-2 list-disc list-inside text-muted-foreground">
           {points.map((point, index) => (
             <li key={index}>{point}</li>
           ))}
