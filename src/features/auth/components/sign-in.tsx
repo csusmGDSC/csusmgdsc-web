@@ -41,6 +41,7 @@ import { useTheme } from "@/lib/providers";
 const SignIn = () => {
   const signIn = useSignIn();
   const id = useId();
+  const { theme } = useTheme();
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -53,81 +54,77 @@ const SignIn = () => {
     signIn.mutate(values);
   }
 
-  const ReactComponent = () => {
-    const { theme } = useTheme();
-
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Card className="w-full max-w-4xl overflow-hidden border-0 shadow-transparent rounded-none">
-          <div className="flex flex-col md:flex-row">
-            {/* Left side: Animated shapes */}
-            <div className="relative flex-1 hidden md:flex items-center">
-              <img
-                src={
-                  theme == "light"
-                    ? "/images/stock/stock-3.jpeg"
-                    : "/images/stock/stock-3-dark.jpeg"
-                }
-                alt="background-image"
-                className="select-none"
-                width={700}
-                height={700}
-              />
-            </div>
-
-            {/* Right side: Auth form */}
-            <div className="flex-1 p-8">
-              <CardHeader>
-                <HomeButton />
-                <CardTitle className="text-2xl font-bold">
-                  Welcome Back!
-                </CardTitle>
-                <CardDescription className="font-mono text-blue">
-                  Sign in to your GDSC account
-                </CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-4"
-                  >
-                    <SimpleFormInput
-                      name="email"
-                      id={id}
-                      placeholder="Enter your email"
-                      label="Email"
-                    />
-                    <PasswordInput id={id} showForgotPassword={true} />
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-blue"
-                      disabled={signIn.isPending}
-                    >
-                      Sign In
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-              <CardFooter className="flex flex-col gap-4">
-                <OauthButtons />
-                <div className="flex items-center justify-center">
-                  <span className="text-sm">New to GDSC?</span>
-                  <Link to={"/auth/sign-up"}>
-                    <Button variant="link" className="text-blue">
-                      Sign Up
-                    </Button>
-                  </Link>
-                </div>
-              </CardFooter>
-            </div>
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <Card className="w-full max-w-4xl overflow-hidden border-0 shadow-transparent rounded-none">
+        <div className="flex flex-col md:flex-row">
+          {/* Left side: Animated shapes */}
+          <div className="relative flex-1 hidden md:flex items-center">
+            <img
+              src={
+                theme == "light"
+                  ? "/images/stock/stock-3.jpeg"
+                  : "/images/stock/stock-3-dark.jpeg"
+              }
+              alt="background-image"
+              className="select-none"
+              width={700}
+              height={700}
+            />
           </div>
-        </Card>
-      </div>
-    );
-  };
+
+          {/* Right side: Auth form */}
+          <div className="flex-1 p-8">
+            <CardHeader>
+              <HomeButton />
+              <CardTitle className="text-2xl font-bold">
+                Welcome Back!
+              </CardTitle>
+              <CardDescription className="font-mono text-blue">
+                Sign in to your GDSC account
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
+                >
+                  <SimpleFormInput
+                    name="email"
+                    id={id}
+                    placeholder="Enter your email"
+                    label="Email"
+                  />
+                  <PasswordInput id={id} showForgotPassword={true} />
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-blue"
+                    disabled={signIn.isPending}
+                  >
+                    Sign In
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-4">
+              <OauthButtons />
+              <div className="flex items-center justify-center">
+                <span className="text-sm">New to GDSC?</span>
+                <Link to={"/auth/sign-up"}>
+                  <Button variant="link" className="text-blue">
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
+            </CardFooter>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
 };
 
 export default SignIn;
