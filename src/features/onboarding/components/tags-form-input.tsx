@@ -9,9 +9,11 @@ import {
 import { TagInput, Tag } from "emblor";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { z } from "zod";
+import { ProfileSchema } from "../schemas/profile-schema";
 
 export const TagsFormInput = () => {
-  const form = useFormContext();
+  const form = useFormContext<z.infer<typeof ProfileSchema>>();
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
   const [tags, setTags] = useState<Tag[]>([]);
 

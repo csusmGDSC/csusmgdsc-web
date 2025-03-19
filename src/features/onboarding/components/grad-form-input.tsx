@@ -14,9 +14,11 @@ import {
 } from "@/components/ui/select";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
+import { ProfileSchema } from "../schemas/profile-schema";
+import { z } from "zod";
 
 export const GradFormInput = () => {
-  const form = useFormContext();
+  const form = useFormContext<z.infer<typeof ProfileSchema>>();
   const graduationOptions = useMemo(() => generateGraduationOptions(), []);
 
   function generateGraduationOptions(

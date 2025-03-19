@@ -6,9 +6,11 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useFormContext } from "react-hook-form";
+import { z } from "zod";
+import { ProfileSchema } from "../schemas/profile-schema";
 
 export const BioFormInput = () => {
-  const form = useFormContext();
+  const form = useFormContext<z.infer<typeof ProfileSchema>>();
   return (
     <FormField
       control={form.control}

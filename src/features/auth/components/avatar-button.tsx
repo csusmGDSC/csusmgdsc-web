@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { LogOut, Settings } from "lucide-react";
+import { Key, LogOut, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function AvatarButton() {
@@ -41,6 +41,17 @@ export default function AvatarButton() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <Link to={`/profile/${user?.id}`}>
+            <DropdownMenuItem>
+              <User
+                size={16}
+                strokeWidth={2}
+                className="opacity-60"
+                aria-hidden="true"
+              />
+              <span>Profile</span>
+            </DropdownMenuItem>
+          </Link>
           <Link to="/settings">
             <DropdownMenuItem>
               <Settings
@@ -52,17 +63,19 @@ export default function AvatarButton() {
               <span>Settings</span>
             </DropdownMenuItem>
           </Link>
-          {/* <Link to="/admin/dashboard">
-            <DropdownMenuItem>
-              <Key
-                size={16}
-                strokeWidth={2}
-                className="opacity-60"
-                aria-hidden="true"
-              />
-              <span>Admin</span>
-            </DropdownMenuItem>
-          </Link> */}
+          {user?.role == "ADMIN" && (
+            <Link to="/admin/dashboard">
+              <DropdownMenuItem>
+                <Key
+                  size={16}
+                  strokeWidth={2}
+                  className="opacity-60"
+                  aria-hidden="true"
+                />
+                <span>Admin</span>
+              </DropdownMenuItem>
+            </Link>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>

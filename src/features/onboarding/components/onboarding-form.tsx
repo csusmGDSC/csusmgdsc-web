@@ -26,11 +26,12 @@ import {
   GDSC_POSITIONS_WITH_GRAD_DATE,
   IOTA_TO_GDSC_BRANCH,
   IOTA_TO_GDSC_POSITION,
-} from "@/types/gdsc-user";
-import { OnboardingSchema } from "../schemas/onboarding-schema";
-import { useOnboarding, useUser } from "@/api/auth-api";
+} from "@/types/user";
+import { ProfileSchema } from "../schemas/profile-schema";
+import { useUser } from "@/api/auth-api";
 import { useImagePreview } from "@/hooks/use-image-preview";
 import { Loader2 } from "lucide-react";
+import { useUpdateUser } from "@/api/user-api";
 
 /**
  * OnboardingForm component renders a multi-step form for user onboarding.
@@ -44,24 +45,20 @@ import { Loader2 } from "lucide-react";
  * @returns JSX element representing the onboarding form.
  */
 export const OnboardingForm = () => {
-  const { mutate, isPending } = useOnboarding();
+  const { mutate, isPending } = useUpdateUser();
   const user = useUser();
   const id = useId();
 
-  const form = useForm<z.infer<typeof OnboardingSchema>>({
-    resolver: zodResolver(OnboardingSchema),
+  const form = useForm<z.infer<typeof ProfileSchema>>({
+    resolver: zodResolver(ProfileSchema),
     defaultValues: {
       first_name: user?.first_name || "",
       last_name: user?.last_name || "",
       email: user?.email || "No Email",
-      image: "https://avatar.iran.liara.run/public",
+      image: user?.image || "",
       graduation_date: user?.graduation_date || undefined,
-      branch: user?.branch
-        ? IOTA_TO_GDSC_BRANCH[user.branch as unknown as 1 | 2 | 3]
-        : null,
-      position: user?.position
-        ? IOTA_TO_GDSC_POSITION[user.position as unknown as 1 | 2]
-        : null,
+      branch: 0,
+      position: 0,
       bio: user?.bio || "",
       tags: user?.tags || [],
       website: user?.website || "",
@@ -77,7 +74,7 @@ export const OnboardingForm = () => {
     form.watch("image")
   );
 
-  const onSubmit = async (values: z.infer<typeof OnboardingSchema>) => {
+  const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
     mutate(values);
   };
 
@@ -136,10 +133,10 @@ export const OnboardingForm = () => {
             <StatusFormInput id={id} />
 
             {/* GRADUATION DATE INPUT FOR USER'S GDSC POSITION (i.e student, alumni) */}
+
             {GDSC_POSITIONS_WITH_GRAD_DATE.includes(
-              form.watch(
-                "position"
-              ) as (typeof GDSC_POSITIONS_WITH_GRAD_DATE)[number]
+              // @ts-expect-error this is fine
+              IOTA_TO_GDSC_POSITION[form.watch("position")]
             ) && <GradFormInput />}
 
             {/* PROFILE IMAGE INPUT */}
@@ -171,7 +168,7 @@ export const OnboardingForm = () => {
         <ProfileCard
           name={form.watch("first_name") + " " + form.watch("last_name")}
           bio={form.watch("bio")}
-          role={form.watch("branch") || ""}
+          role={IOTA_TO_GDSC_BRANCH[form.watch("branch")]}
           imageSrc={imagePreview || ""}
           discord={form.watch("discord")}
           github={form.watch("github")}

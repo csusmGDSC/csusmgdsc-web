@@ -1,7 +1,7 @@
-import { GDSCEvent } from "@/types/gdsc-event";
+import { Event, IOTA_TO_EVENT_TYPE } from "@/types/event";
 import { useState, useEffect } from "react";
 
-export function useFilteredEvents(events: GDSCEvent[] | undefined) {
+export function useFilteredEvents(events: Event[] | undefined) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(events || []);
@@ -16,7 +16,7 @@ export function useFilteredEvents(events: GDSCEvent[] | undefined) {
 
     if (selectedTags.length > 0) {
       updatedEvents = updatedEvents.filter((event) =>
-        selectedTags.some((tag) => event.type.includes(tag))
+        selectedTags.some((tag) => IOTA_TO_EVENT_TYPE[event.type].includes(tag))
       );
     }
 

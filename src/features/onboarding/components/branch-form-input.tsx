@@ -9,15 +9,19 @@ import {
 import { IconItem } from "@/components/ui/icon-item";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
-  GDSC_BRANCH_DECSRIPTIONS,
+  GDSC_BRANCH_DESCRIPTIONS,
+  GDSC_BRANCH_IOTA,
   GDSC_BRANCHES,
   GDSC_BRANCHES_ICONS,
-} from "@/types/gdsc-user";
+  IOTA_TO_GDSC_BRANCH,
+} from "@/types/user";
 import { Label } from "@radix-ui/react-label";
 import { useFormContext } from "react-hook-form";
+import { z } from "zod";
+import { ProfileSchema } from "../schemas/profile-schema";
 
 export const BranchFormInput = () => {
-  const form = useFormContext();
+  const form = useFormContext<z.infer<typeof ProfileSchema>>();
 
   return (
     <FormField
@@ -32,8 +36,10 @@ export const BranchFormInput = () => {
           <FormControl>
             <RadioGroup
               className="gap-2"
-              defaultValue={field.value ?? ""}
-              onValueChange={field.onChange}
+              defaultValue={IOTA_TO_GDSC_BRANCH[field.value] ?? ""}
+              onValueChange={(value: (typeof GDSC_BRANCHES)[number]) =>
+                field.onChange(GDSC_BRANCH_IOTA[value])
+              }
             >
               <div className="flex flex-col sm:flex-row gap-2">
                 {GDSC_BRANCHES.map((branch) => (
@@ -55,7 +61,7 @@ export const BranchFormInput = () => {
                           id={`${branch}-description`}
                           className="text-xs text-muted-foreground"
                         >
-                          {GDSC_BRANCH_DECSRIPTIONS[branch]}
+                          {GDSC_BRANCH_DESCRIPTIONS[branch]}
                         </p>
                       </div>
                     </div>

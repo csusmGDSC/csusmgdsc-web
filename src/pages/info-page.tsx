@@ -12,7 +12,7 @@ export default function InfoPage() {
         title="Get Involved"
         subTitle="Join a community of passionate students building the future of
             technology. Whether you're a beginner or an expert, there's a place
-            for you here."
+            for you here. Join us today!"
         backgroundImageSrc="/images/placeholder/homeBackground-3.jpg"
       />
       <PageContent className="gap-32 mt-10">

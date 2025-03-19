@@ -31,6 +31,13 @@ export const API_ROUTES = {
     GET_EVENTS: (params?: Record<string, string | number>) =>
       `/events${params ? formatQueryParams(params) : ""}`,
     GET_EVENT_BY_ID: (id: string) => `/events/${id}`,
+    CREATE_EVENT: "/admin/events",
+    DELETE_EVENT_BY_EVENT_ID: (id: string) => `/admin/events/${id}`,
+    UPDATE_EVENT_BY_EVENT_ID: (id: string) => `/admin/events/${id}`,
+    ADD_EVENT_ORGANIZER_BY_EVENT_ID: (eventId: string, userId: string) =>
+      `/admin/events/${eventId}/organizers/${userId}`,
+    GET_EVENT_ORGANIZERS_BY_EVENT_ID: (eventId: string) =>
+      `/events/${eventId}/organizers`,
   },
   PROJECTS: {},
   TEAMS: {},
@@ -38,6 +45,19 @@ export const API_ROUTES = {
     GET_USERS: (params?: Record<string, string | number>) =>
       `/users${params ? formatQueryParams(params) : ""}`,
     GET_USER_BY_ID: (id: string) => `/users/${id}`,
+  },
+  COMMENTS: {
+    GET_COMMENTS_BY_EVENT_ID: (id: string) => `/comments?event_id=${id}`,
+    GET_COMMENT_BY_USER_ID: (id: string) => `/comments?user_id=${id}`,
+    GET_COMMENTS_BY_USER_AND_EVENT_ID: (userId: string, eventId: string) =>
+      `/comments?user_id=${userId}&event_id=${eventId}`,
+    CREATE_COMMENT: "/comments",
+    GET_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+    UPDATE_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+    DELETE_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+  },
+  UTILS: {
+    UPLOAD_IMAGE: "/admin/utils/image",
   },
 };
 

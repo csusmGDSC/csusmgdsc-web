@@ -14,7 +14,7 @@ const ResourceCards = () => {
           <ResourceCard
             title="Brand Guidelines & Logo"
             subtitle="Check out our brand guidelines"
-            href="https://gdsc-csusm.com/"
+            href="/brand-guidelines"
             imageSrc="/images/resources/logo.png"
           />
           <ResourceCard

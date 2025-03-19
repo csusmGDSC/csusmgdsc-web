@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GDSCEvent } from "@/types/gdsc-event";
+import { Event, IOTA_TO_EVENT_TYPE } from "@/types/event";
 import { formatDate } from "date-fns";
 import { Calendar, Clock, ExternalLink, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -20,20 +20,12 @@ import {
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SectionTitle } from "@/features/base";
-
-type EventType = "workshop" | "leetcode" | "hackathon" | "social";
+import { EventTypeBadge } from "@/components/ui/event-type-badge";
 
 interface UpcomingEventsProps {
-  events?: GDSCEvent[];
+  events?: Event[];
   skeletonMode?: boolean;
 }
-
-const typeColors: Record<EventType, string> = {
-  workshop: "bg-blue/20 text-blue",
-  leetcode: "bg-green/20 text-green",
-  hackathon: "bg-purple-100 text-purple-800",
-  social: "bg-yellow/20 text-yellow",
-};
 
 export default function UpcomingEvents({
   events,
@@ -56,7 +48,7 @@ export default function UpcomingEvents({
   }
 
   const upcomingEvents = events.filter(
-    (event) => new Date(event.startTime) > new Date()
+    (event) => new Date(event.start_time) > new Date()
   );
 
   return (
@@ -77,7 +69,7 @@ export default function UpcomingEvents({
   );
 }
 
-const EventCard = ({ event }: { event: GDSCEvent }) => (
+const EventCard = ({ event }: { event: Event }) => (
   <Link to={`/events/${event.id}`}>
     <Card className="group overflow-hidden hover:shadow-md transition-all">
       {/* Project Image */}
@@ -92,13 +84,7 @@ const EventCard = ({ event }: { event: GDSCEvent }) => (
       <CardHeader>
         <CardTitle className="text-xl font-bold text-primary flex justify-between">
           {event.title}
-          <span
-            className={`px-3 py-1 rounded-full text-sm font-medium ${
-              typeColors[event.type as EventType] || "bg-gray-100 text-gray-800"
-            }`}
-          >
-            {event.type}
-          </span>
+          <EventTypeBadge type={IOTA_TO_EVENT_TYPE[event.type]} />
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -106,14 +92,14 @@ const EventCard = ({ event }: { event: GDSCEvent }) => (
         <div className="space-y-3">
           <EventDetail
             icon={<Calendar className="w-5 h-5" />}
-            text={formatDate(event.startTime, "PPP") || ""}
+            text={formatDate(event.start_time, "PPP") || ""}
           />
           <EventDetail
             icon={<Clock className="w-5 h-5" />}
             text={
-              formatDate(event.startTime, "p") +
+              formatDate(event.start_time, "p") +
                 " - " +
-                formatDate(event.endTime, "p") || ""
+                formatDate(event.end_time, "p") || ""
             }
           />
           <EventDetail

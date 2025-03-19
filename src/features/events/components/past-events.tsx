@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
+import RandomBadge from "@/components/ui/random-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SectionTitle } from "@/features/base";
-import { GDSCEvent } from "@/types/gdsc-event";
+import { Event, IOTA_TO_EVENT_TYPE } from "@/types/event";
 import { ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface PastEventsProps {
-  events?: GDSCEvent[];
+  events?: Event[];
   skeletonMode?: boolean;
 }
 
@@ -26,7 +27,7 @@ export default function PastEvents({ events, skeletonMode }: PastEventsProps) {
   }
 
   const pastEvents = events.filter(
-    (event) => new Date(event.startTime) < new Date()
+    (event) => new Date(event.start_time) < new Date()
   );
 
   return (
@@ -40,18 +41,19 @@ export default function PastEvents({ events, skeletonMode }: PastEventsProps) {
               key={event.id}
               className="group hover:shadow-md transition-shadow border rounded-sm p-4"
             >
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="font-medium">{event.title}</h3>
+              <div className="flex justify-between items-center gap-2">
+                <div className="truncate">
+                  <h3 className="font-medium line-clamp-1">{event.title}</h3>
                   <p className="text-sm text-gray-500">{event.location}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm">
-                    {new Date(event.startTime).toLocaleDateString()}
+                    {new Date(event.start_time).toLocaleDateString()}
                   </p>
-                  <p className="text-sm text-gray-500 capitalize">
-                    {event.type}
-                  </p>
+                  <RandomBadge
+                    text={IOTA_TO_EVENT_TYPE[event.type]}
+                    className="text-xs rounded-full px-2 py-0.5"
+                  />
                 </div>
               </div>
               <Button

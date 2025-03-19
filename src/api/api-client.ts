@@ -1,6 +1,7 @@
 import { API_ROUTES } from "@/config/api-routes";
 import axios from "axios";
 import { saveAccessTokenToLocalStorage } from "./user.localstore";
+import { toast } from "sonner";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -58,12 +59,26 @@ api.interceptors.response.use(
         error.config.headers.Authorization = `Bearer ${newAccessToken}`;
 
         // Retry the original request
-        return api(error.config);
+        // return api(error.config);
       } catch (refreshError) {
         refreshCount += 1;
         return Promise.reject(refreshError);
       }
     }
+
+    // **Handle Rate Limiting (429)**
+    if (error.response?.status === 429) {
+      const retryAfter = error.response.headers["retry-after"];
+
+      const delay = retryAfter ? parseInt(retryAfter, 10) * 1000 : 2000; // Use server delay if available, else default 2s
+
+      toast.error("You are making too many requests. Please try again later.");
+
+      return new Promise((resolve) =>
+        setTimeout(() => resolve(api(error.config)), delay)
+      );
+    }
+
     return Promise.reject(error);
   }
 );

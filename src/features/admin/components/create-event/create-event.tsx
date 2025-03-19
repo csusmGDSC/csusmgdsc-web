@@ -10,6 +10,8 @@ import { ReviewAndSubmit } from "./review-and-submit";
 import { DescriptionAndMediaForm } from "./description-and-media";
 import { BasicInfoForm } from "./basic-info-form";
 import { AdminPageTitle } from "../admin-page-title";
+import { useCreateEvent } from "@/api/event-api";
+import { Loader2 } from "lucide-react";
 
 enum STEPS {
   BASIC_INFORMATION = 0,
@@ -27,24 +29,24 @@ export default function CreateEvent() {
     showSuccessMsg,
   } = useMultipleStepForm(3);
 
+  const createEvent = useCreateEvent();
+
   const form = useForm<z.infer<typeof EventSchema>>({
     resolver: zodResolver(EventSchema),
     defaultValues: {
       title: "",
-      room: "",
+      room: null,
       tags: [],
-      startTime: "",
-      endTime: "",
-      type: null,
-      location: "",
+      startTime: null,
+      endTime: null,
+      type: 0,
+      location: "California State University, San Marcos",
       date: new Date(),
       githubRepo: "",
       slidesURL: "",
       virtualURL: "",
-      imageSrc: undefined,
       description: "",
       about: "",
-      extraImageSrcs: [],
       organizerIds: [],
     },
   });
@@ -60,16 +62,26 @@ export default function CreateEvent() {
     switch (currentStepIndex) {
       case STEPS.BASIC_INFORMATION:
         isValid = await form.trigger([
+          "imageSrc",
           "title",
           "date",
+          "description",
           "startTime",
           "endTime",
           "type",
           "tags",
+          "virtualURL",
+          "githubRepo",
+          "slidesURL",
         ]);
         break;
       case STEPS.DESCRIPTION_AND_MEDIA:
-        isValid = await form.trigger(["description", "about", "imageSrc"]);
+        isValid = await form.trigger([
+          "location",
+          "organizerIds",
+          "room",
+          "about",
+        ]);
         break;
       case STEPS.REVIEW_AND_SUBMIT:
         isValid = form.formState.isValid;
@@ -84,13 +96,12 @@ export default function CreateEvent() {
 
     if (isLastStep && isValid) {
       console.log("SUBMITTING: ", values);
+      createEvent.mutateAsync(values);
     }
 
     if (isValid) {
       nextStep();
     }
-
-    console.log("INCORRECT VALUES AND CANNOT MOVE ON: ", values);
   };
 
   const stepComponents = [
@@ -99,7 +110,7 @@ export default function CreateEvent() {
     <ReviewAndSubmit />,
   ];
 
-  if (showSuccessMsg) {
+  if (showSuccessMsg && createEvent.isSuccess) {
     return (
       <main className="my-4 h-full">
         <h1 className="ml-4 text-primary/90 font-medium text-xl">
@@ -117,10 +128,7 @@ export default function CreateEvent() {
       <div className="flex h-full">
         <div className="flex-1 h-full">
           <FormProvider {...form}>
-            <form
-              className="space-y-6 p-4"
-              onSubmit={form.handleSubmit(handleSubmit)}
-            >
+            <form className="space-y-6 p-4">
               {stepComponents[currentStepIndex]}
 
               {/* FORM BUTTONS */}
@@ -144,11 +152,14 @@ export default function CreateEvent() {
                     type="button"
                     onClick={(e) => {
                       e.preventDefault();
-                      nextStep();
-                      //handleSubmit(form.getValues());
+                      handleSubmit(form.getValues());
                     }}
                     className="relative px-10"
+                    disabled={createEvent.isPending}
                   >
+                    {createEvent.isPending && (
+                      <Loader2 className="text-white animate-spin" />
+                    )}
                     {isLastStep ? "Create" : "Next Step"}
                   </Button>
                 </div>
