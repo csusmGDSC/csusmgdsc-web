@@ -8,7 +8,12 @@ import {
 } from "@/components/ui/form";
 import { IconItem } from "@/components/ui/icon-item";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { GDSC_POSITIONS_ICONS, GDSC_POSITIONS_SELECTABLE } from "@/types/user";
+import {
+  GDSC_POSITION_IOTA,
+  GDSC_POSITIONS_ICONS,
+  GDSC_POSITIONS_SELECTABLE,
+  IOTA_TO_GDSC_POSITION,
+} from "@/types/user";
 import { useFormContext } from "react-hook-form";
 
 export const StatusFormInput = ({ id }: { id: string }) => {
@@ -27,8 +32,14 @@ export const StatusFormInput = ({ id }: { id: string }) => {
           <FormControl>
             <RadioGroup
               className="flex flex-wrap"
-              defaultValue={field.value || ""}
-              onValueChange={field.onChange}
+              defaultValue={IOTA_TO_GDSC_POSITION[field.value] || ""}
+              onValueChange={(value) =>
+                field.onChange(
+                  GDSC_POSITION_IOTA[
+                    value as (typeof GDSC_POSITIONS_SELECTABLE)[number]
+                  ]
+                )
+              }
               aria-orientation="horizontal"
               aria-labelledby={id}
             >

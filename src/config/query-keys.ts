@@ -6,4 +6,5 @@ export const QUERY_KEYS = {
   USERS: "users",
   COMMENTS: "comments",
   ACCESS_TOKEN: "accessToken",
+  EVENT_ORGANIZERS: "eventOrganizers",
 };

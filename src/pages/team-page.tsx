@@ -2,7 +2,7 @@ import { useUsers } from "@/api/user-api";
 import { PageContent, PageHeader } from "@/features/base";
 import { MemberList, MembersFilter } from "@/features/team";
 import { useFilteredUsers } from "@/hooks/use-filtered-users";
-import { GDSC_POSITIONS } from "@/types/user";
+import { GDSC_POSITIONS, IOTA_TO_GDSC_POSITION } from "@/types/user";
 
 const POSITION_LABELS: Record<(typeof GDSC_POSITIONS)[number], string> = {
   leader: "Technical Leads",
@@ -31,9 +31,11 @@ export default function TeamPage() {
     (a, b) => POSITION_ORDER.indexOf(a) - POSITION_ORDER.indexOf(b)
   );
 
-  // const getUsersByPosition = (position: (typeof GDSC_POSITIONS)[number]) => {
-  //   return filteredUsers.filter((user) => user.position === position);
-  // };
+  const getUsersByPosition = (position: (typeof GDSC_POSITIONS)[number]) => {
+    return filteredUsers.filter(
+      (user) => IOTA_TO_GDSC_POSITION[user.position || 0] === position
+    );
+  };
 
   return (
     <main>
@@ -51,7 +53,7 @@ export default function TeamPage() {
         {sortedPositions.map((position) => (
           <MemberList
             key={position}
-            members={filteredUsers}
+            members={getUsersByPosition(position)}
             group={POSITION_LABELS[position]}
             skeletonMode={isLoading}
           />

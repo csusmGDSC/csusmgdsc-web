@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +27,15 @@ import { Link } from "react-router-dom";
 import { EventTypeBadge } from "@/components/ui/event-type-badge";
 import { RoomCard } from "@/components/ui/room-card";
 import { IOTA_TO_ROOM_TYPE } from "@/types/room";
+import { useDeleteEventById } from "@/api/event-api";
 
 export const EventTableColumns: ColumnDef<Event>[] = [
+  {
+    accessorKey: "id",
+    enableHiding: false,
+    header: "ID",
+    cell: ({ row }) => <p className="text-xs">{row.getValue("id")}</p>,
+  },
   {
     accessorKey: "title",
     enableHiding: false,
@@ -56,8 +63,8 @@ export const EventTableColumns: ColumnDef<Event>[] = [
     header: "Time",
     enableHiding: false,
     cell: ({ row }) => {
-      const startTime = row.original.startTime;
-      const endTime = row.original.endTime;
+      const startTime = row.original.start_time;
+      const endTime = row.original.end_time;
 
       return (
         <p className="text-xs">
@@ -103,67 +110,64 @@ export const EventTableColumns: ColumnDef<Event>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      return (
-        <AlertDialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>
-                <Link to={`/events/${row.original.id}`} target="_blank">
-                  Go to Page
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  navigator.clipboard.writeText(row.getValue("id"))
-                }
-                className="hover:cursor-pointer"
-              >
-                Copy event ID
-              </DropdownMenuItem>
-              {/* <DropdownMenuItem className="hover:cursor-pointer">
-                Edit
-              </DropdownMenuItem> */}
-              <DropdownMenuSeparator />
-              <AlertDialogTrigger asChild>
-                <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
-                  className="hover:cursor-pointer"
-                >
-                  Delete
-                </DropdownMenuItem>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>{row.getValue("name")}</AlertDialogHeader>
-                <AlertDialogDescription>
-                  Are you sure you want to delete this event? This action cannot
-                  be undone.
-                </AlertDialogDescription>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => {
-                      // TODO: Delete event
-
-                      // TODO: Find a better way to remove the row from the table
-                      window.location.reload();
-                    }}
-                    className="bg-destructive text-white font-semibold hover:bg-destructive/80"
-                  >
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </AlertDialog>
-      );
-    },
+    cell: ({ row }) => <EventActions row={row} />,
   },
 ];
+
+const EventActions = ({ row }: { row: Row<Event> }) => {
+  const deleteEvent = useDeleteEventById(row.original.id);
+
+  return (
+    <AlertDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem>
+            <Link to={`/events/${row.original.id}`} target="_blank">
+              Go to Page
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(row.getValue("id"))}
+            className="hover:cursor-pointer"
+          >
+            Copy event ID
+          </DropdownMenuItem>
+          {/* <DropdownMenuItem className="hover:cursor-pointer">
+                Edit
+              </DropdownMenuItem> */}
+          <DropdownMenuSeparator />
+          <AlertDialogTrigger asChild>
+            <DropdownMenuItem
+              onSelect={(e) => e.preventDefault()}
+              className="hover:cursor-pointer"
+            >
+              Delete
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>{row.getValue("title")}</AlertDialogHeader>
+            <AlertDialogDescription>
+              Are you sure you want to delete this event? This action cannot be
+              undone.
+            </AlertDialogDescription>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => deleteEvent.mutate()}
+                className="bg-destructive text-white font-semibold hover:bg-destructive/80"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </AlertDialog>
+  );
+};

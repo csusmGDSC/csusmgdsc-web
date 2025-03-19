@@ -16,11 +16,65 @@ interface FetchUsersRequest {
   totalCount: number;
 }
 
+async function uploadImage(file: File) {
+  const formData = new FormData();
+  formData.append("image", file);
+  const { data } = await api.post(API_ROUTES.UTILS.UPLOAD_IMAGE, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data.url;
+}
+
 async function fetchUsers(): Promise<FetchUsersRequest> {
   const { data } = await api.get(
-    API_ROUTES.USERS.GET_USERS({ limit: 500 }) // TODO: Handle pagination when it becomes an issue using useInfiniteQuery
+    API_ROUTES.USERS.GET_USERS({ limit: 500, page: 1 }) // TODO: Handle pagination when it becomes an issue using useInfiniteQuery
   );
   return data;
+}
+
+async function fetchUserById(id: string): Promise<User> {
+  const { data } = await api.get(API_ROUTES.USERS.GET_USER_BY_ID(id));
+  return data;
+}
+
+async function updateUser(
+  userId: string,
+  values: z.infer<typeof ProfileSchema>
+) {
+  const payload: Partial<User> = Object.fromEntries(
+    Object.entries({
+      position: values.position,
+      branch: values.branch,
+      graduation_date: values.graduation_date?.toISOString() ?? null,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      full_name: `${values.first_name} ${values.last_name}`,
+      github: values.github,
+      linkedin: values.linkedin,
+      instagram: values.instagram,
+      discord: values.discord,
+      website: values.website,
+      bio: values.bio,
+      tags: values.tags,
+      is_onboarded: true,
+      image: values.image,
+    }).filter(
+      // eslint-disable-next-line
+      ([_, value]) => value !== undefined && value !== "" && value !== null
+    )
+  );
+
+  console.log("SENDING PAYLOAD: ", payload);
+
+  await api.put(API_ROUTES.AUTH.UPDATE_USER + "/" + userId, payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return payload;
 }
 
 export const useUsers = () => {
@@ -35,8 +89,7 @@ export const useUsers = () => {
 export const useUserById = (id: string) => {
   const { data, isLoading } = useQuery({
     queryKey: [QUERY_KEYS.USERS, id],
-    queryFn: () =>
-      fetchUsers().then((data) => data.users.find((user) => user.id === id)), // TODO: Discuss whether we do this or use fetch user by id api call
+    queryFn: () => fetchUserById(id),
   });
 
   return { data, isLoading };
@@ -50,41 +103,13 @@ export function useUpdateUser() {
     throw new Error("User not found, can't update user.");
   }
 
-  const userId = user.id;
-
-  return useMutation<any, unknown, z.infer<typeof ProfileSchema>>({
+  return useMutation<Partial<User>, unknown, z.infer<typeof ProfileSchema>>({
     mutationFn: async (values: z.infer<typeof ProfileSchema>) => {
-      const payload = Object.fromEntries(
-        Object.entries({
-          position: values.position,
-          branch: values.branch,
-          graduation_date: JSON.stringify(values.graduation_date) ?? null,
-          first_name: values.first_name,
-          last_name: values.last_name,
-          full_name: `${values.first_name} ${values.last_name}`,
-          github: values.github,
-          linkedin: values.linkedin,
-          instagram: values.instagram,
-          discord: values.discord,
-          website: values.website,
-          bio: values.bio,
-          tags: values.tags,
-          is_onboarded: true,
-          image: "https://avatar.iran.liara.run/public",
-        }).filter(
-          ([_, value]) => value !== undefined && value !== "" && value !== null
-        )
-      );
-
-      console.log("SENDING PAYLOAD: ", payload);
-
-      await api.put<any>(API_ROUTES.AUTH.UPDATE_USER + "/" + userId, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      return payload;
+      if (values.image instanceof File) {
+        const imageUrl = await uploadImage(values.image);
+        values.image = imageUrl;
+      }
+      return updateUser(user.id, values);
     },
     onSuccess: (updatedFields) => {
       const data = { ...user, ...updatedFields };

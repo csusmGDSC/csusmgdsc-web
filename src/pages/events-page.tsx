@@ -19,7 +19,7 @@ export default function EventsPage() {
       <PageContent>
         <UpcomingEvents
           events={events.filter(
-            (event) => new Date(event.startTime) > new Date()
+            (event) => new Date(event.start_time) > new Date()
           )}
           skeletonMode={isLoading}
         />

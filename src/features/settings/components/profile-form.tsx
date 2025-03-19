@@ -19,8 +19,8 @@ import { BioFormInput } from "@/features/onboarding/components/bio-form-input";
 import { TagsFormInput } from "@/features/onboarding/components/tags-form-input";
 import { SocialInputField } from "@/features/onboarding/components/socials-form-input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { IoWarning } from "react-icons/io5";
+// import { Separator } from "@/components/ui/separator";
+// import { IoWarning } from "react-icons/io5";
 import { useUser } from "@/api/auth-api";
 import { useImagePreview } from "@/hooks/use-image-preview";
 import { Loader2 } from "lucide-react";
@@ -39,10 +39,13 @@ const ProfileForm = () => {
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
+      email: user?.email || "",
       first_name: user?.first_name || "",
       last_name: user?.last_name || "",
-      image: "https://avatar.iran.liara.run/public",
-      graduation_date: new Date(user?.graduation_date || "") || undefined,
+      image: user?.image || "",
+      graduation_date: user?.graduation_date
+        ? new Date(user.graduation_date)
+        : new Date(),
       branch: user?.branch ? user.branch : 0,
       position: user?.position ? user.position : 0,
       bio: user?.bio || "",
@@ -60,7 +63,7 @@ const ProfileForm = () => {
     if (isSuccess) {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
     }
-  }, [isSuccess]);
+  }, [isSuccess, queryClient]);
 
   const { imagePreview, setImagePreview } = useImagePreview(
     form.watch("image")
@@ -103,7 +106,7 @@ const ProfileForm = () => {
 
           {/* GRADUATION DATE INPUT FOR USER'S GDSC POSITION (i.e student, alumni) */}
           {GDSC_POSITIONS_WITH_GRAD_DATE.includes(
-            // @ts-ignore
+            // @ts-expect-error This is so dum
             IOTA_TO_GDSC_POSITION[form.watch("position")]
           ) && <GradFormInput />}
 
@@ -136,7 +139,7 @@ const ProfileForm = () => {
             )}
           </Button>
 
-          <div>
+          {/* <div>
             <p className="text-sm flex items-center gap-2 font-semibold mb-2">
               <IoWarning /> Account Deletion
             </p>
@@ -146,11 +149,13 @@ const ProfileForm = () => {
               type="button"
               onClick={(e) => {
                 e.preventDefault();
+
+
               }}
             >
               Delete
             </Button>
-          </div>
+          </div> */}
         </form>
       </Form>
     </Card>

@@ -7,8 +7,8 @@ export default function EventSummary({
   title,
   date,
   location,
-  startTime,
-  endTime,
+  start_time,
+  end_time,
   tags,
 }: Event) {
   return (
@@ -31,7 +31,7 @@ export default function EventSummary({
       <div className="space-y-4">
         <div className="flex items-center">
           <Calendar className="mr-3" />
-          <span>{date?.toDateString()}</span>
+          <span>{date && new Date(date)?.toDateString()}</span>
         </div>
 
         <div className="flex items-center">
@@ -42,12 +42,12 @@ export default function EventSummary({
         <div className="flex items-center">
           <Clock className="mr-3" />
           <span>
-            {new Date(startTime).toLocaleTimeString([], {
+            {new Date(start_time).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
             })}{" "}
             -{" "}
-            {new Date(endTime).toLocaleTimeString([], {
+            {new Date(end_time).toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
             })}

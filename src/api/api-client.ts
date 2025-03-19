@@ -59,7 +59,7 @@ api.interceptors.response.use(
         error.config.headers.Authorization = `Bearer ${newAccessToken}`;
 
         // Retry the original request
-        return api(error.config);
+        // return api(error.config);
       } catch (refreshError) {
         refreshCount += 1;
         return Promise.reject(refreshError);
@@ -70,7 +70,7 @@ api.interceptors.response.use(
     if (error.response?.status === 429) {
       const retryAfter = error.response.headers["retry-after"];
 
-      let delay = retryAfter ? parseInt(retryAfter, 10) * 1000 : 2000; // Use server delay if available, else default 2s
+      const delay = retryAfter ? parseInt(retryAfter, 10) * 1000 : 2000; // Use server delay if available, else default 2s
 
       toast.error("You are making too many requests. Please try again later.");
 

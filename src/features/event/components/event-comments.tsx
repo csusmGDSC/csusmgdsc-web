@@ -13,7 +13,7 @@ import { SectionTitle } from "@/features/base";
 import { cn } from "@/lib/utils";
 import { GrEmoji } from "react-icons/gr";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -221,7 +221,8 @@ const CommentItem: React.FC<{
   topLevelId: string;
   isTopLevel: boolean;
   user: User;
-}> = ({ comment, replies = [], topLevelId, isTopLevel, user }) => {
+  users: User[];
+}> = ({ comment, replies = [], topLevelId, isTopLevel, user, users }) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
   const [replyMode, setReplyMode] = useState(false);
@@ -236,7 +237,6 @@ const CommentItem: React.FC<{
   const createReply = useCreateComment(comment.event_id);
   const deleteComment = useDeleteComment(comment.event_id);
   const updateComment = useUpdateComment(comment.event_id);
-  const { data: users } = useUsers();
 
   const handlePin = async (commentId: string) => {
     await updateComment.mutateAsync({
@@ -249,7 +249,10 @@ const CommentItem: React.FC<{
 
   return (
     <div className="flex gap-2">
-      <ProfileImage user_id="1" className={editMode ? "hidden" : ""} />
+      <ProfileImage
+        user_id={comment.user_id}
+        className={editMode ? "hidden" : ""}
+      />
       <div className="w-full">
         {/* PINNED COMMENT */}
         {comment.pinned_by && !editMode && (
@@ -458,6 +461,7 @@ const CommentItem: React.FC<{
                 topLevelId={topLevelId}
                 isTopLevel={false}
                 user={users.find((user) => user.id === reply.user_id) as User}
+                users={users}
               />
             ))}
           </div>
@@ -467,13 +471,7 @@ const CommentItem: React.FC<{
   );
 };
 
-const EventComments = () => {
-  const eventId = useLocation().pathname.split("/").pop();
-
-  if (!eventId) {
-    return <Navigate to="/not-found" />;
-  }
-
+const EventComments = ({ eventId }: { eventId: string }) => {
   const { data: comments, isLoading } = useCommentsByEventId(eventId);
   const createComment = useCreateComment(eventId);
   const [sortedComments, setSortedComments] = useState(comments);
@@ -555,6 +553,7 @@ const EventComments = () => {
                 topLevelId={comment.id}
                 isTopLevel
                 user={users.find((user) => user.id === comment.user_id) as User}
+                users={users}
               />
             ))}
           </div>

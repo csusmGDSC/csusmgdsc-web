@@ -48,7 +48,7 @@ export default function UpcomingEvents({
   }
 
   const upcomingEvents = events.filter(
-    (event) => new Date(event.startTime) > new Date()
+    (event) => new Date(event.start_time) > new Date()
   );
 
   return (
@@ -92,14 +92,14 @@ const EventCard = ({ event }: { event: Event }) => (
         <div className="space-y-3">
           <EventDetail
             icon={<Calendar className="w-5 h-5" />}
-            text={formatDate(event.startTime, "PPP") || ""}
+            text={formatDate(event.start_time, "PPP") || ""}
           />
           <EventDetail
             icon={<Clock className="w-5 h-5" />}
             text={
-              formatDate(event.startTime, "p") +
+              formatDate(event.start_time, "p") +
                 " - " +
-                formatDate(event.endTime, "p") || ""
+                formatDate(event.end_time, "p") || ""
             }
           />
           <EventDetail

@@ -110,7 +110,7 @@ export default function CreateEvent() {
     <ReviewAndSubmit />,
   ];
 
-  if (showSuccessMsg) {
+  if (showSuccessMsg && createEvent.isSuccess) {
     return (
       <main className="my-4 h-full">
         <h1 className="ml-4 text-primary/90 font-medium text-xl">
@@ -157,10 +157,10 @@ export default function CreateEvent() {
                     className="relative px-10"
                     disabled={createEvent.isPending}
                   >
-                    {isLastStep ? "Create" : "Next Step"}
                     {createEvent.isPending && (
-                      <Loader2 className="text-blue animate-spin" />
+                      <Loader2 className="text-white animate-spin" />
                     )}
+                    {isLastStep ? "Create" : "Next Step"}
                   </Button>
                 </div>
               </div>

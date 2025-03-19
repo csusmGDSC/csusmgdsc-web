@@ -28,9 +28,10 @@ import {
   IOTA_TO_GDSC_POSITION,
 } from "@/types/user";
 import { ProfileSchema } from "../schemas/profile-schema";
-import { useOnboarding, useUser } from "@/api/auth-api";
+import { useUser } from "@/api/auth-api";
 import { useImagePreview } from "@/hooks/use-image-preview";
 import { Loader2 } from "lucide-react";
+import { useUpdateUser } from "@/api/user-api";
 
 /**
  * OnboardingForm component renders a multi-step form for user onboarding.
@@ -44,7 +45,7 @@ import { Loader2 } from "lucide-react";
  * @returns JSX element representing the onboarding form.
  */
 export const OnboardingForm = () => {
-  const { mutate, isPending } = useOnboarding();
+  const { mutate, isPending } = useUpdateUser();
   const user = useUser();
   const id = useId();
 
@@ -54,7 +55,7 @@ export const OnboardingForm = () => {
       first_name: user?.first_name || "",
       last_name: user?.last_name || "",
       email: user?.email || "No Email",
-      image: "https://avatar.iran.liara.run/public",
+      image: user?.image || "",
       graduation_date: user?.graduation_date || undefined,
       branch: 0,
       position: 0,
@@ -134,7 +135,7 @@ export const OnboardingForm = () => {
             {/* GRADUATION DATE INPUT FOR USER'S GDSC POSITION (i.e student, alumni) */}
 
             {GDSC_POSITIONS_WITH_GRAD_DATE.includes(
-              // @ts-ignore
+              // @ts-expect-error this is fine
               IOTA_TO_GDSC_POSITION[form.watch("position")]
             ) && <GradFormInput />}
 

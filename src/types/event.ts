@@ -5,23 +5,20 @@ export interface Event {
   title: string;
   room?: Room | null;
   tags?: string[];
-  startTime: Date;
-  endTime: Date;
+  start_time: Date;
+  end_time: Date;
   type: keyof typeof IOTA_TO_EVENT_TYPE;
   location?: string;
   date: Date | null;
-  githubRepo?: string;
-  slidesURL?: string;
-  imageSrc?: string | null;
-  virtualURL?: string;
+  repository_url?: string;
+  slides_url?: string;
+  image_src?: string | null;
+  virtual_url?: string;
   description: string;
   about?: string;
-  attendeeIds?: string[];
-  organizerIds: string[];
-  usersAttendedIds?: string[];
-  createdAt: Date;
-  updatedAt: Date;
-  createdBy?: string;
+  created_at: Date;
+  updated_at: Date;
+  created_by?: string;
 }
 
 export const EVENT_TYPES = [

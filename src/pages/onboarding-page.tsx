@@ -3,15 +3,15 @@ import { Button } from "@/components/ui/button";
 import { PageContent } from "@/features/base";
 import { OnboardingForm } from "@/features/onboarding/components/onboarding-form";
 import { LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function OnboardingPage() {
   const signOut = useSignOut();
   const navigate = useNavigate();
   const user = useUser();
 
-  if (user?.is_onboarded) {
-    navigate("/");
+  if (!user || user?.is_onboarded) {
+    return <Navigate to="/" />;
   }
 
   return (

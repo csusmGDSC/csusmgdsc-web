@@ -31,7 +31,13 @@ export const API_ROUTES = {
     GET_EVENTS: (params?: Record<string, string | number>) =>
       `/events${params ? formatQueryParams(params) : ""}`,
     GET_EVENT_BY_ID: (id: string) => `/events/${id}`,
-    CREATE_EVENT: "/events",
+    CREATE_EVENT: "/admin/events",
+    DELETE_EVENT_BY_EVENT_ID: (id: string) => `/admin/events/${id}`,
+    UPDATE_EVENT_BY_EVENT_ID: (id: string) => `/admin/events/${id}`,
+    ADD_EVENT_ORGANIZER_BY_EVENT_ID: (eventId: string, userId: string) =>
+      `/admin/events/${eventId}/organizers/${userId}`,
+    GET_EVENT_ORGANIZERS_BY_EVENT_ID: (eventId: string) =>
+      `/events/${eventId}/organizers`,
   },
   PROJECTS: {},
   TEAMS: {},
@@ -49,6 +55,9 @@ export const API_ROUTES = {
     GET_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
     UPDATE_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
     DELETE_COMMENT_BY_COMMENT_ID: (id: string) => `/comments/${id}`,
+  },
+  UTILS: {
+    UPLOAD_IMAGE: "/admin/utils/image",
   },
 };
 

@@ -61,6 +61,7 @@ export const ProfileImageInput = ({
                   setImagePreview(
                     file ? URL.createObjectURL(file) : imagePreview
                   );
+                  field.field.onChange(file);
                 }}
               />
               <p className="text-xs text-muted-foreground my-4">

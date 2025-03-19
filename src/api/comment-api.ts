@@ -25,7 +25,9 @@ async function fetchCommentsByUserId(id: string): Promise<Comment[]> {
   return data;
 }
 
-async function deleteCommentByCommentId(id: string): Promise<any> {
+async function deleteCommentByCommentId(
+  id: string
+): Promise<Record<string, string>> {
   const { data } = await api.delete(
     API_ROUTES.COMMENTS.DELETE_COMMENT_BY_COMMENT_ID(id)
   );
@@ -34,7 +36,7 @@ async function deleteCommentByCommentId(id: string): Promise<any> {
 
 async function updateCommentByCommentId(
   comment: UpdateCommentRequest
-): Promise<any> {
+): Promise<Record<string, string>> {
   const { data } = await api.put(
     API_ROUTES.COMMENTS.UPDATE_COMMENT_BY_COMMENT_ID(comment.id),
     comment
@@ -47,7 +49,7 @@ async function createComment(
   eventId: string,
   content: string,
   parentId?: string
-): Promise<any> {
+): Promise<Record<string, string>> {
   const { data } = await api.post(API_ROUTES.COMMENTS.CREATE_COMMENT, {
     user_id: userId,
     event_id: eventId,
@@ -61,6 +63,8 @@ export function useCommentsByEventId(id: string) {
   return useQuery({
     queryKey: [QUERY_KEYS.COMMENTS, id],
     queryFn: () => fetchCommentsByEventId(id),
+    staleTime: 60 * 1000,
+    refetchOnMount: true,
   });
 }
 
@@ -68,6 +72,8 @@ export function useCommentsByUserId(id: string) {
   return useQuery({
     queryKey: [QUERY_KEYS.COMMENTS, id],
     queryFn: () => fetchCommentsByUserId(id),
+    staleTime: 60 * 1000,
+    refetchOnMount: true,
   });
 }
 

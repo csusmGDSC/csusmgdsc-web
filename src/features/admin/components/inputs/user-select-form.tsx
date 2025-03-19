@@ -7,11 +7,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FormLabel } from "@/components/ui/form";
-import { leads } from "@/tests/mock/team";
 import { useFormContext } from "react-hook-form";
 import { EventSchema } from "../../schemas/event-schema";
 import { z } from "zod";
 import { AvatarCard } from "@/components/ui/avatar-card";
+import { useUsers } from "@/api/user-api";
 
 export const UserSelectForm = ({
   name,
@@ -23,6 +23,9 @@ export const UserSelectForm = ({
   required?: boolean;
 }) => {
   const form = useFormContext<z.infer<typeof EventSchema>>();
+  const { data: users } = useUsers();
+
+  const adminUsers = users.filter((user) => user.role === "ADMIN");
 
   return (
     <div className="flex flex-col gap-2">
@@ -35,13 +38,14 @@ export const UserSelectForm = ({
           <AvatarCard
             key={index}
             imageSrc={
-              leads.find((lead) => lead.userId === userId)?.imageSrc || ""
+              adminUsers.find((lead) => lead.id === userId)?.image || ""
             }
             fullName={
-              leads.find((lead) => lead.userId === userId)?.name || "No Name"
+              adminUsers.find((lead) => lead.id === userId)?.full_name ||
+              "No Name"
             }
             email={
-              leads.find((lead) => lead.userId === userId)?.email || "No Email"
+              adminUsers.find((lead) => lead.id === userId)?.email || "No Email"
             }
             userId={userId}
             removeButton
@@ -68,76 +72,24 @@ export const UserSelectForm = ({
           className="pb-2 overflow-y-scroll max-h-[20rem]"
           align="start"
         >
-          <DropdownMenuLabel>Project</DropdownMenuLabel>
+          <DropdownMenuLabel>Student Leads</DropdownMenuLabel>
 
-          {leads.map((lead) => (
+          {adminUsers.map((lead) => (
             <DropdownMenuItem
-              key={lead.userId}
+              key={lead.id}
               onClick={() =>
-                form.setValue(name, [...form.watch(name), lead.userId])
+                form.setValue(name, [...form.watch(name), lead.id])
               }
             >
               <div
                 className="flex size-8 items-center justify-center rounded-sm border border-border bg-background"
                 aria-hidden="true"
               >
-                <img src={lead.imageSrc} className="object-cover" />
+                <img src={lead.image} className="object-cover" />
               </div>
               <div>
                 <div className="text-sm font-medium overflow-ellipsis truncate max-w-[150px]">
-                  {lead.name}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  {lead.email}
-                </div>
-              </div>
-            </DropdownMenuItem>
-          ))}
-
-          <DropdownMenuLabel>Leetcode</DropdownMenuLabel>
-
-          {leads.map((lead) => (
-            <DropdownMenuItem
-              key={lead.userId}
-              onClick={() =>
-                form.setValue(name, [...form.watch(name), lead.userId])
-              }
-            >
-              <div
-                className="flex size-8 items-center justify-center rounded-lg border border-border bg-background"
-                aria-hidden="true"
-              >
-                <img src={lead.imageSrc} className="object-cover" />
-              </div>
-              <div>
-                <div className="text-sm font-medium overflow-ellipsis truncate max-w-[150px]">
-                  {lead.name}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  {lead.email}
-                </div>
-              </div>
-            </DropdownMenuItem>
-          ))}
-
-          <DropdownMenuLabel>Marketing</DropdownMenuLabel>
-
-          {leads.map((lead) => (
-            <DropdownMenuItem
-              key={lead.userId}
-              onClick={() =>
-                form.setValue(name, [...form.watch(name), lead.userId])
-              }
-            >
-              <div
-                className="flex size-8 items-center justify-center rounded-lg border border-border bg-background"
-                aria-hidden="true"
-              >
-                <img src={lead.imageSrc} className="object-cover" />
-              </div>
-              <div>
-                <div className="text-sm font-medium overflow-ellipsis truncate max-w-[150px]">
-                  {lead.name}
+                  {lead.full_name}
                 </div>
                 <div className="text-xs text-muted-foreground">
                   {lead.email}
