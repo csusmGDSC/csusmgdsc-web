@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { Calendar, Clock, MapPin } from "lucide-react";
+import "add-to-calendar-button";
+import { formatDate } from "date-fns";
 import RandomBadge from "@/components/ui/random-badge";
 import { Event } from "@/types/event";
-import { Calendar, Clock, MapPin } from "lucide-react";
 
 export default function EventSummary({
   title,
+  description,
   date,
   location,
   start_time,
@@ -13,11 +15,23 @@ export default function EventSummary({
 }: Event) {
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:items-center justify-between">
         <h1 className="text-3xl font-bold line-clamp-2">{title}</h1>
-        <Button size="lg">
-          <Calendar /> Add to calendar
-        </Button>
+        <add-to-calendar-button
+          name={title}
+          description={description}
+          startDate={formatDate(new Date(date as Date), "yyyy-MM-dd")}
+          startTime={new Date(start_time).toTimeString()}
+          endTime={new Date(end_time).toTimeString()}
+          timeZone="America/Los_Angeles"
+          location={location}
+          options="'Apple','Google','MicrosoftTeams'"
+          size="6"
+          hideCheckmark="true"
+          styleLight="--font:GoogleSans, system-ui, sans-serif; --btn-background: #4285F4; --btn-text: #fff;"
+          label="Add to Calendar"
+          buttonStyle="default"
+        ></add-to-calendar-button>
       </div>
       <div className="flex flex-wrap gap-2">
         {tags?.map((tag, index) => (

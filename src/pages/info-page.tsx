@@ -1,8 +1,11 @@
 import { PageContent, PageHeader } from "@/features/base";
 import { SectionTitle } from "@/features/base";
 import { Benefits, InfoCards } from "@/features/info";
+import { useTheme } from "@/lib/providers";
 
 export default function InfoPage() {
+  const { theme } = useTheme();
+
   return (
     <main>
       <PageHeader
@@ -28,7 +31,11 @@ export default function InfoPage() {
             </p>
 
             <img
-              src="/images/stock/stock-4.jpeg"
+              src={
+                theme == "light"
+                  ? "/images/stock/stock-4.jpeg"
+                  : "/images/stock/stock-4-dark.jpeg"
+              }
               alt="stock-4"
               className="hidden lg:block"
             />

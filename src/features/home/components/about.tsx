@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { SectionTitle } from "@/features/base";
+import { useTheme } from "@/lib/providers";
 
 const About = () => {
+  const { theme } = useTheme();
   return (
     <>
       <section id="about" className="-mb-16">
@@ -34,7 +36,11 @@ const About = () => {
           </div>
 
           <img
-            src="/images/stock/stock-2.jpeg"
+            src={
+              theme == "light"
+                ? "/images/stock/stock-2.jpeg"
+                : "/images/stock/stock-2-dark.jpeg"
+            }
             alt="about-image"
             className="hidden md:block"
           />

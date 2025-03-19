@@ -30,6 +30,9 @@ import { SignUpSchema } from "../schemas/auth-schemas";
 import FormCard from "./form-card";
 import { useSignUp } from "@/api/auth-api";
 
+// Theme management
+import { useTheme } from "@/lib/providers";
+
 /**
  * SignUp component renders a sign-up form with email and password fields.
  * It includes password strength validation and visual feedback for password requirements.
@@ -41,6 +44,7 @@ import { useSignUp } from "@/api/auth-api";
 const SignUp = () => {
   const signUp = useSignUp();
   const id = useId();
+  const { theme } = useTheme();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -68,7 +72,11 @@ const SignUp = () => {
             {/* Left side: Animated shapes */}
             <div className="relative flex-1 hidden md:flex items-center">
               <img
-                src="/images/stock/stock-3.jpeg"
+                src={
+                  theme == "light"
+                    ? "/images/stock/stock-3.jpeg"
+                    : "/images/stock/stock-3-dark.jpeg"
+                }
                 alt="background-image"
                 className="select-none"
                 width={700}

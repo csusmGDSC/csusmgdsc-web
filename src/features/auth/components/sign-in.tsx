@@ -27,6 +27,9 @@ import { Link } from "react-router-dom";
 import { SignInSchema } from "../schemas/auth-schemas";
 import { useSignIn } from "@/api/auth-api";
 
+// Theme management
+import { useTheme } from "@/lib/providers";
+
 /**
  * SignIn component renders a sign-in form with email and password fields.
  * It includes password strength validation and visual feedback for password requirements.
@@ -38,6 +41,7 @@ import { useSignIn } from "@/api/auth-api";
 const SignIn = () => {
   const signIn = useSignIn();
   const id = useId();
+  const { theme } = useTheme();
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -57,7 +61,11 @@ const SignIn = () => {
           {/* Left side: Animated shapes */}
           <div className="relative flex-1 hidden md:flex items-center">
             <img
-              src="/images/stock/stock-3.jpeg"
+              src={
+                theme == "light"
+                  ? "/images/stock/stock-3.jpeg"
+                  : "/images/stock/stock-3-dark.jpeg"
+              }
               alt="background-image"
               className="select-none"
               width={700}

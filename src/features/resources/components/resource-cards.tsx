@@ -8,20 +8,20 @@ const ResourceCards = () => {
           <ResourceCard
             title="CSUSM Merch"
             subtitle="Check out our GDSC-CSUSM merch"
-            href="/merch"
-            imageSrc="https://placehold.co/600x400"
+            href="https://www.bkstr.com/csusanmarcosstore/home"
+            imageSrc="/images/resources/merch.png"
           />
           <ResourceCard
             title="Brand Guidelines & Logo"
             subtitle="Check out our brand guidelines"
             href="/brand-guidelines"
-            imageSrc="https://placehold.co/600x400"
+            imageSrc="/images/resources/logo.png"
           />
           <ResourceCard
             title="CSU San Marcos"
             subtitle="Check out our university"
             href="https://www.csusm.edu/index.html"
-            imageSrc="https://placehold.co/600x400"
+            imageSrc="/images/resources/csusm.png"
           />
         </div>
       </div>
