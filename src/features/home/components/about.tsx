@@ -7,7 +7,7 @@ const About = () => {
   const { theme } = useTheme();
   return (
     <>
-      <section id="about" className="-mb-16">
+      <section id="about">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="h-full flex flex-col justify-center gap-6">
             <SectionTitle
@@ -42,7 +42,7 @@ const About = () => {
                 : "/images/stock/stock-2-dark.jpeg"
             }
             alt="about-image"
-            className="hidden md:block"
+            className="hidden md:block w-[32rem] h-[20rem] object-cover rounded-lg mx-auto"
           />
         </div>
       </section>

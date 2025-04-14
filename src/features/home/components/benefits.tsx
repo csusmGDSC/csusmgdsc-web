@@ -1,111 +1,77 @@
-import { IconType } from "react-icons";
-import { BiSolidBarChartAlt2 } from "react-icons/bi";
-import { BsCheck2Circle, BsFillSuitDiamondFill } from "react-icons/bs";
-import { IoCubeOutline } from "react-icons/io5";
-import { useTheme } from "@/lib/providers";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Separator } from "@/components/ui/separator";
+import { SectionTitle } from "@/features/base";
+import { User, Zap } from "lucide-react";
 
 export default function Benefits() {
-  const { theme } = useTheme();
   return (
-    <div className="flex flex-row items-center gap-20" id="benefits">
-      <div className="w-full md:w-1/2">
-        <h1 className="text-3xl font-bold text-primary">
-          Built on strong foundations
-        </h1>
-        <p className="mb-8 font-mono text-blue">
-          A community driven to give students the best software engineering
-          experience
-        </p>
-        <hr />
-        <dl className="grid-cols-2 grid my-8 gap-y-8">
-          <Row
-            label="Welcoming"
-            desc="We teach every passionate student that's interested in developing skills."
+    <section id="benefits">
+      <div className="mt-4 grid gap-6 md:grid-cols-2 md:gap-12 lg:gap-24">
+        <div className="relative mt-6 sm:mt-0 flex items-center">
+          <Carousel className="z-10">
+            <CarouselContent>
+              <CarouselItem className="overflow-hidden rounded-md">
+                <img
+                  src="/images/group-1.jpg"
+                  className="object-cover w-full h-full rounded-md"
+                />
+              </CarouselItem>
+              <CarouselItem className="overflow-hidden rounded-md">
+                <img
+                  src="/images/group-2.jpg"
+                  className="object-cover w-full h-full rounded-md"
+                />
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselNext />
+            <CarouselPrevious />
+          </Carousel>
+        </div>
+        <div className="relative space-y-8">
+          <SectionTitle
+            title="Built on strong foundations"
+            subtitle="A community driven to give students the best software engineering experience"
           />
-          <Row
-            label="Collaboration"
-            desc="GDSC is built on collaboration and engagement between proactive students."
-          />
-          <Row
-            label="Rewarding"
-            desc="Students will learn modern, up-to-date technologies used in the industry."
-          />
-        </dl>
-        <hr />
-        <div className="grid grid-cols-2 md:grid-cols-4 w-full mt-8 gap-4">
-          {[
-            {
-              title: "Schedule Friendly",
-              icon: BsCheck2Circle,
-              color: "text-blue",
-            },
-            {
-              title: "Cross-team projects",
-              icon: IoCubeOutline,
-              color: "text-green",
-            },
-            {
-              title: "Active Community",
-              icon: BsFillSuitDiamondFill,
-              color: "text-yellow",
-            },
-            {
-              title: "Constant Growth",
-              icon: BiSolidBarChartAlt2,
-              color: "text-red",
-            },
-          ].map((item, index) => (
-            <Thing
-              title={item.title}
-              icon={item.icon}
-              className="col-span-1 flex-1 flex items-center"
-              color={item.color}
-              key={index}
-            />
-          ))}
+
+          <p className="text-muted-foreground">
+            We emphasize on high-quality, impact-driven core values that{" "}
+            <span className="font-semibold text-primary">
+              transform our students into software engineers
+            </span>
+            . We inspire innovation and bridge the gap between coursework and
+            industry practice.
+          </p>
+
+          <Separator />
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Zap className="size-4" />
+                <h3 className="text-sm font-medium">Success-Driven</h3>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                Our students have opened avenues into job offers
+              </p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <User className="size-4" />
+                <h3 className="text-sm font-medium">Student-led</h3>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                Led and built by engineering students, for engineering students
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div
-        className="relative hidden md:flex w-1/2 max-w-[32rem]
-          items-center justify-center overflow-hidden"
-      >
-        {/* <IconCloud iconSlugs={slugs} /> */}
-        <img
-          src={
-            theme == "light"
-              ? "/images/stock/stock-5.jpeg"
-              : "/images/stock/stock-5-dark.jpeg"
-          }
-          alt="benefits image"
-        />
-      </div>
-    </div>
+    </section>
   );
 }
-
-const Row = ({ label, desc }: { label: string; desc: string }) => {
-  return (
-    <div className="contents">
-      <dt className="font-semibold text-primary/90">{label}</dt>
-      <dd className="text-muted-foreground">{desc}</dd>
-    </div>
-  );
-};
-
-interface ThingProps {
-  title: string;
-  icon: IconType;
-  color: string;
-  className?: string;
-}
-
-const Thing = ({ title, icon: Icon, color, className }: ThingProps) => {
-  return (
-    <div className={className}>
-      <span>
-        <Icon className={`${color}`} />
-        {title}
-      </span>
-    </div>
-  );
-};

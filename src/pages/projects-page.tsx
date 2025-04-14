@@ -1,33 +1,14 @@
+import { projects } from "@/config/data";
 import { PageContent, PageHeader } from "@/features/base";
 import {
   ProjectContributions,
   ProjectList,
   ProjectRequirements,
 } from "@/features/projects";
-import { GDSCProject } from "@/types/gdsc-project";
-
-const exampleProjects: GDSCProject[] = [
-  {
-    title: "NASA JPL Rover",
-    description:
-      "Mechanical assembly of rover sourced from the NASA JPL website. Used to build foundational skills for URC rover challenge.",
-    websiteUrl: "https://github.com/nasa-jpl/open-source-rover",
-    githubUrl: "https://github.com/nasa-jpl/open-source-rover",
-    imageSrc: "/images/projects/rover.jpg",
-    tags: ["ROS2", "Python", "C++"],
-    date: "Sep 2024 - Present",
-  },
-  {
-    title: "Routify",
-    description:
-      "City pathfinding visualizer. Used to learn fundamental graph traversal algorithms such as BFS, DFS, or A* Search.",
-    websiteUrl: "https://www.routify.cc",
-    githubUrl: "https://www.github.com/jaedonspurlock01/routify",
-    imageSrc: "/images/projects/routify.gif",
-    tags: ["JavaScript", "ReactJS", "ThreeJS"],
-    date: "Jan 2024 - Mar 2024",
-  },
-];
+import { ProjectBackend } from "@/features/projects/components/project-backend";
+import { ProjectFrontend } from "@/features/projects/components/project-frontend";
+import { ProjectTechMarquee } from "@/features/projects/components/project-tech-marquee";
+import { ProjectTools } from "@/features/projects/components/project-tools";
 
 export default function ProjectsPage() {
   return (
@@ -37,10 +18,17 @@ export default function ProjectsPage() {
         subTitle="Check out our open-source projects!"
         backgroundImageSrc="/images/placeholder/homeBackground-2.jpg"
       />
-      <PageContent>
+      <PageContent className="gap-0 space-y-20 ">
         <ProjectContributions />
-        <ProjectList projects={exampleProjects} />
-        <ProjectRequirements />
+        <ProjectList projects={projects} />
+
+        <section className="space-y-20">
+          <ProjectTechMarquee />
+          <ProjectFrontend />
+          <ProjectBackend />
+          <ProjectTools />
+          <ProjectRequirements />
+        </section>
       </PageContent>
     </main>
   );

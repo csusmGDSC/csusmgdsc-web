@@ -5,15 +5,18 @@ import { SectionTitle } from "@/features/base";
 
 interface ProjectListProps {
   projects: GDSCProject[];
+  title?: string;
+  subtitle?: string;
 }
 
-const ProjectList = ({ projects }: ProjectListProps) => {
+const ProjectList = ({
+  projects,
+  title = "Projects",
+  subtitle = "See our list of technical works",
+}: ProjectListProps) => {
   return (
     <section className="space-y-2">
-      <SectionTitle
-        title="Projects"
-        subtitle="See our list of technical works"
-      />
+      <SectionTitle title={title} subtitle={subtitle} />
       <CardGrid placeholder="There is currently no projects at the moment.">
         {projects.map((e) => (
           <div className="sm:!w-[calc(50%-1rem)] lg:!w-[calc(33.333%-1rem)]">

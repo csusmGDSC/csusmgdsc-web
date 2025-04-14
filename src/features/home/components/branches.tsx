@@ -14,7 +14,7 @@ import {
   GitBranch,
 } from "lucide-react";
 import { SectionTitle } from "@/features/base";
-import RandomBadge from "@/components/ui/random-badge";
+import { Badge } from "@/components/ui/badge";
 
 const teams = [
   {
@@ -117,13 +117,14 @@ export default function Branches() {
                     <h4 className="text-sm font-semibold text-primary/80 mb-3">
                       Skills used
                     </h4>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       {team.technologies.map((tech, idx) => (
-                        <RandomBadge
-                          text={tech}
+                        <Badge
                           key={idx}
-                          className="p-1 text-xs rounded-sm"
-                        />
+                          className="bg-primary-foreground font-light border border-border text-primary hover:bg-secondary"
+                        >
+                          {tech}
+                        </Badge>
                       ))}
                     </div>
                   </div>

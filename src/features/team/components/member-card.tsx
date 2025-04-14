@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
 const MemberCard = ({
@@ -14,7 +14,7 @@ const MemberCard = ({
   userId: string;
 }) => {
   return (
-    <Card className="flex flex-col items-center justify-center hover:shadow-lg transition-shadow">
+    <Card className="flex flex-col items-center justify-center border-transparent shadow-none hover:border-border">
       <img
         src={imageSrc}
         alt="avatar"
@@ -22,15 +22,13 @@ const MemberCard = ({
       />
 
       <CardContent className="flex flex-col items-center">
-        <p className="text-primary text-lg font-medium line-clamp-2">{name}</p>
-        <p className="text-primary text-lg">{role}</p>
-      </CardContent>
+        <p className="text-primary font-medium line-clamp-2">{name}</p>
+        <p className="text-primary text-sm">{role}</p>
 
-      <CardFooter>
-        <Link to={`/profile/${userId}`}>
+        <Link to={`/profile/${userId}`} className="mt-3">
           <Button variant="ghost">View Profile</Button>
         </Link>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 };
