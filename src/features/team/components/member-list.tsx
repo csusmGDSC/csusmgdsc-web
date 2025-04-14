@@ -12,9 +12,9 @@ interface MemberListProps {
 const MemberList = ({ group, members, skeletonMode }: MemberListProps) => {
   if (skeletonMode) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[...Array(3)].map((_, index) => (
-          <Skeleton className="aspect-square w-full" key={index} />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {[...Array(12)].map((_, index) => (
+          <Skeleton className="h-[15rem] w-full" key={index} />
         ))}
       </div>
     );
@@ -27,7 +27,7 @@ const MemberList = ({ group, members, skeletonMode }: MemberListProps) => {
   return (
     <section id={group} className="space-y-2">
       <SectionTitle title={group} />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {members.map((member) => (
           <MemberCard
             key={member.id}
