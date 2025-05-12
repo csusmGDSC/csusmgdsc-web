@@ -40,11 +40,10 @@ export const Testimonials = () => {
           <CardContent>
             <blockquote className="grid h-full grid-rows-[1fr_auto] gap-6">
               <p>
-                GDSC has been an incredible resource for me, providing
-                opportunities to learn and grow in a supportive environment.
-                Because of this experience, I was able to leverage my skills and
-                knowledge from this organization, which propelled me in the
-                industry.
+                GDSC is the most effective catalyst for software engineering success at CSUSM.
+                We've built GDSC to bring real industry standards to the academic setting.
+                Through open source projects that have real impact, interview preperation and career readiness mentorship,
+                and conference attendance!
               </p>
 
               <div className="grid grid-cols-[auto_1fr] items-center gap-3">
